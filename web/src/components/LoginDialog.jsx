@@ -8,7 +8,7 @@ import {
   IconUserToServerArrow,
   IconX
 } from '@/components/ui/icons/Icons'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { VectorLogo } from '@/components/ui/vectors'
 import isEmail from 'validator/es/lib/isEmail'
 import StyledDialog from '@/components/ui/dialog/StyledDialog'
@@ -80,17 +80,28 @@ export default function LoginDialog() {
     reset()
     setOpen(false)
   }
-  const disabled = !(isCreateAccount
-    ? !!username &&
-      username.length >= 3 &&
-      username.length <= 20 &&
-      usernameRegex.test(username) &&
-      (!email || (!!email && isEmail(email))) &&
-      !!password &&
-      password.length >= 6 &&
-      !!confirmPassword &&
-      confirmPassword === password
-    : !!usernameOrEmail && !!password)
+
+  const [disabled, setDisabled] = useState(true)
+
+  useEffect(() => {
+    if(!username) return;
+    setTimeout(() => {
+      const _disabled = !(isCreateAccount
+        ? !!username &&
+          username.length >= 3 &&
+          username.length <= 20 &&
+          usernameRegex.test(username) &&
+          (!email || (!!email && isEmail(email))) &&
+          !!password &&
+          password.length >= 6 &&
+          !!confirmPassword &&
+          confirmPassword === password
+        : !!usernameOrEmail && !!password)
+      // console.log(_disabled, !!username, username?.length >= 3, username?.length <= 20, usernameRegex.test(username), (!email || (!!email && isEmail(email))), !!password, password.length >= 6, !!confirmPassword, confirmPassword === password)
+      setDisabled(_disabled)
+    }, 100)
+
+  }, [isCreateAccount, username, email, password, confirmPassword, usernameOrEmail])
 
   return (
     <StyledDialog
