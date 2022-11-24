@@ -84,7 +84,7 @@ export default function LoginDialog() {
   const [disabled, setDisabled] = useState(true)
 
   useEffect(() => {
-    if(!username) return;
+    if(isCreateAccount && !username) return;
     setTimeout(() => {
       const _disabled = !(isCreateAccount
         ? !!username &&
@@ -97,6 +97,7 @@ export default function LoginDialog() {
           !!confirmPassword &&
           confirmPassword === password
         : !!usernameOrEmail && !!password)
+      console.log(_disabled)
       // console.log(_disabled, !!username, username?.length >= 3, username?.length <= 20, usernameRegex.test(username), (!email || (!!email && isEmail(email))), !!password, password.length >= 6, !!confirmPassword, confirmPassword === password)
       setDisabled(_disabled)
     }, 100)
