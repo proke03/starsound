@@ -109,6 +109,7 @@ export const uploadImageFileSingle = async (
   allowGif: boolean = false,
   imageUrl?: string
 ): Promise<string> => {
+  if(!file) return;
   const { createReadStream, mimetype } = await file
   if (!imageMimeTypes.includes(mimetype))
     throw new Error('error.upload.invalidMime')
