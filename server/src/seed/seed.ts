@@ -26,7 +26,7 @@ export async function seed(em: EntityManager) {
       username: process.env.SEED_USER_NAME,
       isAdmin: true,
       //FIXME: 교체
-      avatarUrl: process.env.SEED_USER_AVATAR_URL,
+      // avatarUrl: process.env.SEED_USER_AVATAR_URL,
       passwordHash: await argon2.hash(
         process.env.SEED_USER_PASSWORD || 'password'
       )
@@ -37,8 +37,8 @@ export async function seed(em: EntityManager) {
       displayName: process.env.SEED_SERVER_DISPLAYNAME,
       description: process.env.SEED_SERVER_DESCRIPTION,
       category: ServerCategory.Meta,
-      avatarUrl: process.env.SEED_SERVER_AVATAR_URL,
-      bannerUrl: process.env.SEED_SERVER_BANNER_URL,
+      // avatarUrl: process.env.SEED_SERVER_AVATAR_URL,
+      // bannerUrl: process.env.SEED_SERVER_BANNER_URL,
       isFeatured: true,
       featuredPosition: ReorderUtils.FIRST_POSITION,
       owner: seedUser
