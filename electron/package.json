@@ -1,0 +1,68 @@
+{
+  "name": "electron",
+  "description": "All-in-one chat and forums for communities.",
+  "version": "0.0.1",
+  "repository": "https://github.com/agoora",
+  "private": true,
+  "author": {
+    "name": "Team 3355",
+    "email": "admin@335oh.com"
+  },
+  "engines": {
+    "node": "16.x.x"
+  },
+  "main": "electron/index.js",
+  "scripts": {
+    "build": "yarn workspace web run build:electron",
+    "dev": "electron .",
+    "dist": "electron-builder",
+    "pack": "electron-builder --dir"
+  },
+  "dependencies": {
+    "@electron/remote": "^1.2.0",
+    "cross-env": "^7.0.3",
+    "discord-rpc": "^4.0.1",
+    "electron-builder-notarize": "^1.2.0",
+    "electron-context-menu": "^3.1.1",
+    "electron-log": "^4.3.5",
+    "electron-store": "^8.0.0",
+    "electron-updater": "^4.4.1",
+    "typescript": "^4.3.5"
+  },
+  "devDependencies": {
+    "electron": "13.1.7",
+    "electron-builder": "^22.11.9"
+  },
+  "build": {
+    "productName": "Comet",
+    "appId": "app.joincomet",
+    "asar": true,
+    "files": [
+      "electron",
+      "dist"
+    ],
+    "directories": {
+      "buildResources": "electron/resources",
+      "output": "dist-electron"
+    },
+    "snap": {
+      "publish": {
+        "provider": "generic",
+        "url": "https://anydummyurl.com"
+      }
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "joincomet",
+        "repo": "comet",
+        "vPrefixedTagName": false
+      }
+    ],
+    "afterSign": "electron-builder-notarize",
+    "mac": {
+      "hardenedRuntime": true,
+      "entitlements": "./build/entitlements.mac.plist"
+    }
+  }
+}

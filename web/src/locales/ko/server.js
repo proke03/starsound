@@ -1,0 +1,36 @@
+export const server = {
+  loading: '플래닛 로딩중...',
+  feed: '피드',
+  invitePeople: '사람들을 초대하세요',
+  onlineCount: '온라인: {{count}}',
+  memberCount: '멤버: {{count}}',
+  memberCount_plural: '멤버: {{count}}',
+  context: {
+    markRead: '읽음으로 표시',
+    mute: '플래닛 알림 끄기',
+    invite: '초대하기',
+    leave: '플래닛 떠나기'
+  },
+  create: {
+    title: '플래닛 만들기',
+    category: '카테고리',
+    displayName: '플래닛 이름',
+    name: '주소',
+    nameLimit: '알파벳, 숫자, 언더바(_)만 사용 가능합니다.',
+    description: '설명',
+    upload: '업로드',
+    requireInvite: '가입하려면 초대가 필요합니다',
+    downvotesEnabled: '비추천 허용',
+  },
+  sidebar: {
+    posts: 'POSTS',
+    admin: '관리자 메뉴',
+    edit: '플래닛 수정',
+    manageRoles: '역할 관리',
+    channels: '채널',
+    join: 'Join',
+    leave: 'Leave',
+  },
+  serverSelect: '플래닛 선택',
+  noDescription: '설명이 없습니다',
+}
