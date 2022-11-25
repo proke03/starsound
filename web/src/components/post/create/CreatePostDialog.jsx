@@ -98,7 +98,7 @@ const Tab = {
   Image: 'Image',
 }
 
-export default function CreatePostDialog({ open, setOpen, serverId }) {
+export default function CreatePostDialog({ open, setOpen, serverId, ...props }) {
   const [text, setText] = useState('')
   const [createPost, { loading }] = useCreatePostMutation()
   const { t } = useTranslation()

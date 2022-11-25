@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useHasServerPermissions } from '@/hooks/useHasServerPermissions'
 import { ServerPermission } from '@/graphql/hooks'
@@ -7,6 +8,7 @@ import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import ContextMenuSection from '@/components/ui/context/ContextMenuSection'
 import toast from 'react-hot-toast'
 import { useDeletePostMutation } from '@/graphql/hooks'
+import CreatePostDialog from '@/components/post/create/CreatePostDialog'
 
 export default function PostContextMenu({ post, ContextMenuItem }) {
   const { t } = useTranslation()
@@ -25,6 +27,8 @@ export default function PostContextMenu({ post, ContextMenuItem }) {
   const [currentUser] = useCurrentUser()
   const isAuthor = !!post.author && !!currentUser && post.author.id === currentUser.id
   const canDelete = isAuthor || canManagePosts
+
+  const [open, setOpen] = useState(false)
 
   /*const friends = (currentUser?.relatedUsers ?? []).filter(
     rel => rel.relationshipStatus === 'Friends'
@@ -46,6 +50,7 @@ export default function PostContextMenu({ post, ContextMenuItem }) {
   if (!post) return null
   return (
     <>
+      <CreatePostDialog open={open} setOpen={setOpen} serverId={post.server.id} post={post}/>
       <ContextMenuSection>
         {/*{userFolders.length > 0 && (
           <ContextMenuItem label={t('post.context.addToUserFolder')}>
@@ -103,7 +108,12 @@ export default function PostContextMenu({ post, ContextMenuItem }) {
           </ContextMenuItem>
         )}*/}
 
-        {isAuthor && <ContextMenuItem label={t('post.context.edit')} />}
+        {isAuthor && 
+          <ContextMenuItem 
+            label={t('post.context.edit')}
+            onClick={() => {setOpen(true)}}
+          />
+        }
         {/*{canManagePosts && (
           <ContextMenuItem
             onClick={() => togglePin()}
