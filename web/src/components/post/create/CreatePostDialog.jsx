@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import ctl from '@netlify/classnames-template-literals'
 import Editor from '@/components/ui/editor/Editor'
 import {
@@ -21,6 +21,7 @@ import isURL from 'validator/es/lib/isURL'
 import { useDebounce } from 'react-use'
 import { canEmbed } from '@/components/ui/CustomEmbed'
 import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
+import { useStore } from './../../../hooks/useStore';
 
 const labelClass = ctl(`
   block
@@ -193,6 +194,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
     }
   }
   const [selectedImage, setSelectedImage] = useState(0)
+  const { postToEdit, setPostToEdit } = useStore(state => state)
 
   const close = () => {
     setOpen(false)
@@ -201,6 +203,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       setImages([])
       setCurrentTab(Tab.Text)
       reset()
+      setPostToEdit(null)
     }, 300)
   }
 
@@ -232,6 +235,27 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       push(post.relativeUrl)
     })
   }
+
+  useLayoutEffect(() => {
+    if(postToEdit){
+      setValue('title', postToEdit.title)
+      if(postToEdit.images.length > 0){
+        //image
+        setCurrentTab(Tab.Image)
+        setImages(postToEdit.images)
+      }
+      else if(postToEdit.linkUrl){
+        //link
+        setCurrentTab(Tab.Link)
+        setValue('linkUrl', postToEdit.linkUrl)
+      }
+      else{
+        //text
+        setCurrentTab(Tab.Text)
+        setText(postToEdit.text)
+      }
+    }
+  }, [postToEdit])
 
   return (
     <Dialog isOpen={open} close={close}>
@@ -397,10 +421,18 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                               <IconX className="w-4.5 h-4.5 text-white" />
                             </div>
                             <div className="absolute inset-0 bg-black rounded bg-opacity-0 group-hover:bg-opacity-50" />
-                            <div
-                              style={{ backgroundImage: `url(${image.data})` }}
-                              className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
-                            />
+                            {
+                              image.hasOwnProperty('data')?
+                              <div
+                                style={{ backgroundImage: `url(${image.data})` }}
+                                className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
+                              />
+                              :
+                              <img
+                                src={image.image.smallUrl}
+                                className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
+                              />
+                            }
                           </div>
                         </div>
                       ))}

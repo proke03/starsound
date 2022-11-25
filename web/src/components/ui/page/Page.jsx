@@ -1,4 +1,8 @@
+import CreatePostDialog from '@/components/post/create/CreatePostDialog'
+import { useStore } from '@/hooks/useStore'
+
 export default function Page({ children, header, rightSidebar, leftSidebar }) {
+  const { postToEdit, showCreatePostDialog, setShowCreatePostDialog } = useStore(state => state)
   return (
     <div className="flex flex-grow">
       {leftSidebar}
@@ -12,6 +16,7 @@ export default function Page({ children, header, rightSidebar, leftSidebar }) {
         </div>
       </div>
       {rightSidebar}
+      {postToEdit && <CreatePostDialog open={showCreatePostDialog} setOpen={setShowCreatePostDialog} serverId={postToEdit.server.id}/>}
     </div>
   )
 

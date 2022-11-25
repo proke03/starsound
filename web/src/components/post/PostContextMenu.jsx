@@ -7,6 +7,8 @@ import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import ContextMenuSection from '@/components/ui/context/ContextMenuSection'
 import toast from 'react-hot-toast'
 import { useDeletePostMutation } from '@/graphql/hooks'
+import CreatePostDialog from '@/components/post/create/CreatePostDialog'
+import { useStore } from '@/hooks/useStore'
 
 export default function PostContextMenu({ post, ContextMenuItem }) {
   const { t } = useTranslation()
@@ -25,6 +27,8 @@ export default function PostContextMenu({ post, ContextMenuItem }) {
   const [currentUser] = useCurrentUser()
   const isAuthor = !!post.author && !!currentUser && post.author.id === currentUser.id
   const canDelete = isAuthor || canManagePosts
+
+  const { setPostToEdit, setShowCreatePostDialog } = useStore(state => state)
 
   /*const friends = (currentUser?.relatedUsers ?? []).filter(
     rel => rel.relationshipStatus === 'Friends'
@@ -103,7 +107,15 @@ export default function PostContextMenu({ post, ContextMenuItem }) {
           </ContextMenuItem>
         )}*/}
 
-        {isAuthor && <ContextMenuItem label={t('post.context.edit')} />}
+        {/* {isAuthor && 
+          <ContextMenuItem 
+            label={t('post.context.edit')}
+            onClick={() => {
+              setPostToEdit(post)
+              setShowCreatePostDialog(true)}
+            }
+          />
+        } */}
         {/*{canManagePosts && (
           <ContextMenuItem
             onClick={() => togglePin()}
