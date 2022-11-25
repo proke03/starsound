@@ -56,5 +56,8 @@ export const useStore = create((set, get) => ({
   setShowLeftSidebar: showLeftSidebar => set({showLeftSidebar}),
 
   showRightSidebar: !['iOS', 'Android'].includes(getOS()),
-  setShowRightSidebar: showRightSidebar => set({showRightSidebar})
+  setShowRightSidebar: showRightSidebar => set({showRightSidebar}),
+
+  showCreatePostDialog: false,
+  setShowCreatePostDialog: showCreatePostDialog => set({showCreatePostDialog}),
 }))

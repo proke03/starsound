@@ -22,6 +22,8 @@ import { useOpenLogin } from '@/hooks/useLoginDialog'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { useUpdatePostVoteMutation, VoteType } from '@/graphql/hooks'
 import MessageImageDialog from '@/components/message/MessageImageDialog'
+import CreatePostDialog from '@/components/post/create/CreatePostDialog'
+import { useStore } from '@/hooks/useStore'
 
 export default memo(function Post({
   post,
@@ -74,6 +76,8 @@ export default memo(function Post({
   const [currentImage, setCurrentImage] = useState(0)
   const [currentUser] = useCurrentUser()
   const openLogin = useOpenLogin()
+
+  const { showCreatePostDialog, setShowCreatePostDialog } = useStore(state => state)
 
   return (
     <ContextMenuTrigger data={{ type: ContextMenuType.Post, post }}>
@@ -398,6 +402,7 @@ export default memo(function Post({
           </div>
         </div>
       </div>
+      <CreatePostDialog open={showCreatePostDialog} setOpen={setShowCreatePostDialog} serverId={post.server.id} post={post}/>
     </ContextMenuTrigger>
   )
 })
