@@ -1,5 +1,7 @@
 # 별별소리
 
+![logo](https://user-images.githubusercontent.com/19148682/203886499-ed612c11-9ad1-4c74-9963-eb287a87ba2d.png)
+
 All-in-one chat and forums for communities.
 
 ## Tech Stack
