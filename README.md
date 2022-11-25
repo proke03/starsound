@@ -43,7 +43,7 @@ Build frontend:
 
 Environment variables:
 
-- `VITE_API_DOMAIN` (domain server is running on i.e. `api.335oh.com`)
+- `VITE_API_DOMAIN` (domain server is running on i.e. `api.starsound.in`)
 
 ### Backend
 
@@ -57,19 +57,5 @@ docker-compose up -d
 
 yarn run dev:server
 ```
-
-Environment variables:
-
-- `DATABASE_URL` (defaults to `postgresql://postgres:password@localhost:5432` if left blank)
-- `ACCESS_TOKEN_SECRET` (required, secret used for encrypting passwords)
-- `REDIS_URL` (optional, in-memory will be used if not provided)
-
-The following environment variables are related to S3 file uploads and are required for file uploads to work.
-
-- `MEDIA_DOMAIN` (domain media is hosted on i.e. `media.335oh.com`)
-- `BUCKET` (name of bucket)
-- `AWS_S3_ENDPOINT` (endpoint bucket is hosted on i.e. `aws.335oh.com`)
-- `AWS_S3_ACCESS_KEY_ID` (access key ID provided by AWS)
-- `AWS_S3_SECRET_ACCESS_KEY` (secret access key provided by AWS)
 
 #### Production
