@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import ctl from '@netlify/classnames-template-literals'
 import Editor from '@/components/ui/editor/Editor'
 import {
@@ -21,6 +21,7 @@ import isURL from 'validator/es/lib/isURL'
 import { useDebounce } from 'react-use'
 import { canEmbed } from '@/components/ui/CustomEmbed'
 import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
+import { useStore } from './../../../hooks/useStore';
 
 const labelClass = ctl(`
   block
@@ -98,7 +99,7 @@ const Tab = {
   Image: 'Image',
 }
 
-export default function CreatePostDialog({ open, setOpen, serverId, ...props }) {
+export default function CreatePostDialog({ open, setOpen, serverId }) {
   const [text, setText] = useState('')
   const [createPost, { loading }] = useCreatePostMutation()
   const { t } = useTranslation()
@@ -232,6 +233,30 @@ export default function CreatePostDialog({ open, setOpen, serverId, ...props }) 
       push(post.relativeUrl)
     })
   }
+
+  const { postToEdit } = useStore(state => state)
+  useLayoutEffect(() => {
+    if(postToEdit){
+    // if(props.post){
+      setValue('title', postToEdit.title)
+      if(postToEdit.images.length > 0){
+        //image
+        setCurrentTab(Tab.Image)
+        setImages(postToEdit.images)
+      }
+      else if(postToEdit.linkUrl){
+        //link
+        setCurrentTab(Tab.Link)
+        setValue('linkUrl', postToEdit.linkUrl)
+      }
+      else{
+        //text
+        setCurrentTab(Tab.Text)
+        setText(postToEdit.text)
+      }
+      console.log(postToEdit)
+    }
+  }, [postToEdit])
 
   return (
     <Dialog isOpen={open} close={close}>

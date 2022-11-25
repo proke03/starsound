@@ -28,7 +28,7 @@ export default function PostContextMenu({ post, ContextMenuItem }) {
   const isAuthor = !!post.author && !!currentUser && post.author.id === currentUser.id
   const canDelete = isAuthor || canManagePosts
 
-  const { setShowCreatePostDialog } = useStore(state => state)
+  const { setPostToEdit, setShowCreatePostDialog } = useStore(state => state)
 
   /*const friends = (currentUser?.relatedUsers ?? []).filter(
     rel => rel.relationshipStatus === 'Friends'
@@ -110,7 +110,10 @@ export default function PostContextMenu({ post, ContextMenuItem }) {
         {isAuthor && 
           <ContextMenuItem 
             label={t('post.context.edit')}
-            onClick={() => {setShowCreatePostDialog(true)}}
+            onClick={() => {
+              setPostToEdit(post)
+              setShowCreatePostDialog(true)}
+            }
           />
         }
         {/*{canManagePosts && (

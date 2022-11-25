@@ -60,4 +60,6 @@ export const useStore = create((set, get) => ({
 
   showCreatePostDialog: false,
   setShowCreatePostDialog: showCreatePostDialog => set({showCreatePostDialog}),
+  postToEdit: null,
+  setPostToEdit: postToEdit => set({postToEdit}),
 }))
