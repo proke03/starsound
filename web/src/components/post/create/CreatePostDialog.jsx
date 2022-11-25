@@ -194,6 +194,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
     }
   }
   const [selectedImage, setSelectedImage] = useState(0)
+  const { postToEdit, setPostToEdit } = useStore(state => state)
 
   const close = () => {
     setOpen(false)
@@ -202,6 +203,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       setImages([])
       setCurrentTab(Tab.Text)
       reset()
+      setPostToEdit(null)
     }, 300)
   }
 
@@ -234,10 +236,8 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
     })
   }
 
-  const { postToEdit } = useStore(state => state)
   useLayoutEffect(() => {
     if(postToEdit){
-    // if(props.post){
       setValue('title', postToEdit.title)
       if(postToEdit.images.length > 0){
         //image
@@ -254,7 +254,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
         setCurrentTab(Tab.Text)
         setText(postToEdit.text)
       }
-      console.log(postToEdit)
     }
   }, [postToEdit])
 
@@ -422,10 +421,18 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                               <IconX className="w-4.5 h-4.5 text-white" />
                             </div>
                             <div className="absolute inset-0 bg-black rounded bg-opacity-0 group-hover:bg-opacity-50" />
-                            <div
-                              style={{ backgroundImage: `url(${image.data})` }}
-                              className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
-                            />
+                            {
+                              image.hasOwnProperty('data')?
+                              <div
+                                style={{ backgroundImage: `url(${image.data})` }}
+                                className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
+                              />
+                              :
+                              <img
+                                src={image.image.smallUrl}
+                                className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
+                              />
+                            }
                           </div>
                         </div>
                       ))}
