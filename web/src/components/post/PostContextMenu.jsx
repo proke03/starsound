@@ -107,7 +107,7 @@ export default function PostContextMenu({ post, ContextMenuItem }) {
           </ContextMenuItem>
         )}*/}
 
-        {isAuthor && 
+        {/* {isAuthor && 
           <ContextMenuItem 
             label={t('post.context.edit')}
             onClick={() => {
@@ -115,7 +115,7 @@ export default function PostContextMenu({ post, ContextMenuItem }) {
               setShowCreatePostDialog(true)}
             }
           />
-        }
+        } */}
         {/*{canManagePosts && (
           <ContextMenuItem
             onClick={() => togglePin()}
