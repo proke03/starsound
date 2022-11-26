@@ -33,4 +33,10 @@ export const server = {
   },
   serverSelect: 'Select a planet',
   noDescription: 'No description',
+  list: {
+    cancel: 'Cancel',
+    delete: 'Delete',
+    deleteServer: 'Delete {{serverName}}',
+    confirm: 'All posts, comments, and messages will be lost. Enter your password to continue.'
+  },
 }

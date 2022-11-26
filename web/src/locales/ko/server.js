@@ -33,4 +33,10 @@ export const server = {
   },
   serverSelect: '플래닛 선택',
   noDescription: '설명이 없습니다',
+  list: {
+    cancel: '취소',
+    delete: '삭제',
+    deleteServer: '{{serverName}} 삭제',
+    confirm: '모든 게시물, 댓글, 메시지가 삭제됩니다. 계속하려면 비밀번호를 입력하세요.',
+  },
 }

@@ -1,10 +1,20 @@
 import { ServerPermission } from '@/graphql/hooks'
 
 export const permissions = {
+  title: 'Permissions',
+  roles: 'Roles',
   name: 'Name',
   default: 'Default',
   addRole: 'Add Role',
+  createRole: 'Create Role',
   editRole: 'Edit Role',
+  deleteRole: 'Delete Role',
+  save: 'Save',
+  saveChanges: 'Save Changes',
+  discard: 'Discard',
+  discardChanges: 'Discard Changes',
+  notSaved: 'Changes not saved',
+  continue: 'Continue',
   color: 'Color',
   permissions: 'Permissions',
   server: {

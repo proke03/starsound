@@ -248,7 +248,7 @@ export default function CreateServerDialog({ open, setOpen, server }) {
         <div>
           <div className="text-sm text-accent flex items-center pt-3">
           <span className={`h-7 flex items-center`}>
-            starsound.in/+{server?.name ?? ''}
+            {t('identity.dns')}/+{server?.name ?? ''}
           </span>
             {!server && (
               <input
