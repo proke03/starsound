@@ -422,7 +422,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                             </div>
                             <div className="absolute inset-0 bg-black rounded bg-opacity-0 group-hover:bg-opacity-50" />
                             {
-                              image.hasOwnProperty('data')?
+                              image.file?
                               <div
                                 style={{ backgroundImage: `url(${image.data})` }}
                                 className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
