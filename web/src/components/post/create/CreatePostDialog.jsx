@@ -250,6 +250,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               images && images.length > 0 && currentTab === Tab.Image
                 ?
                   images.map(image => {
+                    console.log(image);
                     let result = image.file?
                       {
                         file: image.file,
@@ -258,16 +259,13 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                       }
                       :
                       {
-                        originalUrl: image.originalUrl,
-                        popupUrl: image.popupUrl,
-                        popupWidth: image.popupWidth,
-                        popupHeight: image.popupHeight,
-                        smallUrl: image.smallUrl,
-                        smallWidth: image.smallWidth,
-                        smallHeight: image.smallHeight,
-                        linkUrl: image.linkUrl,
-                        caption: image.caption,
+                        originalUrl: image.image.originalUrl,
+                        popupUrl: image.image.popupUrl,
+                        smallUrl: image.image.smallUrl,
+                        linkUrl: image.image.linkUrl,
+                        caption: image.image.caption,
                       }
+                    console.log(result)
                     return result
                   })
                 : null
@@ -504,12 +502,20 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
 
                   {images && images?.length > 0 && (
                     <div className="mt-5 flex space-x-5">
-                      <div
-                        className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
-                        style={{
-                          backgroundImage: `url(${images[selectedImage]?.data})`
-                        }}
-                      />
+                      {
+                        images[selectedImage].file?
+                          <div
+                            className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                            style={{
+                              backgroundImage: `url(${images[selectedImage]?.data})`
+                            }}
+                          />
+                          :
+                          <img
+                            src={images[selectedImage]?.image.originalUrl}
+                            className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                          />
+                      }
 
                       <div className="space-y-5 max-w-full flex-grow">
                         <div>
