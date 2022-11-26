@@ -34,7 +34,7 @@ export default function FeedPage() {
   return (
     <>
       <Helmet>
-        <title>Home – Comet</title>
+        <title>Home – Starsound</title>
       </Helmet>
 
       <Page

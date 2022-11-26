@@ -35,7 +35,7 @@ export default function ExplorePage() {
   return (
     <Page leftSidebar={<ExploreSidebar />} header={<Header title={t('explore.title')} icon={<IconExplore className="w-5 h-5" />} />}>
       <Helmet>
-        <title>Explore Planets – Comet</title>
+        <title>Explore Planets – Starsound</title>
       </Helmet>
       <PageView>
         <div className="md:px-8 md:py-8 px-0 py-0">

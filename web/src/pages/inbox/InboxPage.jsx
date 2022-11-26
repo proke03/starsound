@@ -26,7 +26,7 @@ export default function InboxPage() {
   return (
     <Page header={<InboxHeader />}>
       <Helmet>
-        <title>{`(${replies.length}) Inbox – Comet`}</title>
+        <title>{`(${replies.length}) Inbox – Starsound`}</title>
       </Helmet>
 
       <PageView>

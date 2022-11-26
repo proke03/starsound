@@ -38,7 +38,7 @@ export default function FriendsPage() {
       header={<FriendsHeader pendingCount={incomingFriendRequests.length} />}
     >
       <Helmet>
-        <title>Friends – Comet</title>
+        <title>Friends – Starsound</title>
       </Helmet>
 
       <PageView>
@@ -89,7 +89,7 @@ export default function FriendsPage() {
             </div>
 
             <div className="text-secondary text-sm mt-3 mb-4">
-              You can add a friend with their Comet Tag. It's cAsE sEnSitIvE!
+              You can add a friend with their Starsound Tag. It's cAsE sEnSitIvE!
             </div>
 
             <div className="relative">

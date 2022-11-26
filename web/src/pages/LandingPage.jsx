@@ -37,7 +37,7 @@ export default function LandingPage() {
             <VectorLogo className="h-6 text-secondary" />
 
             <div className="ml-auto space-x-3 inline-flex items-center">
-              <Tippy content="Comet Discord Server">
+              <Tippy content="Starsound Discord Server">
                 <a
                   href="https://discord.gg/NPCMGSm"
                   target="_blank"
@@ -48,9 +48,9 @@ export default function LandingPage() {
                 </a>
               </Tippy>
 
-              <Tippy content="@joincometapp on Twitter">
+              <Tippy content="@proke03app on Twitter">
                 <a
-                  href="https://twitter.com/joincometapp"
+                  href="https://twitter.com/proke03app"
                   target="_blank"
                   rel="noreferrer noopener"
                   className={iconButton}
@@ -59,9 +59,9 @@ export default function LandingPage() {
                 </a>
               </Tippy>
 
-              <Tippy content="Comet on GitHub">
+              <Tippy content="Starsound on GitHub">
                 <a
-                  href="https://github.com/joincomet/comet"
+                  href="https://github.com/proke03/starsound"
                   target="_blank"
                   rel="noreferrer noopener"
                   className={iconButton}
@@ -96,7 +96,7 @@ export default function LandingPage() {
               </h1>
               <p className="text-white text-xl max-w-screen-md">
                 The age of fragmented communities is over. Say goodbye to Reddit
-                and Discord, and run your entire community on Comet.
+                and Discord, and run your entire community on Starsound.
               </p>
               <div className="inline-flex items-center space-x-6">
                 <a
