@@ -2,11 +2,11 @@
   "name": "server",
   "description": "All-in-one chat and forums for communities.",
   "version": "0.0.1",
-  "repository": "https://github.com/agoora",
+  "repository": "https://github.com/starsound",
   "private": true,
   "author": {
-    "name": "Team 3355",
-    "email": "admin@335oh.com"
+    "name": "Team starsound",
+    "email": "admin@starsound.in"
   },
   "engines": {
     "node": "16.x.x"

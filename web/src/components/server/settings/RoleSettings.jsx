@@ -73,7 +73,7 @@ export default function RoleSettings({ server }) {
               plusLabel="Create role"
               onClick={() => setCreateRoleOpen(true)}
             >
-              Roles
+              {t('permissions.roles')}
             </SidebarLabel>
             <div className="space-y-0.5">
               {server.roles.map(role => (
@@ -92,7 +92,7 @@ export default function RoleSettings({ server }) {
           <div className="pt-4 w-full">
             <div className="flex items-center justify-between">
               <div className="text-primary text-base mb-6 font-semibold">
-                Edit Role - {selectedRole.name}
+                {t('permissions.editRole')} - {selectedRole.name}
               </div>
 
               {selectedRole.name !== '@everyone' && (
@@ -119,13 +119,13 @@ export default function RoleSettings({ server }) {
                     })
                   }}
                 >
-                  Delete Role
+                  {t('permissions.deleteRole')}
                 </button>
               )}
             </div>
 
             <div className="mb-6">
-              <label className="label">Name</label>
+              <label className="label">{t('permissions.name')}</label>
               <input
                 className="textbox"
                 placeholder={t('permissions.name')}
@@ -136,7 +136,7 @@ export default function RoleSettings({ server }) {
               />
             </div>
 
-            <div className="label">Color</div>
+            <div className="label">{t('permissions.color')}</div>
             <div className="grid grid-cols-4 gap-3 mb-10">
               {Object.keys(realColors).map(col => (
                 <div
@@ -156,7 +156,7 @@ export default function RoleSettings({ server }) {
                 </div>
               ))}
             </div>
-            <div className="label">Permissions</div>
+            <div className="label">{t('permissions.title')}</div>
             <div className="space-y-0.5 divide-y divide-gray-700">
               {Object.values(ServerPermission).map(permission => (
                 <div key={permission} className="flex w-full py-4 text-base">
@@ -197,7 +197,7 @@ export default function RoleSettings({ server }) {
             madeChanges ? 'translate-y-0' : 'translate-y-24'
           }`}
         >
-          <div className="text-tertiary text-sm">Changes not saved</div>
+          <div className="text-tertiary text-sm">{t('permissions.notSaved')}</div>
           <div className="flex items-center space-x-3 ml-auto">
             <button
               type="button"
@@ -208,7 +208,7 @@ export default function RoleSettings({ server }) {
                 setPermissions(selectedRole.permissions)
               }}
             >
-              Discard Changes
+              {t('permissions.discardChanges')}
             </button>
             <button
               type="button"
@@ -222,7 +222,7 @@ export default function RoleSettings({ server }) {
                 })
               }
             >
-              Save Changes
+              {t('permissions.saveChanges')}
               {updateRoleLoading && (
                 <IconSpinner className="w-5 h-5 text-primary ml-3" />
               )}
@@ -254,11 +254,11 @@ function CreateRoleDialog({
   return (
     <Dialog isOpen={createRoleOpen} close={() => setCreateRoleOpen(false)}>
       <div className="max-w-md w-full rounded-md dark:bg-gray-800 shadow-lg p-4">
-        <div className="text-primary text-2xl font-semibold">Create Role</div>
+        <div className="text-primary text-2xl font-semibold">{t('permissions.createRole')}</div>
 
         <div className="text-left">
           <label htmlFor="name" className="label">
-            Name
+            {t('permissions.name')}
           </label>
           <input
             id="name"
@@ -277,7 +277,7 @@ function CreateRoleDialog({
             type="button"
             onClick={() => setCreateRoleOpen(false)}
           >
-            Cancel
+            {t('permissions.discard')}
           </button>
           <button
             className="save-button"
@@ -293,7 +293,7 @@ function CreateRoleDialog({
               })
             }}
           >
-            Continue
+            {t('permissions.continue')}
             {loading && <IconSpinner className="w-5 h-5 text-primary ml-3" />}
           </button>
         </div>

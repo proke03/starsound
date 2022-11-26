@@ -98,7 +98,8 @@ export default memo(function Message({
                 </span>
               </UserPopup>
             </ContextMenuTrigger>
-            &nbsp;has joined the {message.serverUser ? 'planet' : 'group'}
+            &nbsp;{t('message.playerJoined', { channel: message.serverUser ? 'planet' : 'group' })}
+            {/* &nbsp;has joined the {message.serverUser ? 'planet' : 'group'} */}
             <span className="pl-2 text-11 whitespace-nowrap text-mid cursor-default leading-5 select-none">
               {calendarDate(message.createdAt)}
             </span>

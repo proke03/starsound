@@ -78,7 +78,7 @@ export default function MessageContextMenu({
                   }
                 }
               })
-              toast.error(t('Message deleted!'))
+              toast.error(t('message.context.deleted'))
             }}
           />
         )}

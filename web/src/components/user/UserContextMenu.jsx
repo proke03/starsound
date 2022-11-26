@@ -137,7 +137,8 @@ export default function UserContextMenu({
               label={t('user.context.banUser', { user: user })}
               red
               onClick={() => {
-                const confirmed = window.confirm(`Are you sure you want to ban ${user.username} from +${server.name}?`)
+                // const confirmed = window.confirm(`Are you sure you want to ban ${user.username} from +${server.name}?`)
+                const confirmed = window.confirm(t('user.confirmBan', { userName: user.username, serverName: server.name }))
                 if (!confirmed) return
                 banUser({
                   variables: {
@@ -147,26 +148,30 @@ export default function UserContextMenu({
                     }
                   }
                 })
-                toast.success(`Banned ${user.username} from +${server.name}!`)
+                // toast.success(`Banned ${user.username} from +${server.name}!`)
+                toast.success(t('user.bannedUser', { userName: user.username, serverName: server.name }))
               }}
             />
 
             {currentUser.isAdmin && (
-              <ContextMenuItem label={`Global ban ${user.username}`}
-                               red
-                               onClick={() => {
-                                 const confirmed = window.confirm(`Are you sure you want to global ban ${user.username}?`)
-                                 if (!confirmed) return
-                                 banUser({
-                                   variables: {
-                                     input: {
-                                       serverId: server.id,
-                                       userId: user.id
-                                     }
-                                   }
-                                 })
-                                 toast.success(`Global banned ${user.username}!`)
-                               }}
+              <ContextMenuItem 
+                // label={`Global ban ${user.username}`}
+                label={t('user.globalBan', { userName: user.username })}
+                red
+                onClick={() => {
+                  // const confirmed = window.confirm(`Are you sure you want to global ban ${user.username}?`)
+                  const confirmed = window.confirm(t('user.confirmGlobalBan', { userName: user.username }))
+                  if (!confirmed) return
+                  banUser({
+                    variables: {
+                      input: {
+                        serverId: server.id,
+                        userId: user.id
+                      }
+                    }
+                  })
+                  toast.success(t('user.globalBanSuccess', { userName: user.username, serverName: server.name }))
+                }}
               />
             )}
           </>

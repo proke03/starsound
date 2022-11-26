@@ -27,6 +27,7 @@ export const user = {
     mutualServers: 'Mutual Planets',
     mutualFriends: '맞친구',
     sendMessage: '메시지 보내기',
+    comingSoon: '개발중인 기능입니다!',
   },
   offline: '오프라인',
   online: '온라인',
@@ -47,4 +48,22 @@ export const user = {
   noMutualPlanets: '팔로우한 플래닛이 없어요!',
   newPassword: '새 비밀번호',
   currentPassword: '현재 비밀번호',
+  popup: {
+    viewProfile: '프로필 보기',
+    roles: '역할',
+  },
+  settings: {
+    password:{
+      title: '비밀번호',
+      changeDone: '변경 사항이 저장됐습니다',
+    },
+    deleteAccount: '계정 삭제',
+    confirmDelete: '계정을 삭제하면 복구할 수 없습니다.',
+    cancel: '취소',
+  },
+  confirmBan: '{{username}} 님을 +{{serverName}}에서 추방하시겠습니까?',
+  userBanned: '{{userName}} 님을 +{{serverName}}에서 추방했습니다',
+  globalBan: '글로벌 밴 {{userName}}',
+  confirmGlobalBan: '{{userName}}님을 글로벌 밴 하시겠습니까?',
+  globalBanSuccess: '{{userName}}님을 글로벌 밴 했습니다',
 }

@@ -181,7 +181,7 @@ function DeleteServerDialog({ open, setOpen, server }) {
             type="button"
             onClick={() => setOpen(false)}
           >
-            Cancel
+            {t('server.list.cancel')}
           </button>
           <button
             className="form-button-delete"
@@ -196,7 +196,7 @@ function DeleteServerDialog({ open, setOpen, server }) {
               })
             }}
           >
-            Delete
+            {t('server.list.delete')}
             {loading && <IconSpinner className="w-5 h-5 text-primary ml-3" />}
           </button>
         </>
@@ -204,12 +204,12 @@ function DeleteServerDialog({ open, setOpen, server }) {
     >
       <div className="max-w-md w-full rounded-md dark:bg-gray-800 shadow-lg px-5 pt-5 pb-10">
         <div className="text-red-400 text-lg font-semibold">
-          Delete {server.name}
+          {/* Delete {server.name} */}
+          {t('server.list.deleteServer', { serverName: server.name })}
         </div>
 
         <div className="text-tertiary pb-3 pt-3 text-sm">
-          All posts, comments, and messages will be lost. Enter your password to
-          continue.
+          {t('server.list.delete.confirm')}
         </div>
 
         <div className="relative">

@@ -42,7 +42,7 @@ export default function MessageImageDialog({
                 rel="noreferrer noopener"
                 onClick={e => e.stopPropagation()}
               >
-                Open original
+                {t('message.openOriginal')}
               </a>
             </div>
           </div>

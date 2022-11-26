@@ -6,6 +6,7 @@ import { dm } from './dm'
 import { error } from './error'
 import { explore } from './explore'
 import { folder } from './folder'
+import { identity } from './identity'
 import { inbox } from './inbox'
 import { infinity } from './infinity'
 import { message } from './message'
@@ -32,6 +33,7 @@ export const ko = {
   error,
   explore,
   folder,
+  identity,
   inbox,
   infinity,
   message,

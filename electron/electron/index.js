@@ -23,7 +23,7 @@ if (!isDev) {
   }, 1000 * 60);
 }
 
-app.setAppUserModelId("Comet");
+app.setAppUserModelId("Starsound");
 
 // log.info("App starting...");
 
@@ -124,7 +124,7 @@ app.whenReady().then(() => {
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: "Show Comet",
+      label: "Show Starsound",
       click: function () {
         mainWindow.show();
         mainWindow.send("windowOpened");
@@ -140,7 +140,7 @@ app.whenReady().then(() => {
   ]);
 
   tray = new Tray(join(__dirname, "./resources/tray.png"));
-  tray.setToolTip("Comet");
+  tray.setToolTip("Starsound");
   tray.setContextMenu(contextMenu);
   tray.on("click", () => mainWindow.show());
 });
@@ -168,9 +168,9 @@ async function setActivity() {
   // https://discord.com/developers/applications/<application_id>/rich-presence/assets
   rpc.setActivity({
     details: `Chat and forums for communities.`,
-    state: "joincomet.app",
+    state: "proke03.app",
     largeImageKey: "discord_rich_presence_icon",
-    largeImageText: "Drop Discord and Reddit, join Comet",
+    largeImageText: "Drop Discord and Reddit, join Starsound",
     instance: false,
   });
 }

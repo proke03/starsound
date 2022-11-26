@@ -1,10 +1,20 @@
 import { ServerPermission } from '@/graphql/hooks'
 
 export const permissions = {
+  title: '권한',
+  roles: '역할',
   name: '역할명',
   default: '기본',
   addRole: '역할 추가',
+  createRole: '역할 생성',
   editRole: '역할 수정',
+  deleteRole: '역할 삭제',
+  save: '저장',
+  saveChanges: '변경사항 저장',
+  discard: '취소',
+  discardChanges: '변경 사항 취소',
+  notSaved: '변경 사항이 저장되지 않았습니다',
+  continue: '계속하기',
   color: '색상',
   permissions: '권한',
   server: {

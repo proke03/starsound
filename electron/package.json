@@ -2,11 +2,11 @@
   "name": "electron",
   "description": "All-in-one chat and forums for communities.",
   "version": "0.0.1",
-  "repository": "https://github.com/agoora",
+  "repository": "https://github.com/starsound",
   "private": true,
   "author": {
-    "name": "Team 3355",
-    "email": "admin@335oh.com"
+    "name": "Team starsound",
+    "email": "admin@starsound.in"
   },
   "engines": {
     "node": "16.x.x"
@@ -34,8 +34,8 @@
     "electron-builder": "^22.11.9"
   },
   "build": {
-    "productName": "Comet",
-    "appId": "app.joincomet",
+    "productName": "Starsound",
+    "appId": "app.proke03",
     "asar": true,
     "files": [
       "electron",
@@ -54,8 +54,8 @@
     "publish": [
       {
         "provider": "github",
-        "owner": "joincomet",
-        "repo": "comet",
+        "owner": "proke03",
+        "repo": "starsound",
         "vPrefixedTagName": false
       }
     ],

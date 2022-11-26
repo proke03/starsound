@@ -4,6 +4,7 @@ export const comment = {
   cancelReply: 'Cancel Reply',
   hideReplies: 'Hide Replies',
   showReplies: 'Show Replies',
+  ago: 'ago',
   create: {
     submit: 'Comment',
     cancel: 'Cancel'

@@ -165,7 +165,7 @@ export default function CustomEmbed({ url }) {
     return (
       <div className={containerClass}>
         <iframe
-          src={`https://clips.twitch.tv/embed?clip=${clipId}&parent=localhost&parent=335oh.com`}
+          src={`https://clips.twitch.tv/embed?clip=${clipId}&parent=localhost&parent=starsound.in`}
           frameBorder="0"
           allowFullScreen
           scrolling="no"

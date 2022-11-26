@@ -34,7 +34,7 @@ export default function InfoSidebar() {
             </Link>
 
             <a
-              href="https://github.com/joincomet/comet"
+              href="https://github.com/proke03/starsound"
               target="_blank"
               rel="noopener noreferrer"
               className={linkClass}
@@ -53,7 +53,7 @@ export default function InfoSidebar() {
           </div>
 
           <div className="pt-1.5">
-            &copy; {new Date().getFullYear()} CometX, LLC
+            &copy; {new Date().getFullYear()} StarsoundX, LLC
           </div>
         </div> */}
 

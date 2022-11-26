@@ -5282,28 +5282,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"agoora@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "agoora@workspace:."
-  dependencies:
-    "@graphql-codegen/cli": ^1.21.7
-    "@graphql-codegen/typescript": ^1.23.0
-    "@graphql-codegen/typescript-operations": ^1.18.4
-    "@graphql-codegen/typescript-react-apollo": ^2.3.1
-    "@types/node": ^16.4.0
-    "@typescript-eslint/eslint-plugin": ^4.28.4
-    "@typescript-eslint/parser": ^4.28.4
-    concurrently: ^6.2.0
-    env-cmd: ^10.1.0
-    eslint: ^7.31.0
-    eslint-config-prettier: ^8.3.0
-    eslint-plugin-prettier: ^3.4.0
-    prettier: ^2.3.2
-    rimraf: ^3.0.2
-    ts-invariant: ^0.8.2
-  languageName: unknown
-  linkType: soft
-
 "ajv-formats@npm:^2.1.1":
   version: 2.1.1
   resolution: "ajv-formats@npm:2.1.1"
@@ -16642,6 +16620,28 @@ __metadata:
   checksum: 88bec83ee220687c72d94fd86a98d5272c91d37ec64b66d830dbc0d79b62bfa6e47f53b71646011835fc9ce7fae62739545d13124262b53be4fbb3e2ebad551c
   languageName: node
   linkType: hard
+
+"starsound@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "starsound@workspace:."
+  dependencies:
+    "@graphql-codegen/cli": ^1.21.7
+    "@graphql-codegen/typescript": ^1.23.0
+    "@graphql-codegen/typescript-operations": ^1.18.4
+    "@graphql-codegen/typescript-react-apollo": ^2.3.1
+    "@types/node": ^16.4.0
+    "@typescript-eslint/eslint-plugin": ^4.28.4
+    "@typescript-eslint/parser": ^4.28.4
+    concurrently: ^6.2.0
+    env-cmd: ^10.1.0
+    eslint: ^7.31.0
+    eslint-config-prettier: ^8.3.0
+    eslint-plugin-prettier: ^3.4.0
+    prettier: ^2.3.2
+    rimraf: ^3.0.2
+    ts-invariant: ^0.8.2
+  languageName: unknown
+  linkType: soft
 
 "stat-mode@npm:^1.0.0":
   version: 1.0.0

@@ -1,6 +1,7 @@
 import Popup from '@/components/ui/Popup'
 import UserAvatar from '@/components/user/UserAvatar'
 import { useStore } from '@/hooks/useStore'
+import { useTranslation } from 'react-i18next'
 
 export default function UserPopup({
   user,
@@ -8,6 +9,7 @@ export default function UserPopup({
   children,
   placement = 'right'
 }) {
+  const { t } = useTranslation()
   const setDialogUserId = useStore(s => s.setDialogUserId)
   if (!user) return children
   return (
@@ -34,7 +36,7 @@ export default function UserPopup({
                   }}
                   className="cursor-pointer bg-black bg-opacity-50 transition rounded-full absolute whitespace-nowrap inset-0 flex items-center justify-center text-9 uppercase tracking-widest font-semibold opacity-0 group-hover:opacity-100"
                 >
-                  View Profile
+                  {t('user.popup.viewProfile')}
                 </div>
               </div>
 
@@ -49,7 +51,7 @@ export default function UserPopup({
               {role && (
                 <div>
                   <div className="text-11 font-semibold uppercase tracking-widest text-secondary pb-2">
-                    Roles
+                    {t('user.popup.roles')}
                   </div>
                   <div
                     style={{ borderColor: role.color }}

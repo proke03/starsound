@@ -12,9 +12,9 @@ export default function FolderHeader({ folder }) {
       icon={<IconFolder className="w-5 h-5" />}
     >
       <div className="flex items-center space-x-4">
-        <Tab page="Added">Recently Added</Tab>
-        <Tab page="Top">Top</Tab>
-        <Tab page="New">New</Tab>
+        <Tab page="Added">{t('folder.sort.added')}</Tab>
+        <Tab page="Top">{t('folder.sort.top')}</Tab>
+        <Tab page="New">{t('folder.sort.new')}</Tab>
       </div>
       <div className="ml-auto">
         <ShowFoldersButton />

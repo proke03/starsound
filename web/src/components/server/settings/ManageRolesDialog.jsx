@@ -149,7 +149,7 @@ export default function ManageRolesDialog({ open, setOpen, server }) {
             </div>
           ) : (
             <SidebarItem light onClick={() => setIsAddingRole(true)}>
-              Add Role
+              {t('permissions.addRole')}
               <HiPlus className="w-5 h-5 ml-auto" />
             </SidebarItem>
           )}
@@ -320,7 +320,7 @@ export default function ManageRolesDialog({ open, setOpen, server }) {
                   madeChanges ? '' : ''
                 }`}
               >
-                <div className="text-secondary text-sm">Changes not saved</div>
+                <div className="text-secondary text-sm">{t('permissions.notSaved')}</div>
                 <div className="flex items-center space-x-3 ml-auto">
                   <button
                     type="button"
@@ -331,7 +331,7 @@ export default function ManageRolesDialog({ open, setOpen, server }) {
                       setPermissions(selectedRole.permissions)
                     }}
                   >
-                    Discard
+                    {t('permissions.cancel')}
                   </button>
                   <button
                     type="button"
@@ -350,7 +350,7 @@ export default function ManageRolesDialog({ open, setOpen, server }) {
                       })
                     }
                   >
-                    Save
+                    {t('permissions.save')}
                     {updateRoleLoading && (
                       <IconSpinner className="w-5 h-5 text-primary ml-3" />
                     )}

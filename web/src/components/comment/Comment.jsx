@@ -106,7 +106,7 @@ export default function Comment({
 
               <div className="text-11 text-mid font-medium pl-2 leading-none">
                 {formatDistanceToNowStrict(new Date(comment.createdAt))}
-                &nbsp;ago
+                &nbsp;{t('comment.ago')}
               </div>
             </div>
 

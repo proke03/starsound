@@ -15,8 +15,8 @@ export default defineConfig(({ command }) => ({
         display: 'standalone',
         scope: '/',
         start_url: '/',
-        name: 'Comet',
-        short_name: 'Comet',
+        name: 'Starsound',
+        short_name: 'Starsound',
         icons: [
           {
             src: '/icon-192x192.png',

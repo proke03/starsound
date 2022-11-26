@@ -94,29 +94,29 @@ export async function createAccount(
 
   await em.persistAndFlush(user)
 
-  const cometServer = await em.findOne(
+  const starsoundServer = await em.findOne(
     Server,
     {
-      name: 'Comet',
+      name: 'Starsound',
       isDeleted: false
     }
   )
-  if (cometServer) {
+  if (starsoundServer) {
     const defaultRole = await em.findOneOrFail(Role, {
-      server: cometServer,
+      server: starsoundServer,
       isDefault: true
     })
-    cometServer.userCount++
+    starsoundServer.userCount++
     await em.persistAndFlush([
-      cometServer,
+      starsoundServer,
       em.create(ServerUser, {
         user,
-        server: cometServer,
+        server: starsoundServer,
         status: ServerUserStatus.Joined,
         role: defaultRole
       })
     ])
-    const defaultChannel = await em.findOne(Channel, { server: cometServer, isDefault: true })
+    const defaultChannel = await em.findOne(Channel, { server: starsoundServer, isDefault: true })
     if (defaultChannel) {
       const message = em.create(Message, {
         type: MessageType.Join,

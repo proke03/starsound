@@ -90,6 +90,7 @@ export default function SidebarChannel({ channel, server }) {
 }
 
 function DeleteChannelDialog({ server, channel, open, setOpen }) {
+  const { t } = useTranslation()
   const [deleteChannel, { loading }] = useDeleteChannelMutation()
   const { push } = useHistory()
   const { pathname, hash } = useLocation()
@@ -147,10 +148,10 @@ function DeleteChannelDialog({ server, channel, open, setOpen }) {
     >
       <div className="px-4 pt-4 pb-10">
         <div className="text-lg font-medium text-secondary">
-          Delete <span className="text-primary">#{channel.name}</span>?
+          {t('channel.delete.label')} <span className="text-primary">#{channel.name}</span>?
         </div>
         <div className="text-tertiary pt-3 text-sm">
-          Messages in this channel will be lost.
+          {t('channel.delete.confirm')}
         </div>
       </div>
     </StyledDialog>
