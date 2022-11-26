@@ -11,6 +11,11 @@ export const folder = {
   userFolder: 'User Folder',
   serverFolder: 'Planet Folder',
   collaborative: 'Collaborative',
+  sort: {
+    new: 'New',
+    top: 'Top',
+    added: 'Recently Added',
+  },
   user: {
     title: 'Your Folders',
     create: 'Create Folder'

@@ -11,6 +11,11 @@ export const folder = {
   userFolder: '유저 폴더',
   serverFolder: '행성 폴더',
   collaborative: '협업',
+  sort: {
+    new: 'New',
+    top: 'Top',
+    added: 'Recently Added',
+  },
   user: {
     title: '내 폴더',
     create: '폴더 만들기',
