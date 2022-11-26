@@ -57,7 +57,7 @@ export default function UserSettingsDialog({ open, setOpen }) {
         }
       }
     }).then(() => {
-      toast.success('Saved changes!')
+      toast.success(t('user.settings.password.changeDone'))
       reset()
     })
   }
@@ -192,16 +192,16 @@ function DeleteAccountDialog({ deleteOpen, setDeleteOpen }) {
     <Dialog isOpen={deleteOpen} close={() => setDeleteOpen(false)}>
       <div className="max-w-md w-full rounded-md dark:bg-gray-800 shadow-lg p-4">
         <div className="text-red-400 text-2xl font-semibold">
-          Delete Account
+          {t('user.settings.deleteAccount')}
         </div>
 
         <div className="text-secondary pb-5 pt-3 text-base">
-          You will not be able to recover your account.
+          {t('user.settings.confirmDelete')}
         </div>
 
         <div className="text-left">
           <label htmlFor="confirmPassword" className="label">
-            Password
+            {t('user.settings.password.title')}
           </label>
           <input
             id="confirmPassword"
@@ -219,7 +219,7 @@ function DeleteAccountDialog({ deleteOpen, setDeleteOpen }) {
             type="button"
             onClick={() => setDeleteOpen(false)}
           >
-            Cancel
+            {t('user.settings.cancel')}
           </button>
           <button
             className="form-button-delete"
@@ -231,7 +231,7 @@ function DeleteAccountDialog({ deleteOpen, setDeleteOpen }) {
               })
             }}
           >
-            Delete Account
+            {t('user.settings.deleteAccount')}
             {loading && <IconSpinner className="w-5 h-5 text-primary ml-3" />}
           </button>
         </div>

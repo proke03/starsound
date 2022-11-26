@@ -26,7 +26,8 @@ export const user = {
     receivedFriendRequest: 'Accept Request',
     mutualServers: 'Mutual Planets',
     mutualFriends: 'Mutual Friends',
-    sendMessage: 'Send Message'
+    sendMessage: 'Send Message',
+    comingSoon: 'Improved profile coming soon!',
   },
   offline: 'Offline',
   online: 'Online',
@@ -47,4 +48,22 @@ export const user = {
   noMutualPlanets: 'No mutual planets',
   newPassword: 'New Password',
   currentPassword: 'Current Password',
+  popup: {
+    viewProfile: 'View Profile',
+    roles: 'Roles',
+  },
+  settings: {
+    password:{
+      title: 'Password',
+      changeDone: 'Saved changes',
+    },
+    deleteAccount: 'Delete Account',
+    confirmDelete: 'You will not be able to recover your account.',
+    cancel: 'Cancel',
+  },
+  confirmBan: 'Are you sure you want to ban {{userName}} from +{{serverName}}?',
+  userBanned: 'Banned {{userName}} from +{{serverName}}!',
+  globalBan: 'Global Ban {{userName}}',
+  confirmGlobalBan: 'Are you sure you want to global ban {{userName}}?',
+  globalBanSuccess: 'Global banned {{userName}}!',
 }

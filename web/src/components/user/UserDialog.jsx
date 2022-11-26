@@ -268,7 +268,7 @@ export default memo(function UserDialog() {
                 className={tabClass(currentTab === tab.MutualServers)}
                 onClick={() => setCurrentTab(tab.MutualServers)}
               >
-                <div className="transform translate-y-0.5">Mutual Planets</div>
+                <div className="transform translate-y-0.5">{t('user.profile.mutualServers')}</div>
               </button>
 
               {/*<button
@@ -367,7 +367,7 @@ export default memo(function UserDialog() {
           <div className="h-36 dark:bg-gray-750 rounded-b-lg p-5 flex items-center justify-center">
             <button className="h-0 w-0 overflow-hidden" />
             <div className="text-lg font-medium text-tertiary">
-              Improved profile coming soon!
+              {t('user.profile.comingSoon')}
             </div>
           </div>
         )}
