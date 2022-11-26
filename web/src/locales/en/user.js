@@ -72,4 +72,5 @@ export const user = {
   globalBan: 'Global Ban {{userName}}',
   confirmGlobalBan: 'Are you sure you want to global ban {{userName}}?',
   globalBanSuccess: 'Global banned {{userName}}!',
+  inthisgroup: 'IN THIS GROUP',
 }

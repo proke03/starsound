@@ -72,4 +72,5 @@ export const user = {
   globalBan: '글로벌 밴 {{userName}}',
   confirmGlobalBan: '{{userName}}님을 글로벌 밴 하시겠습니까?',
   globalBanSuccess: '{{userName}}님을 글로벌 밴 했습니다',
+  inthisgroup: '그룹',
 }

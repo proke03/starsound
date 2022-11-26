@@ -9,7 +9,7 @@ export default forwardRef(({ users }, ref) => {
   return (
     <Sidebar right ref={ref} show={showUsers}>
       <div className="px-1.5">
-        <SidebarLabel>IN THIS GROUP</SidebarLabel>
+        <SidebarLabel>{t('user.inthisgroup')}</SidebarLabel>
         {users.map(user => (
           <SidebarUser key={user.id} user={user} />
         ))}
