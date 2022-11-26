@@ -67,7 +67,7 @@ export async function bootstrap() {
     app.use(
       '/graphql', 
       cors({
-      // origin: ['https://335oh.com'],
+      // origin: ['https://starsound.in'],
         origin: ['*'],
       // credentials: true,
       // optionsSuccessStatus: 200 
