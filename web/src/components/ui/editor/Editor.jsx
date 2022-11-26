@@ -24,7 +24,7 @@ import Underline from '@tiptap/extension-underline'
 import { Spoiler } from './Spoiler'
 import { useCallback, useEffect } from 'react'
 
-export default function Editor({ text, setText }) {
+export default function Editor({ text, setText, target }) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -51,6 +51,11 @@ export default function Editor({ text, setText }) {
     if (html === `<p></p>`) setText('')
     else setText(html)
   }, [editor, html, setText])
+
+  useEffect(() => {
+    if(!target) return;
+    editor?.commands.insertContent(target.text)
+  }, [target, editor])
 
   const pasteRegex =
     /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z]{2,}\b(?:[-a-zA-Z0-9@:%._+~#=?!&/]*)(?:[-a-zA-Z0-9@:%._+~#=?!&/]*)/i

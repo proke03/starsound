@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import ctl from '@netlify/classnames-template-literals'
 import Editor from '@/components/ui/editor/Editor'
 import {
@@ -323,7 +323,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
 
           {currentTab === Tab.Text && (
             <div className="pt-5">
-              <Editor text={text} setText={setText} />
+              <Editor text={text} setText={setText} target={postToEdit}/>
             </div>
           )}
 
