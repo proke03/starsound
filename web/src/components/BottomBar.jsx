@@ -147,7 +147,7 @@ export default function BottomBar() {
                     : 'text-tertiary'
                 }`}
               >
-                3355 v{version}
+                {t('identity.name')} v{version}
               </div>
 
               {window.electron && updateAvailable && (
