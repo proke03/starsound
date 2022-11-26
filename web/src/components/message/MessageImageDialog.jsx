@@ -1,5 +1,6 @@
 import Dialog from '@/components/ui/dialog/Dialog'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function MessageImageDialog({
   image,
@@ -7,6 +8,7 @@ export default function MessageImageDialog({
   height,
   rounded = true
 }) {
+  const { t } = useTranslation()
   const [showImagePopup, setShowImagePopup] = useState(false)
 
   return (

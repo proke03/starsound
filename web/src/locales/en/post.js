@@ -48,6 +48,10 @@ export const post = {
   collapse: 'Hide Details',
   feed: {
     title: 'Your Feed',
+    helmetTitle: 'Home – Starsound',
+    joinCreatePlanet: 'Join & Create Planets',
+    postComment: 'Post & Comment',
+    chat: 'Chat',
     refresh: 'Refresh Posts',
     sort: {
       hot: 'Hot',

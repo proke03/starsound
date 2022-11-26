@@ -13,6 +13,7 @@ import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import { MessageType } from '@/graphql/hooks'
 import MessagesStart from '@/components/message/MessagesStart'
 import { format } from 'date-fns'
+import { useTranslation } from 'react-i18next';
 
 export default memo(function Message({
   index,
@@ -23,6 +24,7 @@ export default memo(function Message({
   group,
   user
 }) {
+  const { t } = useTranslation()
   const [currentUser] = useCurrentUser()
   const isMentioned =
     message.isEveryoneMentioned ||

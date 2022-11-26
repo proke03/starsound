@@ -52,7 +52,7 @@ export default function FriendsPage() {
         )}
         {friendsPage === 'All' && (
           <>
-            <div className={label}>All Friends - {friends.length}</div>
+            <div className={label}>{t('user.friends.allFriends')} - {friends.length}</div>
             {friends.map(friend => (
               <FriendListItem friend={friend} key={friend.id} />
             ))}
@@ -61,7 +61,7 @@ export default function FriendsPage() {
         {friendsPage === 'Pending' && (
           <>
             <div className={label}>
-              Pending Requests - {friendRequests.length}
+              {t('user.friends.pendingRequests')} - {friendRequests.length}
             </div>
             {friendRequests.map(user => (
               <FriendRequestListItem
@@ -78,18 +78,18 @@ export default function FriendsPage() {
         )}
         {friendsPage === 'Blocked' && (
           <>
-            <div className={label}>Blocked Users - {blocking.length}</div>
+            <div className={label}>{t('user.friends.blockedUsers')} - {blocking.length}</div>
           </>
         )}
 
         {friendsPage === 'Add Friend' && (
           <div>
             <div className="font-bold uppercase text-base text-primary">
-              Add Friend
+              {t('user.friends.addFriend')}
             </div>
 
             <div className="text-secondary text-sm mt-3 mb-4">
-              You can add a friend with their Starsound Tag. It's cAsE sEnSitIvE!
+              {t('user.friends.addFriendWarning')}
             </div>
 
             <div className="relative">
@@ -104,7 +104,7 @@ export default function FriendsPage() {
                 className="absolute right-4 text-13 text-primary font-medium bg-blue-500 rounded h-8 px-4 top-1/2 transform -translate-y-1/2 disabled:opacity-50"
                 disabled={!username}
               >
-                Send Friend Request
+                {t('user.friends.sendRequest')}
               </button>
             </div>
           </div>
