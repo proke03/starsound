@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import ctl from '@netlify/classnames-template-literals'
 import Editor from '@/components/ui/editor/Editor'
 import {
@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/icons/Icons'
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useCreatePostMutation, useGetLinkMetaQuery } from '@/graphql/hooks'
+import { useCreatePostMutation, useGetLinkMetaQuery, useUpdatePostMutation } from '@/graphql/hooks'
 import Dialog from '@/components/ui/dialog/Dialog'
 import { useForm } from 'react-hook-form'
 import ServerSelect from '@/components/post/create/ServerSelect'
@@ -102,6 +102,7 @@ const Tab = {
 export default function CreatePostDialog({ open, setOpen, serverId }) {
   const [text, setText] = useState('')
   const [createPost, { loading }] = useCreatePostMutation()
+  const [updatePost, { loading: updateLoading }] = useUpdatePostMutation()
   const { t } = useTranslation()
   const { push } = useHistory()
   const [currentUser] = useCurrentUser()
@@ -210,30 +211,74 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   const onSubmit = ({ title, linkUrl }) => {
     if(currentTab === Tab.Link && !linkMeta) return;
 
-    createPost({
-      variables: {
-        input: {
-          title,
-          text: text && currentTab === Tab.Text ? text : null,
-          linkUrl: linkUrl && currentTab === Tab.Link ? linkUrl : null,
-          serverId: server.id,
-          images:
-            images && images.length > 0 && currentTab === Tab.Image
-              ? images.map(({ file, caption, linkUrl }) => ({
-                  file,
-                  caption,
-                  linkUrl
-                }))
-              : null
+    if(!postToEdit){
+      createPost({
+        variables: {
+          input: {
+            title,
+            text: text && currentTab === Tab.Text ? text : null,
+            linkUrl: linkUrl && currentTab === Tab.Link ? linkUrl : null,
+            serverId: server.id,
+            images:
+              images && images.length > 0 && currentTab === Tab.Image
+                ? 
+                  images.map(({ file, caption, linkUrl }) => ({
+                    file,
+                    caption,
+                    linkUrl
+                  }))
+                : null
+          }
         }
-      }
-    }).then(({ data }) => {
-      const post = data?.createPost
-      if (!post) return
-      setOpen(false)
-      reset()
-      push(post.relativeUrl)
-    })
+      }).then(({ data }) => {
+        const post = data?.createPost
+        if (!post) return
+        setOpen(false)
+        reset()
+        push(post.relativeUrl)
+      })
+    }
+    else {
+      updatePost({
+        variables: {
+          input: {
+            postId: postToEdit.id,
+            title,
+            text: text && currentTab === Tab.Text ? text : null,
+            linkUrl: linkUrl && currentTab === Tab.Link ? linkUrl : null,
+            images:
+              images && images.length > 0 && currentTab === Tab.Image
+                ?
+                  images.map(image => {
+                    console.log(image);
+                    let result = image.file?
+                      {
+                        file: image.file,
+                        caption: image.caption,
+                        linkUrl: image.linkUrl,
+                      }
+                      :
+                      {
+                        originalUrl: image.image.originalUrl,
+                        popupUrl: image.image.popupUrl,
+                        smallUrl: image.image.smallUrl,
+                        linkUrl: image.image.linkUrl,
+                        caption: image.image.caption,
+                      }
+                    console.log(result)
+                    return result
+                  })
+                : null
+          }
+        }
+      }).then(({ data }) => {
+        const post = data?.updatePost
+        if (!post) return
+        setOpen(false)
+        reset()
+        push(post.relativeUrl)
+      })
+    }
   }
 
   useLayoutEffect(() => {
@@ -323,7 +368,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
 
           {currentTab === Tab.Text && (
             <div className="pt-5">
-              <Editor text={text} setText={setText} />
+              <Editor text={text} setText={setText} target={postToEdit}/>
             </div>
           )}
 
@@ -409,9 +454,10 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                               className="absolute top-1 right-1 rounded-full bg-black p-0.5 hidden group-hover:block z-10"
                               onClick={() => {
                                 if (selectedImage >= i && selectedImage > 0) {
-                                  setImmediate(() =>
-                                    setSelectedImage(selectedImage - 1)
-                                  )
+                                  // setImmediate(() =>
+                                    // setSelectedImage(selectedImage - 1)
+                                  // )
+                                  setSelectedImage(selectedImage - 1)
                                 }
                                 const newImages = images.slice()
                                 newImages.splice(i, 1)
@@ -422,7 +468,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                             </div>
                             <div className="absolute inset-0 bg-black rounded bg-opacity-0 group-hover:bg-opacity-50" />
                             {
-                              image.hasOwnProperty('data')?
+                              image.file?
                               <div
                                 style={{ backgroundImage: `url(${image.data})` }}
                                 className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
@@ -457,12 +503,20 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
 
                   {images && images?.length > 0 && (
                     <div className="mt-5 flex space-x-5">
-                      <div
-                        className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
-                        style={{
-                          backgroundImage: `url(${images[selectedImage]?.data})`
-                        }}
-                      />
+                      {
+                        images[selectedImage]?.file?
+                          <div
+                            className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                            style={{
+                              backgroundImage: `url(${images[selectedImage]?.data})`
+                            }}
+                          />
+                          :
+                          <img
+                            src={images[selectedImage]?.image.originalUrl}
+                            className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                          />
+                      }
 
                       <div className="space-y-5 max-w-full flex-grow">
                         <div>
@@ -550,7 +604,13 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               <button
                 type="submit"
                 className={postBtnClass}
-                disabled={!formState.isValid || !server || loading || (debouncedLinkUrl && !linkMeta)}
+                disabled={
+                  !formState.isValid || 
+                  !server || 
+                  loading || 
+                  (debouncedLinkUrl && !linkMeta) ||
+                  (currentTab === Tab.Image && images?.length === 0)
+                }
               >
                 {t('post.create.submit')}
                 {loading && (

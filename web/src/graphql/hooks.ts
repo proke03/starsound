@@ -1283,9 +1283,27 @@ export type UpdateMessageInput = {
   text: Scalars['String'];
 };
 
+export type UpdatePostImagesInput = {
+  caption?: Maybe<Scalars['String']>;
+  file?: Maybe<Scalars['Upload']>;
+  linkUrl?: Maybe<Scalars['String']>;
+  originalHeight?: Maybe<Scalars['Float']>;
+  originalUrl?: Maybe<Scalars['String']>;
+  originalWidth?: Maybe<Scalars['Float']>;
+  popupHeight?: Maybe<Scalars['Float']>;
+  popupUrl?: Maybe<Scalars['String']>;
+  popupWidth?: Maybe<Scalars['Float']>;
+  smallHeight?: Maybe<Scalars['Float']>;
+  smallUrl?: Maybe<Scalars['String']>;
+  smallWidth?: Maybe<Scalars['Float']>;
+};
+
 export type UpdatePostInput = {
+  images?: Maybe<Array<UpdatePostImagesInput>>;
+  linkUrl?: Maybe<Scalars['String']>;
   postId: Scalars['ID'];
-  text: Scalars['String'];
+  text?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
 };
 
 export type UpdatePostVoteInput = {
