@@ -6,9 +6,9 @@ import PageView from '@/components/ui/page/PageView'
 import { usePublicServersQuery } from '@/graphql/hooks'
 import EndReached from '@/components/ui/EndReached'
 import { Helmet } from 'react-helmet-async'
-import Header from "@/components/ui/header/Header";
-import {IconExplore} from "@/components/ui/icons/Icons";
-import { useTranslation } from 'react-i18next';
+import Header from "@/components/ui/header/Header"
+import {IconExplore} from "@/components/ui/icons/Icons"
+import { useTranslation } from 'react-i18next'
 
 export default function ExplorePage() {
   const { t } = useTranslation()
@@ -35,7 +35,7 @@ export default function ExplorePage() {
   return (
     <Page leftSidebar={<ExploreSidebar />} header={<Header title={t('explore.title')} icon={<IconExplore className="w-5 h-5" />} />}>
       <Helmet>
-        <title>Explore Planets – Starsound</title>
+        <title>{t('explore.helmetTitle')}</title>
       </Helmet>
       <PageView>
         <div className="md:px-8 md:py-8 px-0 py-0">

@@ -13,6 +13,7 @@ import {createNotification, isNotificationsSupported} from '@/utils/createNotifi
 import InfoSidebar from '@/components/ui/InfoSidebar'
 
 export default function FeedPage() {
+  const { t } = useTranslation()
   const [currentUser] = useCurrentUser()
   useSetHomePage(null)
 
@@ -34,7 +35,7 @@ export default function FeedPage() {
   return (
     <>
       <Helmet>
-        <title>Home – Starsound</title>
+        <title>{t('post.feed.helmetTitle')}</title>
       </Helmet>
 
       <Page
