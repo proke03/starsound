@@ -90,6 +90,7 @@ export default function SidebarChannel({ channel, server }) {
 }
 
 function DeleteChannelDialog({ server, channel, open, setOpen }) {
+  const { t } = useTranslation()
   const [deleteChannel, { loading }] = useDeleteChannelMutation()
   const { push } = useHistory()
   const { pathname, hash } = useLocation()
