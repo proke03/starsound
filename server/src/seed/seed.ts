@@ -48,7 +48,7 @@ export async function seed(em: EntityManager) {
       server: seedServer,
       isDefault: true
     })
-    const cometServerUser = em.create(ServerUser, {
+    const starsoundServerUser = em.create(ServerUser, {
       server: seedServer,
       user: seedUser,
       role: defaultRole
@@ -100,7 +100,7 @@ export async function seed(em: EntityManager) {
       defaultRole,
       announcementsFolder,
       announcementsServerFolder,
-      cometServerUser,
+      starsoundServerUser,
       readLaterFolder,
       readLaterUserFolder,
       favoritesFolder,

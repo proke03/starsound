@@ -39,7 +39,7 @@ export default function ContextMenu({
   const copyToClipboard = useCopyToClipboard()[1]
 
   const url = data?.href ? new URL(data.href) : null
-  const isCometLink = url && url.origin === window.location.origin
+  const isStarsoundLink = url && url.origin === window.location.origin
 
   const os = getOS()
   const isMac = os === 'Mac OS'
@@ -91,7 +91,7 @@ export default function ContextMenu({
         <FolderContextMenu {...props} />
       )}
 
-      {!!data?.href && !isCometLink && (
+      {!!data?.href && !isStarsoundLink && (
         <>
           <ContextMenuDivider />
           <ContextMenuSection>
