@@ -454,9 +454,10 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                               className="absolute top-1 right-1 rounded-full bg-black p-0.5 hidden group-hover:block z-10"
                               onClick={() => {
                                 if (selectedImage >= i && selectedImage > 0) {
-                                  setImmediate(() =>
-                                    setSelectedImage(selectedImage - 1)
-                                  )
+                                  // setImmediate(() =>
+                                    // setSelectedImage(selectedImage - 1)
+                                  // )
+                                  setSelectedImage(selectedImage - 1)
                                 }
                                 const newImages = images.slice()
                                 newImages.splice(i, 1)
@@ -503,7 +504,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   {images && images?.length > 0 && (
                     <div className="mt-5 flex space-x-5">
                       {
-                        images[selectedImage].file?
+                        images[selectedImage]?.file?
                           <div
                             className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
                             style={{
