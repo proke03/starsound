@@ -22,7 +22,7 @@ export default function CreateChannel({ server }) {
     permissions: [ServerPermission.ManageChannels]
   })
 
-  if (!canManageChannels) return <SidebarLabel>Channels</SidebarLabel>
+  if (!canManageChannels) return <SidebarLabel>{t('channel.title')}</SidebarLabel>
 
   return (
     <>

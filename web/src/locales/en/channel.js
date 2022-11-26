@@ -10,6 +10,10 @@ export const channel = {
     alreadyExists: 'Channel already exists',
   },
   edit: 'Edit Channel',
+  delete: {
+    label: 'Delete',
+    confirm: 'Messages in this channel will be lost.',
+  },
   type: {
     public: {
       label: 'Public',

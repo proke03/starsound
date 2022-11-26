@@ -10,6 +10,10 @@ export const channel = {
     alreadyExists: '이미 존재하는 채널입니다',
   },
   edit: '채널 수정',
+  delete: {
+    label: '삭제',
+    confirm: '채널의 메시지가 모두 삭제됩니다.',
+  },
   type: {
     public: {
       label: '공개',
