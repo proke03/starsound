@@ -13,8 +13,12 @@ export const message = {
     pin: 'Pin Message',
     unpin: 'Unpin Message',
     edit: 'Edit Message',
-    delete: 'Delete Message'
+    delete: 'Delete Message',
+    deleted: 'Message Deleted',
   },
   needLogin: `Must log in to send messages`,
   notifications: 'Notifications',
+  playerJoined: 'has joined the {{channel}}',
+  openOriginal: 'Open original',
+  startDm: 'This is the beginning of your direct message history with @{{username}}',
 }

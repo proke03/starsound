@@ -14,8 +14,9 @@ export default function MessagesStart({ user, channel, group }) {
               {user.username}
             </div>
             <div className="pt-2 text-tertiary select-none text-base">
-              This is the beginning of your direct message history with{' '}
-              <span className="font-semibold">@{user.username}</span>
+              {/* This is the beginning of your direct message history with{' '}
+              <span className="font-semibold">@{user.username}</span> */}
+              {t('message.startDm', { username: user.username })}
             </div>
           </>
         )}
