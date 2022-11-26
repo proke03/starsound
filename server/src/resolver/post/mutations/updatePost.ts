@@ -2,7 +2,7 @@ import { Field, ID, InputType, Publisher } from 'type-graphql'
 import { ArrayMaxSize, IsUrl, Length, MaxLength } from 'class-validator'
 import { Context } from '@/types'
 import { ChangePayload, ChangeType } from '@/resolver/subscriptions'
-import { Post, PostImage, Server, User } from '@/entity'
+import { Image, Post, PostImage, Server, User } from '@/entity'
 import { 
   handleText, 
   imageMimeTypes, 
@@ -134,20 +134,20 @@ export async function updatePost(
         })
       }
       else{
-        postImages.push({
-          image: {
-            originalUrl: image.originalUrl,
-            originalWidth: image.originalWidth,
-            originalHeight: image.originalHeight,
-            popupUrl: image.popupUrl,
-            popupWidth: image.popupWidth,
-            popupHeight: image.popupHeight,
-            smallUrl: image.smallUrl,
-            smallWidth: image.smallWidth,
-            smallHeight: image.smallHeight,
-          },
-          linkUrl: image.linkUrl,
-          caption: image.caption
+        post.images.forEach(_image => {
+          if(_image.image.originalUrl === image.originalUrl){
+            postImages.push({
+              image: {
+                originalUrl: image.originalUrl,
+                originalWidth: _image.image.originalWidth,
+                originalHeight: _image.image.originalHeight,
+                popupUrl: image.popupUrl,
+                smallUrl: image.smallUrl,
+              } as Image,
+              linkUrl: image.linkUrl,
+              caption: image.caption
+            })
+          }
         })
       }
     }
