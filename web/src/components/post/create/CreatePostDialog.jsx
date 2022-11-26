@@ -250,7 +250,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               images && images.length > 0 && currentTab === Tab.Image
                 ?
                   images.map(image => {
-                    image.file?
+                    let result = image.file?
                       {
                         file: image.file,
                         caption: image.caption,
@@ -258,10 +258,17 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                       }
                       :
                       {
-                        "image": image.image,
-                        "linkUrl": image.linkUrl,
-                        "caption": image.caption,
+                        originalUrl: image.originalUrl,
+                        popupUrl: image.popupUrl,
+                        popupWidth: image.popupWidth,
+                        popupHeight: image.popupHeight,
+                        smallUrl: image.smallUrl,
+                        smallWidth: image.smallWidth,
+                        smallHeight: image.smallHeight,
+                        linkUrl: image.linkUrl,
+                        caption: image.caption,
                       }
+                    return result
                   })
                 : null
           }

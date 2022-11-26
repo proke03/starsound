@@ -1285,17 +1285,17 @@ export type UpdateMessageInput = {
 
 export type UpdatePostImagesInput = {
   caption?: Maybe<Scalars['String']>;
-  file: Scalars['Upload'];
+  file?: Maybe<Scalars['Upload']>;
   linkUrl?: Maybe<Scalars['String']>;
-  originalHeight: Scalars['Float'];
-  originalUrl: Scalars['String'];
-  originalWidth: Scalars['Float'];
-  popupHeight: Scalars['Float'];
-  popupUrl: Scalars['String'];
-  popupWidth: Scalars['Float'];
-  smallHeight: Scalars['Float'];
-  smallUrl: Scalars['String'];
-  smallWidth: Scalars['Float'];
+  originalHeight?: Maybe<Scalars['Float']>;
+  originalUrl?: Maybe<Scalars['String']>;
+  originalWidth?: Maybe<Scalars['Float']>;
+  popupHeight?: Maybe<Scalars['Float']>;
+  popupUrl?: Maybe<Scalars['String']>;
+  popupWidth?: Maybe<Scalars['Float']>;
+  smallHeight?: Maybe<Scalars['Float']>;
+  smallUrl?: Maybe<Scalars['String']>;
+  smallWidth?: Maybe<Scalars['Float']>;
 };
 
 export type UpdatePostInput = {

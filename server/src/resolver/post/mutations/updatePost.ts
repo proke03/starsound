@@ -14,34 +14,34 @@ import { FileUpload, GraphQLUpload } from 'graphql-upload'
 import mime from 'mime'
 @InputType()
 class UpdatePostImagesInput {
-  @Field(() => GraphQLUpload)
+  @Field(() => GraphQLUpload, { nullable: true })
   file?: FileUpload
 
-  @Field()
+  @Field({ nullable: true })
   originalUrl?: string
 
-  @Field()
+  @Field({ nullable: true })
   originalWidth?: number
 
-  @Field()
+  @Field({ nullable: true })
   originalHeight?: number
 
-  @Field()
+  @Field({ nullable: true })
   popupUrl?: string
 
-  @Field()
+  @Field({ nullable: true })
   popupWidth?: number
 
-  @Field()
+  @Field({ nullable: true })
   popupHeight?: number
 
-  @Field()
+  @Field({ nullable: true })
   smallUrl?: string
 
-  @Field()
+  @Field({ nullable: true })
   smallWidth?: number
 
-  @Field()
+  @Field({ nullable: true })
   smallHeight?: number
 
   @Field({ nullable: true })
@@ -120,6 +120,7 @@ export async function updatePost(
   
   if (images && images.length > 0) {
     for (const image of images) {
+      console.log(image);
       if(image.file){
         const { createReadStream, mimetype } = await image.file
         const ext = mime.getExtension(mimetype)
