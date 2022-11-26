@@ -604,7 +604,13 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               <button
                 type="submit"
                 className={postBtnClass}
-                disabled={!formState.isValid || !server || loading || (debouncedLinkUrl && !linkMeta)}
+                disabled={
+                  !formState.isValid || 
+                  !server || 
+                  loading || 
+                  (debouncedLinkUrl && !linkMeta) ||
+                  (currentTab === Tab.Image && images?.length === 0)
+                }
               >
                 {t('post.create.submit')}
                 {loading && (
