@@ -37,6 +37,12 @@ export const user = {
     revokeRequest: '취소',
     acceptRequest: '수락',
     rejectRequest: '무시',
+    allFriends: '모든 친구',
+    pendingRequests: '미수락 요청',
+    blockedUsers: '차단된 유저',
+    addFriend: '친구 추가',
+    addFriendWarning: "별별소리 태그로 친구를 추가할 수 있습니다. 대소문자를 구분합니다!",
+    sendRequest: '친구 요청 전송',
     tab: {
       online: '온라인',
       all: '전체',

@@ -37,6 +37,12 @@ export const user = {
     revokeRequest: 'Cancel',
     acceptRequest: 'Accept',
     rejectRequest: 'Ignore',
+    allFriends: 'All Friends',
+    pendingRequests: 'Pending Requests',
+    blockedUsers: 'Blocked Users',
+    addFriend: 'Add Friend',
+    addFriendWarning: "You can add a friend with their Starsound Tag. It's cAsE sEnSitIvE!",
+    sendRequest: 'Send Friend Request',
     tab: {
       online: 'Online',
       all: 'All',
