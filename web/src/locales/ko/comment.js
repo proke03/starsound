@@ -4,6 +4,7 @@ export const comment = {
   cancelReply: '댓글 취소',
   hideReplies: '댓글 숨기기',
   showReplies: '댓글 보기',
+  ago: '전',
   create: {
     submit: '작성',
     cancel: '취소'
