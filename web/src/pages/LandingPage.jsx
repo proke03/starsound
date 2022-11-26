@@ -16,12 +16,14 @@ import { getOS } from '@/utils/getOS'
 import Page from '@/components/ui/page/Page'
 import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import { getDownloadLink } from '@/hooks/getDownloadLink'
+import { useTranslation } from 'react-i18next'
 
 const container = 'relative z-10 max-w-screen-lg xl:max-w-screen-xl mx-auto'
 const iconButton =
   'p-3 hover:bg-gray-700 transition rounded-full cursor-pointer'
 
 export default function LandingPage() {
+  const { t } = useTranslation()
   const [currentUser] = useCurrentUser()
 
   const os = getOS()
@@ -91,12 +93,11 @@ export default function LandingPage() {
             <div className="text-center flex flex-col items-center space-y-12">
               <h1 className="inline-flex items-center">
                 <div className="text-5xl text-white font-semibold tracking-tight">
-                  All-in-one chat and forums for communities.
+                  {t('identity.landingPage.subtitle')}
                 </div>
               </h1>
               <p className="text-white text-xl max-w-screen-md">
-                The age of fragmented communities is over. Say goodbye to Reddit
-                and Discord, and run your entire community on Starsound.
+                {t('identity.landingPage.description')}
               </p>
               <div className="inline-flex items-center space-x-6">
                 <a
@@ -105,7 +106,8 @@ export default function LandingPage() {
                   target="_blank"
                   className="bg-blue-500 select-none h-12 px-6 rounded-full inline-flex items-center text-lg text-white transition transform shadow-md hover:-translate-y-0.5 cursor-pointer"
                 >
-                  Download for {os}
+                  {/* Download for {os} */}
+                  {t('identity.landingPage.download', { os: os })}
                   <IconDownload className="w-6 h-6 ml-3" />
                 </a>
 
@@ -113,7 +115,7 @@ export default function LandingPage() {
                   to="/"
                   className="border border-gray-700 select-none h-12 px-6 rounded-full inline-flex items-center text-lg text-white transition transform shadow-md hover:-translate-y-0.5 cursor-pointer"
                 >
-                  Open in Browser
+                  {t('identity.landingPage.openInBrowser')}
                 </Link>
               </div>
             </div>

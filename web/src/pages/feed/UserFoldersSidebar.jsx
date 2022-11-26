@@ -46,19 +46,19 @@ export default function UserFoldersSidebar() {
                 <div className="mr-3 rounded dark:bg-gray-900 p-1.5 flex items-center justify-center shadow-inner">
                   <IconCreateServer className="w-5 h-5 text-green-400" />
                 </div>
-                Join & Create Planets
+                {t('post.feed.joinCreatePlanet')}
               </div>
               <div className="flex items-center text-sm font-medium">
                 <div className="mr-3 rounded dark:bg-gray-900 p-1.5 flex items-center justify-center shadow-inner">
                   <IconCreate className="w-5 h-5 text-blue-400" />
                 </div>
-                Post & Comment
+                {t('post.feed.postComment')}
               </div>
               <div className="flex items-center text-sm font-medium">
                 <div className="mr-3 rounded dark:bg-gray-900 p-1.5 flex items-center justify-center shadow-inner">
                   <IconChat className="w-5 h-5 text-pink-400" />
                 </div>
-                Chat
+                {t('post.feed.chat')}
               </div>
               <div className="flex items-center text-sm font-medium">
                 <div className="mr-3 rounded dark:bg-gray-900 p-1.5 flex items-center justify-center shadow-inner">

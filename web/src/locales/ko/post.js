@@ -48,6 +48,10 @@ export const post = {
   collapse: '세부사항 숨기기',
   feed: {
     title: '피드',
+    helmetTitle: '홈 – 별별소리',
+    joinCreatePlanet: '플래닛에 가입하거나 만들어서 친구들과 소통하세요.',
+    postComment: '댓글과 포스트를 작성하세요.',
+    chat: '채팅',
     refresh: '새로고침',
     sort: {
       hot: 'Hot',
