@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/icons/Icons'
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useCreatePostMutation, useGetLinkMetaQuery } from '@/graphql/hooks'
+import { useCreatePostMutation, useGetLinkMetaQuery, useUpdatePostMutation } from '@/graphql/hooks'
 import Dialog from '@/components/ui/dialog/Dialog'
 import { useForm } from 'react-hook-form'
 import ServerSelect from '@/components/post/create/ServerSelect'
@@ -102,6 +102,7 @@ const Tab = {
 export default function CreatePostDialog({ open, setOpen, serverId }) {
   const [text, setText] = useState('')
   const [createPost, { loading }] = useCreatePostMutation()
+  const [updatePost, { loading: updateLoading }] = useUpdatePostMutation()
   const { t } = useTranslation()
   const { push } = useHistory()
   const [currentUser] = useCurrentUser()
@@ -210,30 +211,69 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   const onSubmit = ({ title, linkUrl }) => {
     if(currentTab === Tab.Link && !linkMeta) return;
 
-    createPost({
-      variables: {
-        input: {
-          title,
-          text: text && currentTab === Tab.Text ? text : null,
-          linkUrl: linkUrl && currentTab === Tab.Link ? linkUrl : null,
-          serverId: server.id,
-          images:
-            images && images.length > 0 && currentTab === Tab.Image
-              ? images.map(({ file, caption, linkUrl }) => ({
-                  file,
-                  caption,
-                  linkUrl
-                }))
-              : null
+    if(!postToEdit){
+      createPost({
+        variables: {
+          input: {
+            title,
+            text: text && currentTab === Tab.Text ? text : null,
+            linkUrl: linkUrl && currentTab === Tab.Link ? linkUrl : null,
+            serverId: server.id,
+            images:
+              images && images.length > 0 && currentTab === Tab.Image
+                ? 
+                  images.map(({ file, caption, linkUrl }) => ({
+                    file,
+                    caption,
+                    linkUrl
+                  }))
+                : null
+          }
         }
-      }
-    }).then(({ data }) => {
-      const post = data?.createPost
-      if (!post) return
-      setOpen(false)
-      reset()
-      push(post.relativeUrl)
-    })
+      }).then(({ data }) => {
+        const post = data?.createPost
+        if (!post) return
+        setOpen(false)
+        reset()
+        push(post.relativeUrl)
+      })
+    }
+    else {
+      updatePost({
+        variables: {
+          input: {
+            postId: postToEdit.id,
+            title,
+            text: text && currentTab === Tab.Text ? text : null,
+            linkUrl: linkUrl && currentTab === Tab.Link ? linkUrl : null,
+            images:
+              images && images.length > 0 && currentTab === Tab.Image
+                ?
+                  images.map(image => {
+                    image.file?
+                      {
+                        file: image.file,
+                        caption: image.caption,
+                        linkUrl: image.linkUrl,
+                      }
+                      :
+                      {
+                        "image": image.image,
+                        "linkUrl": image.linkUrl,
+                        "caption": image.caption,
+                      }
+                  })
+                : null
+          }
+        }
+      }).then(({ data }) => {
+        const post = data?.updatePost
+        if (!post) return
+        setOpen(false)
+        reset()
+        push(post.relativeUrl)
+      })
+    }
   }
 
   useLayoutEffect(() => {

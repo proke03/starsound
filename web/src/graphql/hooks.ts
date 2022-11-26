@@ -1283,9 +1283,27 @@ export type UpdateMessageInput = {
   text: Scalars['String'];
 };
 
+export type UpdatePostImagesInput = {
+  caption?: Maybe<Scalars['String']>;
+  file: Scalars['Upload'];
+  linkUrl?: Maybe<Scalars['String']>;
+  originalHeight: Scalars['Float'];
+  originalUrl: Scalars['String'];
+  originalWidth: Scalars['Float'];
+  popupHeight: Scalars['Float'];
+  popupUrl: Scalars['String'];
+  popupWidth: Scalars['Float'];
+  smallHeight: Scalars['Float'];
+  smallUrl: Scalars['String'];
+  smallWidth: Scalars['Float'];
+};
+
 export type UpdatePostInput = {
+  images?: Maybe<Array<UpdatePostImagesInput>>;
+  linkUrl?: Maybe<Scalars['String']>;
   postId: Scalars['ID'];
   text: Scalars['String'];
+  title: Scalars['String'];
 };
 
 export type UpdatePostVoteInput = {

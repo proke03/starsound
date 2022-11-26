@@ -18,7 +18,6 @@ import {
 } from '@/util'
 import { ChangePayload, ChangeType } from '@/resolver/subscriptions'
 import mime from 'mime'
-import isURL from 'validator/lib/isURL'
 
 @InputType()
 export class CreatePostInput {
