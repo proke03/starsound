@@ -68,9 +68,10 @@ export class UpdatePostInput {
   @IsUrl()
   linkUrl?: string
 
+  @Field({ nullable: true })
   @Field()
   @Length(1, 100000)
-  text: string
+  text?: string
 
   @Field(() => [UpdatePostImagesInput], { nullable: true })
   @ArrayMaxSize(20, { message: 'Cannot upload more than 20 images' })

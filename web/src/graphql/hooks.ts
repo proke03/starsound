@@ -1302,7 +1302,7 @@ export type UpdatePostInput = {
   images?: Maybe<Array<UpdatePostImagesInput>>;
   linkUrl?: Maybe<Scalars['String']>;
   postId: Scalars['ID'];
-  text: Scalars['String'];
+  text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
 };
 
