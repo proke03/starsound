@@ -54,7 +54,7 @@ export default function Editor({ text, setText, target }) {
 
   useEffect(() => {
     if(!target) return;
-    editor?.commands.insertContent(target.text)
+    editor?.commands.setContent(target.text)
   }, [target, editor])
 
   const pasteRegex =
