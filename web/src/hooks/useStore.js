@@ -65,4 +65,7 @@ export const useStore = create((set, get) => ({
 
   commentToEdit: null,
   setCommentToEdit: commentToEdit => set({commentToEdit}),
+
+  joinedServers: [],
+  setJoinedServers: joinedServers => set({joinedServers}),
 }))
