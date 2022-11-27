@@ -23,10 +23,19 @@ export default function CommentContextMenu({ comment, post, ContextMenuItem }) {
 
   const isAuthor = !!comment.author && !!currentUser && comment.author.id === currentUser.id
   const canDelete = canManageComments || isAuthor
+
+  const { setCommentToEdit } = useStore(state => state)
+
+  const [] = useStore
   return (
     <>
       <ContextMenuSection>
-        {isAuthor && <ContextMenuItem label={t('comment.context.edit')} />}
+        {isAuthor && 
+          <ContextMenuItem 
+            onClick={() => setCommentToEdit(comment)}
+            label={t('comment.context.edit')}
+          />
+        }
         {/*{canManageComments && (
           <ContextMenuItem
             label={

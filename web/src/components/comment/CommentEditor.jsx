@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import ctl from '@netlify/classnames-template-literals'
 import Editor from '@/components/ui/editor/Editor'
 import { IconSpinner } from '@/components/ui/icons/Icons'
@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next'
 import {
   CommentsDocument,
   CurrentUserDocument,
-  useCreateCommentMutation
+  useCreateCommentMutation,
+  useUpdateCommentMutation,
 } from '@/graphql/hooks'
 
 const commentBtnClass = ctl(`
@@ -34,7 +35,7 @@ const cancelBtnClass = ctl(`
   items-center
 `)
 
-export default function CommentEditor({ postId, parentCommentId, setOpen }) {
+export default function CommentEditor({ postId, parentCommentId, setOpen, target }) {
   const [text, setText] = useState('')
   const [createComment, { loading }] = useCreateCommentMutation({
     update(cache, { data: { createComment } }) {
@@ -51,11 +52,13 @@ export default function CommentEditor({ postId, parentCommentId, setOpen }) {
       })
     }
   })
+
+  const [updateComment, { loading: updateLoading }] = useUpdateCommentMutation()
   const { t } = useTranslation()
 
   return (
     <div className="w-full break-words overflow-hidden">
-      <Editor text={text} setText={setText} />
+      <Editor text={text} setText={setText} target={target}/>
       <div className="flex justify-end space-x-3 items-center pt-3">
         <button
           className={cancelBtnClass}
@@ -70,12 +73,22 @@ export default function CommentEditor({ postId, parentCommentId, setOpen }) {
           className={commentBtnClass}
           disabled={!text || loading}
           onClick={() => {
-            createComment({
-              variables: { input: { postId, text, parentCommentId } }
-            }).then(() => {
-              setOpen(false)
-              setText('')
-            })
+            if(!target){
+              createComment({
+                variables: { input: { postId, text, parentCommentId } }
+              }).then(() => {
+                setOpen(false)
+                setText('')
+              })
+            }
+            else{
+              updateComment({
+                variables: { input: { commentId: target.id, text } }
+              }).then(() => {
+                setOpen(false)
+                setText('')
+              })
+            }
           }}
         >
           {t('comment.create.submit')}
