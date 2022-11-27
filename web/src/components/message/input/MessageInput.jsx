@@ -272,6 +272,7 @@ export default function MessageInput({ channel, server, group, user, users }) {
 
   const pasteListener = useCallback(
     e => {
+      if(!editor?.isFocused) return
       if (!canSendMessage) return
       const files = e.clipboardData.files
       e.preventDefault()
@@ -287,7 +288,7 @@ export default function MessageInput({ channel, server, group, user, users }) {
           } else {
             editor?.commands.insertContent(plain)
           }
-          editor?.commands.focus()
+          // editor?.commands.focus()
         }
       }
     },
@@ -305,6 +306,7 @@ export default function MessageInput({ channel, server, group, user, users }) {
 
   const keypressListener = useCallback(
     e => {
+      if(!editor?.isFocused) return
       if (!canSendMessage) return
       const currentTime = new Date().getTime()
       if (lastKeypressAt) {
@@ -315,7 +317,7 @@ export default function MessageInput({ channel, server, group, user, users }) {
       } else {
         setLastKeypressAt(currentTime)
       }
-      editor?.commands.focus()
+      // editor?.commands.focus()
     },
     [editor]
   )
