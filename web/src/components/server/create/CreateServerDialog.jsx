@@ -207,7 +207,8 @@ export default function CreateServerDialog({ open, setOpen, server }) {
         }`}
         style={bannerSrc ? { backgroundImage: `url(${bannerSrc})` } : {}}
       >
-        <div className="rounded-t-lg absolute inset-0 transition bg-black opacity-0 group-hover:opacity-50 flex items-center justify-center">
+        {/* <div className="rounded-t-lg absolute inset-0 transition bg-black opacity-0 group-hover:opacity-50 flex items-center justify-center"> */}
+        <div className="rounded-t-lg absolute inset-0 transition bg-black opacity-20 group-hover:opacity-50 flex items-center justify-center">
           <IconEdit className="w-10 h-10" />
         </div>
       </label>
@@ -230,7 +231,8 @@ export default function CreateServerDialog({ open, setOpen, server }) {
             {initials}
           </div>
         )}
-        <div className="absolute rounded-3xl inset-0 transition bg-black opacity-0 group-hover:opacity-50 flex items-center justify-center">
+        {/* <div className="absolute rounded-3xl inset-0 transition bg-black opacity-0 group-hover:opacity-50 flex items-center justify-center"> */}
+        <div className="absolute rounded-3xl inset-0 transition bg-black opacity-20 group-hover:opacity-50 flex items-center justify-center">
           <IconEdit className="w-10 h-10" />
         </div>
       </label>
