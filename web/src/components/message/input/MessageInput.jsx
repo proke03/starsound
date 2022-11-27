@@ -379,7 +379,7 @@ export default function MessageInput({ channel, server, group, user, users }) {
       <div className="px-4 dark:bg-gray-750 bg-white relative">
         <div className="relative">
           {canSendMessage && (
-            <Tippy content={t('message.upload')}>
+            <Tippy content={t('message.upload.file')}>
               <div className="block absolute left-4.5 top-1/2 transform -translate-y-1/2">
                 <input
                   className="hidden"

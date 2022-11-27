@@ -52,7 +52,7 @@ export default function ServerInfoCard({
           </div>
 
           <div className="text-13 text-tertiary line-clamp-3 pt-1">
-            {server?.description || 'No description'}
+            {server?.description || t('server.noDescription')}
           </div>
 
           <div className="flex mt-auto text-xs">
@@ -65,7 +65,8 @@ export default function ServerInfoCard({
 
             <div className="ml-auto inline-flex items-center">
               <CategoryIcon className="w-4 h-4 text-tertiary" />
-              <div className="ml-2 text-tertiary">{server.category}</div>
+              {/* <div className="ml-2 text-tertiary">{server.category}</div> */}
+              <div className="ml-2 text-tertiary">{t(`category.${server.category}`)}</div>
             </div>
           </div>
         </div>

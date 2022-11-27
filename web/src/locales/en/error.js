@@ -1,6 +1,6 @@
 export const error = {
   entityNotFound: '{{replace}} not found!',
-  invalidUserAuth: `'USER' authorization can only be used on User entity`,
+  invalidUserAuth: "'USER' authorization can only be used on User entity",
   notLoggedIn: 'Not logged in',
   fileSize: 'File size must be less than {{replace}}MB',
   channelPermissions:

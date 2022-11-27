@@ -1,7 +1,14 @@
 export const message = {
   message: 'Message',
   pinned: 'Pinned Messages',
-  upload: 'Upload a File',
+  upload: {
+    upload: 'Upload',
+    cancel: 'Cencel',
+    to: 'Upload to',
+    file: 'Upload a File',
+    comment: 'Add a Comment',
+    cancelAll: 'Cancel All',
+  },
   typing: {
     one: '{{name}} is typing...',
     two: '{{name1}} and {{name2}} are typing...',

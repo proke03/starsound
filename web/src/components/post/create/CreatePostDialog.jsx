@@ -106,10 +106,9 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   const { t } = useTranslation()
   const { push } = useHistory()
   const [currentUser] = useCurrentUser()
-  // const servers = currentUser?.servers ?? []
-  const { joinedServers } = useStore(state => state)
+  const servers = currentUser?.servers ?? []
   const [server, setServer] = useState(
-    serverId ? joinedServers?.find(s => s.id === serverId) : null
+    serverId ? servers?.find(s => s.id === serverId) : null
   )
   const [currentTab, setCurrentTab] = useState(Tab.Text)
   const { register, handleSubmit, reset, formState, watch, setValue, trigger } =
@@ -123,7 +122,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
     500,
     [linkUrl]
   )
-
   const title = watch('title')
   const { data: linkMetaData, loading: loadingMeta } = useGetLinkMetaQuery({
     variables: {
@@ -172,7 +170,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       )
     }
   }
-
   const onAddImages = e => {
     const files = e.target.files
     if (files && files.length > 0) {
@@ -197,7 +194,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       })
     }
   }
-
   const [selectedImage, setSelectedImage] = useState(0)
   const { postToEdit, setPostToEdit } = useStore(state => state)
 
@@ -314,7 +310,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       >
         <div className="grid grid-cols-4">
           <ServerSelect
-            servers={joinedServers}
+            servers={servers}
             server={server}
             setServer={setServer}
           />

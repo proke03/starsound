@@ -1,6 +1,6 @@
 export const error = {
   entityNotFound: '{{replace}} 를 찾을 수 없어요!',
-  invalidUserAuth: `'USER' authorization can only be used on User entity`,
+  invalidUserAuth: "'USER' authorization can only be used on User entity",
   notLoggedIn: '로그인이 필요합니다.',
   fileSize: '파일 사이즈는 {{replace}}MB 이하여야 해요.',
   channelPermissions:

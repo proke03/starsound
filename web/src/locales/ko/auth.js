@@ -15,6 +15,8 @@ export const auth = {
     invalidEmail: '유효하지 않은 이메일입니다.',
     passwordLimit: '비밀번호는 최소 6자 이상이어야 합니다',
     passwordMatch: '비밀번호가 일치하지 않습니다',
+    showPassword: '비밀번호 보기',
+    hidePassword: '비밀번호 숨기기',
   },
   welcomeBack: '돌아오신 걸 환영합니다!',
   name: '이름',

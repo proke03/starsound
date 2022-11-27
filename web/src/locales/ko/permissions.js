@@ -21,12 +21,12 @@ export const permissions = {
     // General
     [ServerPermission.ManageChannels]: {
       title: '채널 관리',
-      description: '멤버에게 채널을 만들고 수정하고 삭제할 수 있는 권한을 부여해요.',
+      description: '멤버에게 채널을 만들고 수정하고 삭제할 수 있는 권한을 부여합니다.',
     },
     [ServerPermission.ManageServer]: {
       title: '역할 관리',
       description:
-        '멤버에게 새 역할을 만들고 자신의 최고 역할보다 낮은 역할을 수정하고 삭제할 수 있는 권한을 부여해요. 또한 멤버에게 자신이 접근할 수 있는 개별 채널의 권한을 변경할 수 있는 권한을 부여해요.',
+        '멤버에게 새 역할을 만들고 자신의 최고 역할보다 낮은 역할을 수정하고 삭제할 수 있는 권한을 부여합니다. 또한 멤버에게 자신이 접근할 수 있는 개별 채널의 권한을 변경할 수 있는 권한을 부여합니다.',
     },
     [ServerPermission.ManageServer]: {
       title: '행성 관리',

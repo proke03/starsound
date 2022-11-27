@@ -5,6 +5,7 @@ import DialogTitle from '@/components/ui/dialog/DialogTitle'
 import { IconSpinner } from '@/components/ui/icons/IconSpinner'
 import ctl from '@netlify/classnames-template-literals'
 import { useFileIcon } from '@/hooks/useFileIcon'
+import { useTranslation } from 'react-i18next'
 
 const cancelBtnClass = ctl(`
   text-sm
@@ -46,6 +47,7 @@ export default function MessageUploadDialog({
   multiple,
   cancelAll
 }) {
+  const { t } = useTranslation()
   const [text, setText] = useState('')
   const imgSrc = useDataUrl(file)
   const [sending, setSending] = useState(false)
@@ -108,7 +110,7 @@ export default function MessageUploadDialog({
           </DialogTitle>
 
           <div className="text-tertiary text-13 pb-5 pt-0.5 select-none">
-            Upload to{' '}
+            {t('message.upload.to')}{' '}
             <span className="font-medium text-secondary">{placeholder}</span>
           </div>
 
@@ -116,7 +118,7 @@ export default function MessageUploadDialog({
             htmlFor="comment"
             className="block uppercase text-xs font-medium text-secondary pb-1.5"
           >
-            Add a Comment <span className="text-tertiary">(Optional)</span>
+            {t('message.upload.comment')} <span className="text-tertiary">(Optional)</span>
           </label>
           <input
             className="h-10 rounded-lg dark:bg-gray-700 w-full focus:outline-none px-4 text-secondary text-base"
@@ -139,19 +141,19 @@ export default function MessageUploadDialog({
               }}
               disabled={sending}
             >
-              Cancel All
+              {t('message.upload.cancelAll')}
             </button>
           )}
 
           <button className={cancelBtnClass} onClick={close} disabled={sending}>
-            Cancel
+            {t('message.upload.cancel')}
           </button>
           <button
             className={uploadBtnClass}
             disabled={!file || sending}
             onClick={send}
           >
-            Upload
+            {t('message.upload.upload')}
             {sending && (
               <div className="ml-3">
                 <IconSpinner />
