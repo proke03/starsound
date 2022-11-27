@@ -181,6 +181,7 @@ export default function UserSettingsDialog({ open, setOpen }) {
 }
 
 function DeleteAccountDialog({ deleteOpen, setDeleteOpen }) {
+  const { t } = useTranslation()
   const [password, setPassword] = useState('')
   const [deleteAccount, { loading }] = useDeleteAccountMutation()
   const logout = () => {
