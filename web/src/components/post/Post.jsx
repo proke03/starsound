@@ -259,7 +259,7 @@ export default memo(function Post({
             </div>
           </div>
 
-          <div className="text-secondary font-medium text-base">
+          <div className="text-secondary font-bold text-xl">
             {post.title}
           </div>
 
