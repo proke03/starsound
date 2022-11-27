@@ -97,9 +97,6 @@ export default function Messages({ channel, server, user, group, users }) {
           }
         }
       })
-      .then(res => {
-        console.log(res.data)
-      });
     }
   }, [channel?.id, group?.id, user?.id, currentUser?.id, messages?.length])
 
@@ -107,7 +104,6 @@ export default function Messages({ channel, server, user, group, users }) {
     <div className="flex flex-col h-full">
       {!!messages && (
         <Virtuoso
-          onClick={console.log("virtuoso")}
           className="scrollbar-custom dark:bg-gray-750 bg-white"
           alignToBottom
           atBottomStateChange={isAtBottom => {
@@ -134,7 +130,6 @@ export default function Messages({ channel, server, user, group, users }) {
           overscan={0}
           ref={virtuoso}
           startReached={() => {
-            console.log(!fetching, hasMore)
             if (!fetching && hasMore) fetchMore()
           }}
           style={{ overflowX: 'hidden' }}
