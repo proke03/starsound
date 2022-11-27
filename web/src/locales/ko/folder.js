@@ -3,7 +3,7 @@ export const folder = {
   show: '폴더 보이기',
   favorites: '즐겨찾기',
   readLater: '나중에 보기',
-  added: '{{name}}에 추가했어요!',
+  added: '{{name}}에 추가했습니다!',
   name: '이름',
   postCount: '포스트 {{count}}개',
   postCount_plural: '포스트 {{count}}개',

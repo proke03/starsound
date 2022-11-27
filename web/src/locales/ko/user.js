@@ -51,7 +51,7 @@ export const user = {
       add: '친구 추가'
     }
   },
-  noMutualPlanets: '팔로우한 플래닛이 없어요!',
+  noMutualPlanets: '팔로우한 플래닛이 없습니다!',
   newPassword: '새 비밀번호',
   currentPassword: '현재 비밀번호',
   popup: {

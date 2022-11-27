@@ -1,5 +1,5 @@
 export const comment = {
-  noPermission: '댓글을 볼 권한이 없어요.',
+  noPermission: '댓글을 볼 권한이 없습니다.',
   reply: '댓글 달기',
   cancelReply: '댓글 취소',
   hideReplies: '댓글 숨기기',
@@ -15,7 +15,7 @@ export const comment = {
     reply: '댓글 달기',
     vote: '추천',
     unvote: '추천 취소',
-    votePermission: '해당 행성의 댓글을 추천할 수 없어요.',
+    votePermission: '해당 행성의 댓글을 추천할 수 없습니다.',
     pin: '댓글 고정',
     unpin: '댓글 고정 해제',
     edit: '댓글 수정',
