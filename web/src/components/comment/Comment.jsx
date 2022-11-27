@@ -77,7 +77,7 @@ export default function Comment({
           </ContextMenuTrigger>
 
           <div
-            className={`pl-3 pb-3 w-full ${
+            className={`pl-3 pb-3 max-w-max w-full break-words overflow-hidden ${
               !!comment.childCount && !collapse
                 ? 'border-b dark:border-gray-750'
                 : ''
@@ -111,7 +111,7 @@ export default function Comment({
             </div>
 
             <div
-              className="prose prose-sm dark:prose-dark max-w-none"
+              className="prose prose-sm dark:prose-dark max-w-max w-full break-words overflow-hidden"
               dangerouslySetInnerHTML={{ __html: comment.text }}
             />
 

@@ -272,7 +272,7 @@ export default memo(function Post({
                     dangerouslySetInnerHTML={{ __html: post.text }}
                     // className="prose prose-sm dark:prose-dark max-w-none pt-0.5"
                     // className="prose prose-sm dark:prose-dark pt-0.5 break-words"
-                    className="prose prose-sm dark:prose-dark pt-0.5 max-w-max w-full break-words"
+                    className="prose prose-sm dark:prose-dark pt-0.5 max-w-max w-full break-words overflow-hidden"
                   />
                 )}
 
