@@ -4,7 +4,7 @@ export function VectorLogo({ className }) {
   const [id] = useState(new Date().getTime().toString())
   return (
     <svg className={className} 
-    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="231" zoomAndPan="magnify" viewBox="0 0 173.25 56.999997" height="76" preserveAspectRatio="xMidYMid meet" version="1.0">
+    xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="231" zoomAndPan="magnify" viewBox="0 0 173.25 56.999997" height="76" preserveAspectRatio="xMidYMid meet" version="1.0">
       <defs>
         <g />
       </defs>

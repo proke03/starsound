@@ -209,7 +209,7 @@ function DeleteServerDialog({ open, setOpen, server }) {
         </div>
 
         <div className="text-tertiary pb-3 pt-3 text-sm">
-          {t('server.list.delete.confirm')}
+          {t('server.list.confirm')}
         </div>
 
         <div className="relative">
