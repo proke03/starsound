@@ -62,6 +62,7 @@ export default function Editor({ text, setText, target }) {
 
   const pasteListener = useCallback(
     e => {
+      if(!editor?.isFocused) return;
       const plain = e.clipboardData?.getData('text/plain')
       if (plain) {
         if (pasteRegex.test(plain)) {
@@ -71,7 +72,7 @@ export default function Editor({ text, setText, target }) {
         } else {
           editor?.commands.insertContent(plain)
         }
-        editor?.commands.focus()
+        // editor?.commands.focus()
       }
     },
     [editor]
