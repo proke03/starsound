@@ -15,7 +15,7 @@ import {
   useJoinServerMutation,
   useLeaveServerMutation
 } from '@/graphql/hooks'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useHasServerPermissions } from '@/hooks/useHasServerPermissions'
 import CreateServerDialog from '@/components/server/create/CreateServerDialog'
 import { VectorLogo } from '@/components/ui/vectors'
@@ -26,7 +26,6 @@ import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import { useCurrentServer } from '@/hooks/graphql/useCurrentServer'
 import ManageRolesDialog from '@/components/server/settings/ManageRolesDialog'
 import { useTranslation } from 'react-i18next'
-import { useStore } from '@/hooks/useStore'
 
 const joinButtonClass = (isJoined, loading) =>
   ctl(`
@@ -62,12 +61,6 @@ export default function ServerSidebar() {
   const [leaveServer, { loading: leaveLoading }] = useLeaveServerMutation()
 
   const CategoryIcon = getCategoryIcon(server?.category)
-
-  const { joinedServers, setJoinedServers } = useStore(state => state)
-  useEffect(() => {
-    if(!currentUser) return
-    setJoinedServers(currentUser.servers)
-  }, [])
 
   if (!server) return null
   return (
@@ -130,15 +123,9 @@ export default function ServerSidebar() {
                       leaveServer({
                         variables: { input: { serverId: server.id } }
                       })
-                      .then(() => {
-                        setJoinedServers(joinedServers.filter(s => s.id !== server.id))
-                      })
                     } else {
                       joinServer({
                         variables: { input: { serverId: server.id } }
-                      })
-                      .then(() => {
-                        setJoinedServers([...joinedServers, server])
                       })
                     }
                   }}
