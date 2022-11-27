@@ -24,11 +24,12 @@ export default function Messages({ channel, server, user, group, users }) {
     group: group?.id
   })
 
-  const [length, setLength] = useState(messages?.length || 0)
+  // const [length, setLength] = useState(messages?.length || 0)
   useEffect(() => {
-    setLength(messages?.length || 0)
-    virtuoso?.current?.scrollToIndex(length + PREPEND_OFFSET)
-  }, [channel, user, group, virtuoso])
+    // setLength(messages?.length || 0)
+    // virtuoso?.current?.scrollToIndex(length + PREPEND_OFFSET)
+    virtuoso?.current?.scrollToIndex(messages?.length + PREPEND_OFFSET)
+  }, [channel, user, group, virtuoso, messages?.length])
 
   const { atBottom, newMessagesNotification, setNewMessagesNotification } =
     useNewMessageNotification(messages)
@@ -39,13 +40,10 @@ export default function Messages({ channel, server, user, group, users }) {
   const messageRenderer = useCallback(
     (messageList, virtuosoIndex) => {
       const messageIndex = virtuosoIndex + numItemsPrepended - PREPEND_OFFSET
-
       const message = messageList[messageIndex]
       const prevMessage =
         messageIndex > 0 ? messageList[messageIndex - 1] : null
-
       if (!message) return <div style={{ height: '1px' }} /> // returning null or zero height breaks the virtuoso
-
       return (
         <Message
           server={server}
@@ -89,7 +87,7 @@ export default function Messages({ channel, server, user, group, users }) {
           }
         }
       })
-    else if (user)
+    else if (user){
       readDm({
         variables: { input: { userId: user.id } },
         optimisticResponse: {
@@ -99,12 +97,17 @@ export default function Messages({ channel, server, user, group, users }) {
           }
         }
       })
+      .then(res => {
+        console.log(res.data)
+      });
+    }
   }, [channel?.id, group?.id, user?.id, currentUser?.id, messages?.length])
 
   return (
     <div className="flex flex-col h-full">
       {!!messages && (
         <Virtuoso
+          onClick={console.log("virtuoso")}
           className="scrollbar-custom dark:bg-gray-750 bg-white"
           alignToBottom
           atBottomStateChange={isAtBottom => {
@@ -131,6 +134,7 @@ export default function Messages({ channel, server, user, group, users }) {
           overscan={0}
           ref={virtuoso}
           startReached={() => {
+            console.log(!fetching, hasMore)
             if (!fetching && hasMore) fetchMore()
           }}
           style={{ overflowX: 'hidden' }}
