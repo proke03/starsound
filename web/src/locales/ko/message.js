@@ -1,7 +1,14 @@
 export const message = {
   message: '메시지',
   pinned: '고정된 메시지',
-  upload: '파일 업로드',
+  upload: {
+    upload: '업로드',
+    cancel: '취소',
+    to: 'Upload to',
+    file: '파일 업로드',
+    comment: '코멘트 추가',
+    cancelAll: '모두 취소',
+  },
   typing: {
     one: '{{name}} 님이 입력 중입니다',
     two: '{{name1}}, {{name2}} 님이 입력 중입니다',

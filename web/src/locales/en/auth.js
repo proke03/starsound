@@ -15,6 +15,8 @@ export const auth = {
     invalidEmail: 'Invalid email',
     passwordLimit: 'Password must be at least 6 characters',
     passwordMatch: 'Passwords do not match',
+    showPassword: 'Show Password',
+    hidePassword: 'Hide Password',
   },
   welcomeBack: 'Welcome Back!',
   name: 'Name',
