@@ -68,7 +68,11 @@ export default function Comment({
                 <UserAvatar user={currentUser} size={7} />
               </div>
 
-              <CommentEditor postId={post.id} setOpen={() => {setCommentToEdit(null)}} />
+              <CommentEditor 
+                postId={post.id} 
+                setOpen={() => {setCommentToEdit(null)}}
+                target={commentToEdit}
+              />
             </div>
             :
             <div className="flex px-3 pt-3">
