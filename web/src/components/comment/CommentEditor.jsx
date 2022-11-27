@@ -54,7 +54,7 @@ export default function CommentEditor({ postId, parentCommentId, setOpen }) {
   const { t } = useTranslation()
 
   return (
-    <div className="max-w-screen-md w-full">
+    <div className="w-full break-words overflow-hidden">
       <Editor text={text} setText={setText} />
       <div className="flex justify-end space-x-3 items-center pt-3">
         <button
