@@ -502,11 +502,11 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   </div>
 
                   {images && images?.length > 0 && (
-                    <div className="mt-5 flex space-x-5">
+                    <div className="mt-5 flex flex-col sm:flex-row sm:space-x-5">
                       {
                         images[selectedImage]?.file?
                           <div
-                            className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                            className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
                             style={{
                               backgroundImage: `url(${images[selectedImage]?.data})`
                             }}
@@ -518,7 +518,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                           />
                       }
 
-                      <div className="space-y-5 max-w-full flex-grow">
+                      <div className="mt-5 sm:mt-0 space-y-5 max-w-full flex-grow">
                         <div>
                           <label htmlFor="caption" className={labelClass}>
                             {t('post.create.caption')}
