@@ -4,11 +4,12 @@ import { Context } from '@/types'
 import { User } from '@/entity'
 import * as argon2 from 'argon2'
 import {logger} from "@/util";
+import { policy } from '@/policy'
 
 @InputType()
 export class ChangePasswordInput {
   @Field()
-  @MinLength(6)
+  @MinLength(policy.user.passwordMinLength)
   password: string
 
   @Field()

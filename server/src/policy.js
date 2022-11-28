@@ -50,5 +50,15 @@ export const policy = {
     displayNameMinLength: 1,
     displayNameMaxLength: 30,
     descriptionLength: 500,
+    avatarWidth: 256,
+    avatarHeight: 256,
+    bannerWidth: 1920,
+    bannerHeight: 1080,
+  },
+  user: {
+    passwordMinLength: 6,
+    nameMinLength: 3,
+    nameMaxLength: 16,
+    globalBanReasonLength: 1000,
   },
 }
