@@ -154,7 +154,8 @@ const s3upload = (
         }
 
         resolve(
-          await r2.getSignedUrlPromise('getObject', { Bucket: process.env.R2_BUCKET, Key: `${customKey?? key}`, Expires: 3600 })
+          // await r2.getSignedUrlPromise('getObject', { Bucket: process.env.R2_BUCKET, Key: `${customKey?? key}`, Expires: 3600 })
+          `${process.env.R2_PUBLIC_URL}${customKey?? key}`
         )
       })
     })
