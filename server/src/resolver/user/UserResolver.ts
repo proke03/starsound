@@ -31,6 +31,7 @@ import {
 import { user, UserArgs } from '@/resolver/user/queries'
 import { GraphQLNonNegativeInt } from 'graphql-scalars'
 import {ChangePayload, SubscriptionTopic} from "@/resolver/subscriptions";
+import { checkEmail, CheckEmailInput } from './mutations/checkEmail'
 
 @Resolver(() => User)
 export class UserResolver {
@@ -112,6 +113,14 @@ export class UserResolver {
   }
 
   // --- Mutations --- //
+
+  @Mutation(() => Boolean)
+  async verifyEmail(
+    @Ctx() ctx: Context,
+    @Arg('input') input: CheckEmailInput,
+  ): Promise<boolean> {
+    return checkEmail(ctx, input)
+  }
 
   @Mutation(() => LoginResponse)
   async createAccount(

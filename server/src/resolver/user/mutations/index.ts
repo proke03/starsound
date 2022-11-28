@@ -1,5 +1,6 @@
 export * from './changeOnlineStatus'
 export * from './changeUserAvatar'
+export * from './checkEmail'
 export * from './createAccount'
 export * from './deleteAccount'
 export * from './globalBan'
