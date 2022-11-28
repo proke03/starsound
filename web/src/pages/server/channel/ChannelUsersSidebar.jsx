@@ -36,7 +36,7 @@ export default function ChannelUsersSidebar({ server, serverUsers }) {
       serverUser => !serverUser.user.isOnline
     )
     if (offlineUsers.length) {
-      temp.push(`Offline — ${offlineUsers.length}`)
+      temp.push(`${t('channel.offline')} — ${offlineUsers.length}`)
       temp.push(...offlineUsers)
     }
     return temp

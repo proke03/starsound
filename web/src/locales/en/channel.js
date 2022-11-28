@@ -39,4 +39,5 @@ export const channel = {
     description: 'This is the beginning of #{{channel}} channel.',
   },
   online: 'Online',
+  offline: 'Offline',
 }
