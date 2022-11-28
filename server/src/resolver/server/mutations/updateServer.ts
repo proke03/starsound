@@ -1,9 +1,10 @@
 import { Field, ID, InputType } from 'type-graphql'
-import { Length } from 'class-validator'
+import { Length, MaxLength } from 'class-validator'
 import { Server, ServerCategory, ServerPermission, User } from '@/entity'
 import { FileUpload, GraphQLUpload } from 'graphql-upload'
 import { Context } from '@/types'
 import {logger, uploadImageFileSingle} from '@/util'
+import { policy } from '@/policy'
 
 @InputType()
 export class UpdateServerInput {
@@ -11,11 +12,11 @@ export class UpdateServerInput {
   serverId: string
 
   @Field({ nullable: true })
-  @Length(2, 100)
+  @Length(policy.server.displayNameMinLength, policy.server.displayNameMaxLength)
   displayName?: string
 
   @Field({ nullable: true })
-  @Length(0, 500)
+  @MaxLength(policy.server.descriptionLength)
   description?: string
 
   @Field(() => ServerCategory, { nullable: true })
@@ -59,8 +60,8 @@ export async function updateServer(
     displayName: displayName ?? server.displayName,
     description: description ?? server.description,
     category: category ?? server.category,
-    avatarUrl: await uploadImageFileSingle(avatarFile, { width: 256, height: 256 }, false, server.avatarUrl?? undefined),
-    bannerUrl: await uploadImageFileSingle(bannerFile, { width: 920, height: 540 }, false, server.bannerUrl?? undefined),
+    avatarUrl: await uploadImageFileSingle(avatarFile, { width: policy.server.avatarWidth, height: policy.server.avatarHeight }, false, server.avatarUrl?? undefined),
+    bannerUrl: await uploadImageFileSingle(bannerFile, { width: policy.server.bannerWidth, height: policy.server.bannerHeight }, false, server.bannerUrl?? undefined),
     isDownvotesEnabled: isDownvotesEnabled ?? server.isDownvotesEnabled
   })
   await em.persistAndFlush(server)

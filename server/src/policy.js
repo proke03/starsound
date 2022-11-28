@@ -44,4 +44,11 @@ export const policy = {
     nameMinLength: 1,
     nameMaxLength: 30,
   },
+  server: {
+    nameMinLength: 3,
+    nameMaxLength: 21,
+    displayNameMinLength: 1,
+    displayNameMaxLength: 30,
+    descriptionLength: 500,
+  },
 }

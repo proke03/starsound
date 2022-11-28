@@ -1,5 +1,5 @@
 import { Field, InputType } from 'type-graphql'
-import { Length, Matches } from 'class-validator'
+import { Length, Matches, MaxLength } from 'class-validator'
 import { FileUpload, GraphQLUpload } from 'graphql-upload'
 import { Context } from '@/types'
 import {
@@ -17,20 +17,21 @@ import {
 } from '@/entity'
 import {handleUnderscore, logger, ReorderUtils, uploadImageFileSingle} from '@/util'
 import { serverRegex } from '@/util/text/serverRegex'
+import { policy } from '@/policy'
 
 @InputType()
 export class CreateServerInput {
   @Field()
-  @Length(3, 21)
+  @Length(policy.server.nameMinLength, policy.server.nameMaxLength)
   @Matches(serverRegex, { message: 'Letters, numbers and underscores only' })
   name: string
 
   @Field()
-  @Length(2, 100)
+  @Length(policy.server.displayNameMinLength, policy.server.displayNameMaxLength)
   displayName: string
 
   @Field({ nullable: true })
-  @Length(0, 500)
+  @MaxLength(policy.server.descriptionLength)
   description?: string
 
   @Field(() => ServerCategory, { defaultValue: ServerCategory.Other })
@@ -71,8 +72,8 @@ export async function createServer(
     avatarUrl = await uploadImageFileSingle(
       avatarFile,
       {
-        width: 256,
-        height: 256
+        width: policy.server.avatarWidth,
+        height: policy.server.avatarHeight,
       },
       true
     )
@@ -83,8 +84,8 @@ export async function createServer(
     bannerUrl = await uploadImageFileSingle(
       bannerFile,
       {
-        width: 1920,
-        height: 1080
+        width: policy.server.bannerWidth,
+        height: policy.server.bannerHeight,
       },
       true
     )
