@@ -26,7 +26,19 @@ export const policy = {
     maxLimit: 100,
   },
   post: {
-
+    titleMinLength: 1,
+    titleMaxLength: 100,
+    linkLength: 1000,
+    textLength: 4000,
+    imagesLength: 10,
+    captionLength: 180,
+    posts: {
+      defaultOffset: 0,
+      minOffset: 0,
+      defaultLimit: 20,
+      minLimit: 1,
+      maxLimit: 100,
+    },
   },
   role: {
     nameMinLength: 1,

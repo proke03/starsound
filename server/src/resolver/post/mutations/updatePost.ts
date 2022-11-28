@@ -12,6 +12,8 @@ import {
 } from '@/util'
 import { FileUpload, GraphQLUpload } from 'graphql-upload'
 import mime from 'mime'
+import { policy } from '@/policy'
+
 @InputType()
 class UpdatePostImagesInput {
   @Field(() => GraphQLUpload, { nullable: true })
@@ -45,11 +47,11 @@ class UpdatePostImagesInput {
   smallHeight?: number
 
   @Field({ nullable: true })
-  @MaxLength(180)
+  @MaxLength(policy.post.captionLength)
   caption?: string
 
   @Field({ nullable: true })
-  @MaxLength(2000)
+  @MaxLength(policy.post.linkLength)
   @IsUrl()
   linkUrl?: string
 }
@@ -60,21 +62,31 @@ export class UpdatePostInput {
   postId: string
 
   @Field()
-  @Length(1, 300, { message: 'Title must be no longer than 300 characters.' })
+  @Length(
+    policy.post.titleMinLength, 
+    policy.post.titleMaxLength, 
+    { message: `Title must be no longer than ${policy.post.titleMaxLength} characters.` }
+  )
   title: string
 
   @Field({ nullable: true })
-  @MaxLength(2000, { message: 'URL must be no longer than 2000 characters.' })
+  @MaxLength(
+    policy.post.linkLength, 
+    { message: `URL must be no longer than ${policy.post.linkLength} characters.` }
+  )
   @IsUrl()
   linkUrl?: string
 
   @Field({ nullable: true })
   @Field()
-  @Length(1, 100000)
+  @MaxLength(policy.post.textLength)
   text?: string
 
   @Field(() => [UpdatePostImagesInput], { nullable: true })
-  @ArrayMaxSize(20, { message: 'Cannot upload more than 20 images' })
+  @ArrayMaxSize(
+    policy.post.imagesLength, 
+    { message: `Cannot upload more than ${policy.post.imagesLength} images` }
+  )
   images?: UpdatePostImagesInput[]
 }
 
