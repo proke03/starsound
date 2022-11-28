@@ -11,6 +11,7 @@ import {
 } from '@/entity'
 import { Length } from 'class-validator'
 import {logger} from "@/util";
+import { policy } from '@/policy'
 
 @InputType()
 export class CreateFolderInput {
@@ -18,7 +19,7 @@ export class CreateFolderInput {
   serverId?: string
 
   @Field()
-  @Length(1, 100)
+  @Length(policy.folder.nameMinLength, policy.folder.nameMaxLength)
   name: string
 
   @Field({ defaultValue: false })

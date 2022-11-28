@@ -10,6 +10,7 @@ import {
 } from '@/entity'
 import { Context } from '@/types'
 import {logger, uploadImageFileSingle} from '@/util'
+import { policy } from '@/policy'
 
 @InputType()
 export class UpdateFolderInput {
@@ -17,7 +18,7 @@ export class UpdateFolderInput {
   folderId: string
 
   @Field({ nullable: true })
-  @Length(1, 100)
+  @Length(policy.folder.nameMinLength, policy.folder.nameMaxLength)
   name?: string
 
   @Field(() => GraphQLUpload, { nullable: true })

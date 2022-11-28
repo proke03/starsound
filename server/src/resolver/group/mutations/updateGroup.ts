@@ -4,6 +4,7 @@ import { FileUpload, GraphQLUpload } from 'graphql-upload'
 import { Context } from '@/types'
 import { Group, User } from '@/entity'
 import {logger, uploadImageFileSingle} from '@/util'
+import { policy } from '@/policy'
 
 @InputType()
 export class UpdateGroupInput {
@@ -11,7 +12,7 @@ export class UpdateGroupInput {
   groupId: string
 
   @Field({ nullable: true })
-  @Length(1, 100)
+  @Length(policy.group.nameMinLength, policy.group.nameMaxLength)
   name?: string
 
   @Field(() => GraphQLUpload, { nullable: true })
@@ -28,7 +29,7 @@ export async function updateGroup(
     throw new Error('Not in group')
   em.assign(group, {
     name: name ?? group.name,
-    avatarUrl: await uploadImageFileSingle(avatarFile, { width: 256, height: 256 }, false, group.avatarUrl?? undefined)
+    avatarUrl: await uploadImageFileSingle(avatarFile, { width: policy.group.avatarWidth, height: policy.group.avatarHeight }, false, group.avatarUrl?? undefined)
   })
   await em.persistAndFlush(group)
   liveQueryStore.invalidate(`Group:${groupId}`)

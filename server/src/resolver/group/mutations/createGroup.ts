@@ -3,11 +3,12 @@ import { Field, InputType } from 'type-graphql'
 import { Group, Message, MessageType, User } from '@/entity'
 import { ArrayMaxSize } from 'class-validator'
 import {logger} from "@/util";
+import { policy } from '@/policy'
 
 @InputType()
 export class CreateGroupInput {
   @Field(() => [String])
-  @ArrayMaxSize(9)
+  @ArrayMaxSize(policy.group.maxMembers)
   usernames: string[]
 }
 
@@ -16,7 +17,7 @@ export async function createGroup(
   { usernames }: CreateGroupInput
 ): Promise<Group> {
   logger('createGroup')
-  if (usernames.length > 9) throw new Error('error.group.maxSize')
+  if (usernames.length > policy.group.maxMembers) throw new Error('error.group.maxSize')
   const user = await em.findOneOrFail(User, userId)
   const users = [user]
   for (const username of usernames) {
