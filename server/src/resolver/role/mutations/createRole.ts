@@ -4,6 +4,7 @@ import { Context } from '@/types'
 import { Length } from 'class-validator'
 import { QueryOrder } from '@mikro-orm/core'
 import {logger} from "@/util";
+import { policy } from '@/policy'
 
 @InputType()
 export class CreateRoleInput {
@@ -11,7 +12,7 @@ export class CreateRoleInput {
   serverId: string
 
   @Field()
-  @Length(1, 100)
+  @Length(policy.role.nameMinLength, policy.role.nameMaxLength)
   name: string
 }
 

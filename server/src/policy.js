@@ -17,5 +17,19 @@ export const policy = {
     nameMaxLength: 30,
     avatarWidth: 256,
     avatarHeight: 256,
-  }
+  },
+  message: {
+    minLength: 1,
+    maxLength: 2000,
+    defaultValue: 100,
+    minLimit: 1,
+    maxLimit: 100,
+  },
+  post: {
+
+  },
+  role: {
+    nameMinLength: 1,
+    nameMaxLength: 30,
+  },
 }
