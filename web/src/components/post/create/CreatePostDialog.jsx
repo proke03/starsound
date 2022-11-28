@@ -521,7 +521,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                       <div className="space-y-5 max-w-full flex-grow">
                         <div>
                           <label htmlFor="caption" className={labelClass}>
-                            Caption
+                            {t('post.create.caption')}
                             {images[selectedImage]?.caption?.length > 0 &&
                               ` (${images[selectedImage]?.caption?.length}/180)`}
                           </label>
@@ -548,7 +548,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
 
                         <div>
                           <label htmlFor="link" className={labelClass}>
-                            Link
+                            {t('post.create.link')}
                           </label>
                           <input
                             id="link"
