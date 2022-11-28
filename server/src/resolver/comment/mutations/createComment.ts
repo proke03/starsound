@@ -2,14 +2,15 @@ import { Field, ID, InputType, Publisher } from 'type-graphql'
 import { Length } from 'class-validator'
 import { Context } from '@/types'
 import { Comment, CommentVote, Post, Reply, User, VoteType } from '@/entity'
-import {handleText, logger} from '@/util'
+import { handleText, logger } from '@/util'
 import { ChangePayload, ChangeType } from '@/resolver/subscriptions'
+import { policy } from '@/policy'
 
 @InputType()
 export class CreateCommentInput {
   @Field()
-  @Length(1, 100000, {
-    message: 'Text must be between 1 and 100000 characters'
+  @Length(policy.comment.minLength, policy.comment.maxLength, {
+    message: `Text must be between ${policy.comment.minLength} and ${policy.comment.maxLength} characters`
   })
   text: string
 

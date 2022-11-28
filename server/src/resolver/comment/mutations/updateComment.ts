@@ -4,6 +4,7 @@ import { Context } from '@/types'
 import { Comment, User } from '@/entity'
 import {handleText, logger} from '@/util'
 import { ChangePayload, ChangeType } from '@/resolver/subscriptions'
+import { policy } from '@/policy'
 
 @InputType()
 export class UpdateCommentInput {
@@ -11,7 +12,7 @@ export class UpdateCommentInput {
   commentId: string
 
   @Field()
-  @Length(1, 100000)
+  @Length(policy.comment.minLength, policy.comment.maxLength)
   text: string
 }
 

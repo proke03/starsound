@@ -11,6 +11,7 @@ import {
 } from '@/entity'
 import {handleUnderscore, logger, ReorderUtils} from '@/util'
 import { Matches, MaxLength } from 'class-validator'
+import { policy } from '@/policy'
 
 @InputType()
 export class CreateChannelInput {
@@ -18,12 +19,12 @@ export class CreateChannelInput {
   serverId: string
 
   @Field()
-  @MaxLength(100)
+  @MaxLength(policy.channel.nameLength)
   @Matches(/^[a-z0-9-_]+/)
   name: string
 
   @Field({ nullable: true })
-  @MaxLength(500)
+  @MaxLength(policy.channel.descriptionLength)
   description?: string
 
   @Field(() => ChannelType, { defaultValue: ChannelType.Public })

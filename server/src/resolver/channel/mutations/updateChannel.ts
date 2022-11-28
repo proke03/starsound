@@ -2,7 +2,8 @@ import { Field, ID, InputType } from 'type-graphql'
 import { Context } from '@/types'
 import { Channel, ChannelType, ServerPermission, User } from '@/entity'
 import { MaxLength } from 'class-validator'
-import {logger} from "@/util";
+import {logger} from "@/util"
+import { policy } from '@/policy'
 
 @InputType()
 export class UpdateChannelInput {
@@ -10,7 +11,7 @@ export class UpdateChannelInput {
   channelId: string
 
   @Field({ nullable: true })
-  @MaxLength(500)
+  @MaxLength(policy.channel.descriptionLength)
   description?: string
 
   @Field(() => ChannelType, { nullable: true })
