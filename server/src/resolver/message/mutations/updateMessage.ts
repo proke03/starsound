@@ -4,6 +4,7 @@ import { Context } from '@/types'
 import { Message, User } from '@/entity'
 import {handleText, logger} from '@/util'
 import { ChangePayload, ChangeType } from '@/resolver/subscriptions'
+import { policy } from '@/policy'
 
 @InputType()
 export class UpdateMessageInput {
@@ -11,7 +12,7 @@ export class UpdateMessageInput {
   messageId: string
 
   @Field()
-  @Length(1, 100000)
+  @Length(policy.message.minLength, policy.message.maxLength)
   text: string
 }
 

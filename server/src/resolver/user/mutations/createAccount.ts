@@ -20,11 +20,12 @@ import { LoginResponse } from '@/resolver/user/mutations/LoginResponse'
 import { GraphQLEmailAddress } from 'graphql-scalars'
 import { usernameRegex } from '@/util/text/usernameRegex'
 import {ChangePayload, ChangeType} from "@/resolver/subscriptions";
+import { policy } from '@/policy'
 
 @InputType()
 export class CreateAccountInput {
   @Field()
-  @Length(3, 20)
+  @Length(policy.user.nameMinLength, policy.user.nameMaxLength)
   @Matches(usernameRegex)
   username: string
 
@@ -33,7 +34,7 @@ export class CreateAccountInput {
   email?: string
 
   @Field()
-  @Length(6)
+  @Length(policy.user.passwordMinLength)
   password: string
 }
 

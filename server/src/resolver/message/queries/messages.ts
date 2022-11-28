@@ -5,6 +5,7 @@ import { Context } from '@/types'
 import { FilterQuery, QueryOrder } from '@mikro-orm/core'
 import { GraphQLPositiveInt } from 'graphql-scalars'
 import {logger} from "@/util";
+import { policy } from '@/policy'
 
 @ArgsType()
 export class MessagesArgs {
@@ -23,10 +24,10 @@ export class MessagesArgs {
   @Field(() => ID, { nullable: true })
   cursor?: string
 
-  @Field(() => GraphQLPositiveInt, { defaultValue: 100 })
-  @Min(1)
-  @Max(100)
-  limit: number = 100
+  @Field(() => GraphQLPositiveInt, { defaultValue: policy.message.defaultValue })
+  @Min(policy.message.minLimit)
+  @Max(policy.message.maxLimit)
+  limit: number = policy.message.defaultValue
 }
 
 @ObjectType()

@@ -4,6 +4,7 @@ import { Role, ServerPermission, User } from '@/entity'
 import { Context } from '@/types'
 import { GraphQLHexColorCode } from 'graphql-scalars'
 import {logger} from "@/util";
+import { policy } from '@/policy'
 
 @InputType()
 export class UpdateRoleInput {
@@ -11,7 +12,7 @@ export class UpdateRoleInput {
   roleId: string
 
   @Field({ nullable: true })
-  @Length(1, 100)
+  @Length(policy.role.nameMinLength, policy.role.nameMaxLength)
   name?: string
 
   @Field(() => GraphQLHexColorCode, { nullable: true })

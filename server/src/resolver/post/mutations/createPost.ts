@@ -18,21 +18,26 @@ import {
 } from '@/util'
 import { ChangePayload, ChangeType } from '@/resolver/subscriptions'
 import mime from 'mime'
+import { policy } from '@/policy'
 
 @InputType()
 export class CreatePostInput {
   @Field()
-  @Length(1, 300, { message: 'Title must be no longer than 300 characters.' })
+  @Length(
+    policy.post.titleMinLength, 
+    policy.post.titleMaxLength, 
+    { message: 'Title must be no longer than 300 characters.' }
+  )
   title: string
 
   @Field({ nullable: true })
-  @MaxLength(2000, { message: 'URL must be no longer than 2000 characters.' })
+  @MaxLength(policy.post.linkLength, { message: 'URL must be no longer than 2000 characters.' })
   @IsUrl()
   linkUrl?: string
 
   @Field({ nullable: true })
-  @MaxLength(100000, {
-    message: 'Text max length is 100000 characters'
+  @MaxLength(policy.post.textLength, {
+    message: `Text max length is ${policy.post.textLength} characters`
   })
   text?: string
 
@@ -40,7 +45,10 @@ export class CreatePostInput {
   serverId: string
 
   @Field(() => [CreatePostImagesInput], { nullable: true })
-  @ArrayMaxSize(20, { message: 'Cannot upload more than 20 images' })
+  @ArrayMaxSize(
+    policy.post.imagesLength, 
+    { message: `Cannot upload more than ${policy.post.imagesLength} images` }
+  )
   images?: CreatePostImagesInput[]
 }
 
@@ -50,11 +58,11 @@ class CreatePostImagesInput {
   file: FileUpload
 
   @Field({ nullable: true })
-  @MaxLength(180)
+  @MaxLength(policy.post.captionLength)
   caption?: string
 
   @Field({ nullable: true })
-  @MaxLength(2000)
+  @MaxLength(policy.post.linkLength)
   @IsUrl()
   linkUrl?: string
 }

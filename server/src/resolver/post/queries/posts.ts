@@ -22,17 +22,18 @@ import { QueryOrder } from '@mikro-orm/core'
 import dayjs from 'dayjs'
 import { GraphQLNonNegativeInt, GraphQLPositiveInt } from 'graphql-scalars'
 import {logger} from "@/util";
+import { policy } from '@/policy'
 
 @ArgsType()
 export class PostsArgs {
-  @Field(() => GraphQLNonNegativeInt, { defaultValue: 0 })
-  @Min(0)
-  offset: number = 0
+  @Field(() => GraphQLNonNegativeInt, { defaultValue: policy.post.posts.defaultOffset })
+  @Min(policy.post.posts.minOffset)
+  offset: number = policy.post.posts.defaultOffset
 
-  @Field(() => GraphQLPositiveInt, { defaultValue: 20 })
-  @Min(1)
-  @Max(100)
-  limit: number = 20
+  @Field(() => GraphQLPositiveInt, { defaultValue: policy.post.posts.defaultLimit })
+  @Min(policy.post.posts.minLimit)
+  @Max(policy.post.posts.maxLimit)
+  limit: number = policy.post.posts.defaultLimit
 
   @Field(() => PostsSort, {
     defaultValue: 'Hot'

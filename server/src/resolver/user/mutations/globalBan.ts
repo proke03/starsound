@@ -1,8 +1,9 @@
 import { Field, ID, InputType } from 'type-graphql'
-import { Length } from 'class-validator'
+import { Length, MaxLength } from 'class-validator'
 import { Context } from '@/types'
 import { User } from '@/entity'
-import {logger} from "@/util";
+import {logger} from "@/util"
+import { policy } from '@/policy'
 
 @InputType()
 export class GlobalBanInput {
@@ -10,7 +11,7 @@ export class GlobalBanInput {
   userId: string
 
   @Field({ nullable: true })
-  @Length(1, 1000)
+  @MaxLength(policy.user.globalBanReasonLength)
   reason?: string
 }
 
