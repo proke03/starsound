@@ -1,6 +1,10 @@
 import { useLoginDialog } from '@/hooks/useLoginDialog'
 import { useForm } from 'react-hook-form'
-import { useCreateAccountMutation, useLoginMutation } from '@/graphql/hooks'
+import { 
+  useVerifyEmailMutation, 
+  useCreateAccountMutation, 
+  useLoginMutation 
+} from '@/graphql/hooks'
 import {
   IconEmail,
   IconSpinner,
@@ -14,6 +18,8 @@ import isEmail from 'validator/es/lib/isEmail'
 import StyledDialog from '@/components/ui/dialog/StyledDialog'
 import ShowPasswordButton from '@/components/ui/ShowPasswordButton'
 import { useTranslation } from 'react-i18next'
+import Tippy from '@tippyjs/react'
+import toast from 'react-hot-toast'
 
 const usernameRegex = /^[A-Za-z0-9-_]+$/gi
 
@@ -35,6 +41,10 @@ export default function LoginDialog() {
   const email = watch('email')
   const username = watch('username')
   const usernameOrEmail = watch('usernameOrEmail')
+  const [emailSended, setEmailSended] = useState(false)
+  const [checkVerifyEmail, { loading: checkVerifyEmailLoading }] =
+    useVerifyEmailMutation()
+
   const password = watch('password')
   const confirmPassword = watch('confirmPassword')
   const [createAccount, { loading: createAccountLoading }] =
@@ -216,6 +226,40 @@ export default function LoginDialog() {
                     type="email"
                   />
                   <IconEmail className={`form-input-icon-icon`} />
+                  <Tippy content={t('auth.createAccount.verifyEmail')}>
+                    <div className={`form-show-password-button`}>
+                      <IconUserToServerArrow
+                        onClick={() => {
+                          if(!(!!email && isEmail(email))) {
+                            toast.error(!email?
+                              t('auth.createAccount.emailRequired')
+                              :
+                              t('auth.createAccount.invalidEmail')
+                            )
+                            return
+                          }
+                          console.log("HI")
+                          if(!emailSended) {
+                            console.log('!emailSended')
+                            checkVerifyEmail({
+                              variables: {
+                                input: {
+                                  email: email ?? null
+                                }
+                              }
+                            })
+                            .then((res) => {
+                              console.log('then')
+                              if(res.data.checkVerifyEmail){
+                                setEmailSended(true)
+                              }
+                            })
+                          }
+                        }}
+                        className="w-5 h-5"
+                      />
+                    </div>
+                  </Tippy>
                 </div>
                 {errors.email?.type === 'email' && (
                   <div className={`form-error`}>{errors.email.message}</div>
@@ -235,6 +279,57 @@ export default function LoginDialog() {
 
           {isCreateAccount ? (
             <>
+              <div>
+                <div className="relative">
+                  <input
+                    id="verifyCode"
+                    {...register('verifyCode', {
+                      required: true,
+                      minLength: 6
+                    })}
+                    className={`form-input-password`}
+                    placeholder={t('auth.createAccount.verifyCode')}
+                    type={'text'}
+                    minLength={6}
+                  />
+                  <Tippy content={t('auth.createAccount.checkCode')}>
+                    <div className={`form-show-password-button`}>
+                      <IconUserToServerArrow
+                        onClick={() => {
+                          if(!(!!email && isEmail(email))) {
+                            toast.error(!email?
+                              t('auth.createAccount.emailRequired')
+                              :
+                              t('auth.createAccount.invalidEmail')
+                            )
+                            return
+                          }
+                          if(!emailSended) {
+                            checkVerifyEmail({
+                              variables: {
+                                input: {
+                                  email: email ?? null
+                                }
+                              }
+                            })
+                            .then((res) => {
+                              if(res.data.checkVerifyEmail){
+                                setEmailSended(true)
+                              }
+                            })
+                          }
+                        }}
+                        className="w-5 h-5"
+                      />
+                    </div>
+                  </Tippy>
+                </div>
+                {errors.password?.type === 'minLength' && (
+                  <div className={`form-error`}>
+                    {t('auth.createAccount.passwordLimit')}
+                  </div>
+                )}
+              </div>
               <div>
                 <div className="relative">
                   <input
