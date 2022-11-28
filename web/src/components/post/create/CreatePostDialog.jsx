@@ -315,7 +315,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             setServer={setServer}
           />
           <div
-            className={tabClass(currentTab === Tab.Text)}
+            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Text)}`}
             onClick={() => {
               setCurrentTab(Tab.Text)
               setValue('linkUrl', '')
@@ -326,7 +326,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             {t('post.type.text_short')}
           </div>
           <div
-            className={tabClass(currentTab === Tab.Link)}
+            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Link)}`}
             onClick={() => {
               setCurrentTab(Tab.Link)
               setText('')
@@ -337,7 +337,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             {t('post.type.link_short')}
           </div>
           <div
-            className={tabClass(currentTab === Tab.Image)}
+            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Image)}`}
             onClick={() => {
               setCurrentTab(Tab.Image)
               setValue('linkUrl', '')
