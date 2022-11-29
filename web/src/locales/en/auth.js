@@ -17,6 +17,8 @@ export const auth = {
     verifyEmail: 'Verify Email',
     verifyCode: 'Verification Code',
     checkCode: 'Check Code',
+    codeRequired: 'Enter your verification code',
+    invalidCode: 'Invalid code',
     passwordLimit: 'Password must be at least 6 characters',
     passwordMatch: 'Passwords do not match',
     showPassword: 'Show Password',

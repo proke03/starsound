@@ -17,6 +17,8 @@ export const auth = {
     verifyEmail: '이메일 인증',
     verifyCode: '인증 코드',
     checkCode: '인증 코드 확인',
+    codeRequired: '인증 코드를 입력해주세요.',
+    invalidCode: '인증 코드를 잘못 입력하셨습니다.',
     passwordLimit: '비밀번호는 최소 6자 이상이어야 합니다',
     passwordMatch: '비밀번호가 일치하지 않습니다',
     showPassword: '비밀번호 보기',
