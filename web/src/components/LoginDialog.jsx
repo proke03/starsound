@@ -243,9 +243,7 @@ export default function LoginDialog() {
                             )
                             return
                           }
-                          console.log("HI")
                           if(!emailSended) {
-                            console.log('!emailSended')
                             checkVerifyEmail({
                               variables: {
                                 input: {
@@ -254,8 +252,8 @@ export default function LoginDialog() {
                               }
                             })
                             .then((res) => {
-                              console.log('then')
-                              if(res.data.checkVerifyEmail){
+                              console.log('then', res.data)
+                              if(res.data.verifyEmail){
                                 setEmailSended(true)
                               }
                             })
@@ -284,32 +282,32 @@ export default function LoginDialog() {
 
           {isCreateAccount ? (
             <>
-              <div>
-                <div className="relative">
-                  <input
-                    id="verifyCode"
-                    {...register('verifyCode', {
-                      required: true,
-                      minLength: 6
-                    })}
-                    className={`form-input-password`}
-                    placeholder={t('auth.createAccount.verifyCode')}
-                    type={'text'}
-                    minLength={6}
-                  />
-                  <Tippy content={t('auth.createAccount.checkCode')}>
-                    <div className={`form-show-password-button`}>
-                      <IconUserToServerArrow
-                        onClick={() => {
-                          if(!(!!email && isEmail(email))) {
-                            toast.error(!email?
-                              t('auth.createAccount.emailRequired')
-                              :
-                              t('auth.createAccount.invalidEmail')
-                            )
-                            return
-                          }
-                          if(!emailSended) {
+              {emailSended && !emailVerified &&
+                <div>
+                  <div className="relative">
+                    <input
+                      id="verifyCode"
+                      {...register('verifyCode', {
+                        required: true,
+                        minLength: 6
+                      })}
+                      className={`form-input-password`}
+                      placeholder={t('auth.createAccount.verifyCode')}
+                      type={'text'}
+                      minLength={6}
+                    />
+                    <Tippy content={t('auth.createAccount.checkCode')}>
+                      <div className={`form-show-password-button`}>
+                        <IconUserToServerArrow
+                          onClick={() => {
+                            if(!(!!email && isEmail(email))) {
+                              toast.error(!email?
+                                t('auth.createAccount.emailRequired')
+                                :
+                                t('auth.createAccount.invalidEmail')
+                              )
+                              return
+                            }
                             checkCode({
                               variables: {
                                 input: {
@@ -322,19 +320,19 @@ export default function LoginDialog() {
                               if(res.data.checkCode)
                                 setEmailVerified(true)
                             })
-                          }
-                        }}
-                        className="w-5 h-5"
-                      />
-                    </div>
-                  </Tippy>
-                </div>
-                {errors.password?.type === 'minLength' && (
-                  <div className={`form-error`}>
-                    {t('auth.createAccount.passwordLimit')}
+                          }}
+                          className="w-5 h-5"
+                        />
+                      </div>
+                    </Tippy>
                   </div>
-                )}
-              </div>
+                  {errors.password?.type === 'minLength' && (
+                    <div className={`form-error`}>
+                      {t('auth.createAccount.passwordLimit')}
+                    </div>
+                  )}
+                </div>
+              }
               <div>
                 <div className="relative">
                   <input
