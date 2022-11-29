@@ -4,6 +4,7 @@ import { User } from '@/entity'
 import { handleUnderscore, logger} from '@/util'
 import { GraphQLEmailAddress } from 'graphql-scalars'
 import { smtpTransport } from '@/config/email'
+import { CacheManager } from '@/util'
 
 var generateRandom = (min, max) => {
   var ranNum = Math.floor(Math.random()*(max-min+1)) + min;
@@ -32,6 +33,7 @@ export async function checkEmail(
   })
   if (foundEmail) throw new Error('error.login.emailInUse')
 
+  const verificationCode = generateRandom(111111, 999999)
   const mailOptions = {
     from: {
       name: '별별소리',
@@ -39,7 +41,7 @@ export async function checkEmail(
     },
     to: email,
     subject: '별별소리 이메일 인증 코드',
-    text: `인증 코드는 ${generateRandom(111111, 999999)} 입니다.`,
+    text: `인증 코드는 ${verificationCode} 입니다.`,
   }
   smtpTransport.sendMail(mailOptions, (error, responses) => {
     if(error) {
@@ -47,7 +49,8 @@ export async function checkEmail(
       return false
     }
     else {
-      console.log(responses)
+      CacheManager.Instance.set(email, verificationCode)
+      console.log(CacheManager.Instance.get(email))
       return true
     }
   })

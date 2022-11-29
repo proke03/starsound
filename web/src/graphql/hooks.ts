@@ -96,6 +96,11 @@ export type CheckEmailInput = {
   email?: Maybe<Scalars['EmailAddress']>;
 };
 
+export type CheckVerificationCodeInput = {
+  email?: Maybe<Scalars['EmailAddress']>;
+  verificationCode: Scalars['String'];
+};
+
 export type CloseDmInput = {
   userId: Scalars['ID'];
 };
@@ -449,6 +454,7 @@ export type Mutation = {
   changeOnlineStatus: User;
   changePassword: User;
   changeUserAvatar: User;
+  checkCode: Scalars['Boolean'];
   closeDm: User;
   createAccount: LoginResponse;
   createChannel: Channel;
@@ -554,6 +560,11 @@ export type MutationChangePasswordArgs = {
 
 export type MutationChangeUserAvatarArgs = {
   input: ChangeUserAvatarInput;
+};
+
+
+export type MutationCheckCodeArgs = {
+  input: CheckVerificationCodeInput;
 };
 
 
@@ -2498,6 +2509,16 @@ export type VerifyEmailMutationVariables = Exact<{
 export type VerifyEmailMutation = (
   { __typename?: 'Mutation' }
   & Pick<Mutation, 'verifyEmail'>
+);
+
+export type CheckCodeMutationVariables = Exact<{
+  input: CheckVerificationCodeInput;
+}>;
+
+
+export type CheckCodeMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'checkCode'>
 );
 
 export type CreateAccountMutationVariables = Exact<{
@@ -5543,6 +5564,37 @@ export function useVerifyEmailMutation(baseOptions?: Apollo.MutationHookOptions<
 export type VerifyEmailMutationHookResult = ReturnType<typeof useVerifyEmailMutation>;
 export type VerifyEmailMutationResult = Apollo.MutationResult<VerifyEmailMutation>;
 export type VerifyEmailMutationOptions = Apollo.BaseMutationOptions<VerifyEmailMutation, VerifyEmailMutationVariables>;
+export const CheckCodeDocument = gql`
+    mutation checkCode($input: CheckVerificationCodeInput!) {
+  checkCode(input: $input)
+}
+    `;
+export type CheckCodeMutationFn = Apollo.MutationFunction<CheckCodeMutation, CheckCodeMutationVariables>;
+
+/**
+ * __useCheckCodeMutation__
+ *
+ * To run a mutation, you first call `useCheckCodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCheckCodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [checkCodeMutation, { data, loading, error }] = useCheckCodeMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCheckCodeMutation(baseOptions?: Apollo.MutationHookOptions<CheckCodeMutation, CheckCodeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CheckCodeMutation, CheckCodeMutationVariables>(CheckCodeDocument, options);
+      }
+export type CheckCodeMutationHookResult = ReturnType<typeof useCheckCodeMutation>;
+export type CheckCodeMutationResult = Apollo.MutationResult<CheckCodeMutation>;
+export type CheckCodeMutationOptions = Apollo.BaseMutationOptions<CheckCodeMutation, CheckCodeMutationVariables>;
 export const CreateAccountDocument = gql`
     mutation createAccount($input: CreateAccountInput!) {
   createAccount(input: $input) {

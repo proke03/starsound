@@ -26,7 +26,9 @@ import {
   LoginInput,
   LoginResponse,
   changePassword,
-  ChangePasswordInput
+  ChangePasswordInput,
+  CheckVerificationCodeInput,
+  checkVerificationCode
 } from '@/resolver/user/mutations'
 import { user, UserArgs } from '@/resolver/user/queries'
 import { GraphQLNonNegativeInt } from 'graphql-scalars'
@@ -120,6 +122,14 @@ export class UserResolver {
     @Arg('input') input: CheckEmailInput,
   ): Promise<boolean> {
     return checkEmail(ctx, input)
+  }
+
+  @Mutation(() => Boolean)
+  async checkCode(
+    @Ctx() ctx: Context,
+    @Arg('input') input: CheckVerificationCodeInput,
+  ): Promise<boolean> {
+    return checkVerificationCode(ctx, input)
   }
 
   @Mutation(() => LoginResponse)
