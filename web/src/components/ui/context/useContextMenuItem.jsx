@@ -90,7 +90,7 @@ function ContextMenuItem({
               <div
                 className={`${
                   isRight ? 'mr-3' : 'ml-3'
-                } p-2 dark:bg-gray-900 rounded w-48 shadow-lg`}
+                } p-2 bg-white dark:bg-gray-900 rounded w-48 shadow-lg`}
               >
                 {children}
               </div>
