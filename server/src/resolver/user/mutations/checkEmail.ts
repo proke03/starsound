@@ -33,7 +33,10 @@ export async function checkEmail(
   if (foundEmail) throw new Error('error.login.emailInUse')
 
   const mailOptions = {
-    from: '별별소리',
+    from: {
+      name: '별별소리',
+      address: process.env.MAIL_SERVICE_USER,
+    },
     to: email,
     subject: '별별소리 이메일 인증 코드',
     text: `인증 코드는 ${generateRandom(111111, 999999)} 입니다.`,
