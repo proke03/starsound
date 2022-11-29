@@ -3,6 +3,7 @@ export * from './metascraper'
 export * from './s3'
 export * from './text'
 
+export * from './cache'
 export * from './checkEnv'
 export * from './checkFileSize'
 export * from './handleMessageLinks'

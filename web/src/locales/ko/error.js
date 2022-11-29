@@ -69,6 +69,9 @@ export const error = {
   upload: {
     invalidMime: '이미지는 PNG나 JPEG 형식이어야 해요',
   },
+  register: {
+    codeNotMatch: 'Code does not match',
+  },
   login: {
     invalid: '로그인이 잘못되었어요',
     invalidEmail: '이메일 주소가 잘못되었어요',
