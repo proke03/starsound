@@ -22,6 +22,10 @@ export async function checkVerificationCode(
 
   if (!email) throw new Error('Must provide email')
 
+  if(!CacheManager.Instance.get(email)){
+    throw new Error('error.register.codeExpired')
+  }
+
   if(verificationCode != CacheManager.Instance.get(email)) {
     throw new Error('error.register.codeNotMatch')
   }
