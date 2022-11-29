@@ -1,28 +1,27 @@
 version: "3"
 
 services:
-  # backend:
-  #   build: .
-  #   image: jangmin/starsound-backend
-  #   links: 
-  #     - postgres:postgres
-  #   ports:
-  #     - "4000:4000"
-  #   env_file:
-  #     - .env.production
-  #   depends_on:
-  #     - postgres
-  #   networks:
-  #     - postgres
+  backend:
+    build: .
+    image: jangmin/backend
+    links: 
+      - postgres:postgres
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env.production
+    depends_on:
+      - postgres
+    networks:
+      - postgres
 
-  # nginx:
-  #   build: .
-  #   image: jangmin/starsound-nginx
-  #   ports:
-  #     - "8000:80"
-  #     - "8000:443"
-  #   networks:
-  #     - postgres
+  nginx:
+    build: .
+    image: jangmin/nginx
+    ports:
+      - "8000:443"
+    networks:
+      - postgres
 
   postgres:
     image: postgres:14
