@@ -69,6 +69,9 @@ export const error = {
   upload: {
     invalidMime: 'Image must be PNG or JPEG'
   },
+  register: {
+    codeNotMatch: 'Code does not match',
+  },
   login: {
     invalid: 'Invalid login',
     invalidEmail: 'Invalid email address',

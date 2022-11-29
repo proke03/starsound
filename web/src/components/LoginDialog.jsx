@@ -2,7 +2,8 @@ import { useLoginDialog } from '@/hooks/useLoginDialog'
 import { useForm } from 'react-hook-form'
 import { 
   useVerifyEmailMutation, 
-  useCreateAccountMutation, 
+  useCheckCodeMutation,
+  useCreateAccountMutation,
   useLoginMutation 
 } from '@/graphql/hooks'
 import {
@@ -44,6 +45,10 @@ export default function LoginDialog() {
   const [emailSended, setEmailSended] = useState(false)
   const [checkVerifyEmail, { loading: checkVerifyEmailLoading }] =
     useVerifyEmailMutation()
+  const verifyCode = watch('verifyCode')
+  const [checkCode, { loading: checkCodeLoading }] =
+    useCheckCodeMutation()
+  const [emailVerified, setEmailVerified] = useState(false)
 
   const password = watch('password')
   const confirmPassword = watch('confirmPassword')
@@ -305,17 +310,17 @@ export default function LoginDialog() {
                             return
                           }
                           if(!emailSended) {
-                            checkVerifyEmail({
+                            checkCode({
                               variables: {
                                 input: {
-                                  email: email ?? null
+                                  email: email ?? null,
+                                  verificationCode: verifyCode ?? null,
                                 }
                               }
                             })
                             .then((res) => {
-                              if(res.data.checkVerifyEmail){
-                                setEmailSended(true)
-                              }
+                              if(res.data.checkCode)
+                                setEmailVerified(true)
                             })
                           }
                         }}
