@@ -22,10 +22,14 @@ const cancelBtnClass = ctl(`
 
 const uploadBtnClass = ctl(`
   text-sm
-  text-primary
+  // text-primary
+  text-gray-900 
+  dark:text-gray-100
   transition
-  bg-blue-500
-  hover:bg-blue-600
+  // bg-blue-500
+  bg-green-600
+  hover:bg-green-700
+  // hover:bg-blue-600
   flex
   items-center
   justify-center
@@ -89,13 +93,16 @@ export default function MessageUploadDialog({
 
   return (
     <Dialog close={close} isOpen={!!file}>
-      <div className="text-left relative w-full rounded-xl dark:bg-gray-750 max-w-lg mx-auto">
-        <div className="absolute left-5 -top-20 flex w-46 h-40">
+      <div className="text-left relative w-full rounded-xl bg-white dark:bg-gray-750 max-w-lg mx-auto">
+        {/* <div className="absolute left-5 -top-20 flex w-46 h-40"> */}
+        {/* <div className="absolute left-5 -top-20 flex w-46 h-40"> */}
+        <div className="px-5 pt-5 flex w-46 h-40">
           {imgSrc && (
             <img
               alt=""
               src={imgSrc}
-              className="absolute max-w-full max-h-full bottom-0 left-0 rounded shadow-md object-cover"
+              // className="absolute max-w-full max-h-full bottom-0 left-0 rounded shadow-md object-cover"
+              className="max-w-full max-h-full rounded shadow-md object-cover"
             />
           )}
 
@@ -104,7 +111,8 @@ export default function MessageUploadDialog({
           )}
         </div>
 
-        <div className="px-5 pt-24 pb-5">
+        {/* <div className="px-5 pt-24 pb-5"> */}
+        <div className="px-5 pt-5 pb-5">
           <DialogTitle className="truncate text-left text-xl text-primary font-semibold select-none">
             {file?.name ?? ''}
           </DialogTitle>

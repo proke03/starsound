@@ -19,6 +19,7 @@ const dotClass = enabled =>
   h-1.5
   w-1.5
   rounded-full
+  bg-gray-600
   dark:bg-gray-100
   mr-2
   ${enabled ? 'opacity-100' : 'opacity-0'}
