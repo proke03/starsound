@@ -99,7 +99,7 @@ export default function UserContextMenu({
                     <div className="flex items-center ">
                       <div
                         className={`w-3 h-3 rounded-full mr-2.5 ${
-                          r.color ? 'bg-white' : 'dark:bg-gray-700'
+                          r.color ? '' : 'dark:bg-gray-700'
                         }`}
                         style={{ backgroundColor: r.color }}
                       />
