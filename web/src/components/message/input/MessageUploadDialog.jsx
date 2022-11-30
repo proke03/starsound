@@ -107,7 +107,8 @@ export default function MessageUploadDialog({
           )}
 
           {!imgSrc && FileIcon && (
-            <FileIcon className="h-full w-full text-white absolute bottom-0 left-0 transform -translate-x-8" />
+            // <FileIcon className="h-full w-full text-white absolute bottom-0 left-0 transform -translate-x-8" />
+            <FileIcon className="w-full h-full rounded shadow-md object-cover" />
           )}
         </div>
 
