@@ -1163,6 +1163,7 @@ export type Server = BaseEntity & {
 };
 
 export enum ServerCategory {
+  Animal = 'Animal',
   Arts = 'Arts',
   Business = 'Business',
   Culture = 'Culture',
