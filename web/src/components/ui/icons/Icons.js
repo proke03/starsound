@@ -11,6 +11,10 @@ export {
 } from 'react-icons/ri'
 
 export {
+  GiPlantsAndAnimals as IconCategoryAnimal,
+} from 'react-icons/gi'
+
+export {
   HiAtSymbol as IconAt,
   HiHashtag as IconHashtag,
   HiBell as IconBell,
