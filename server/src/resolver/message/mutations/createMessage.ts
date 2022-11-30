@@ -165,7 +165,7 @@ export async function createMessage(
     isTyping: false
   })
 
-  handleMessageLinks(em.fork(), message.id, notifyMessageChanged)
+  // handleMessageLinks(em.fork(), message.id, notifyMessageChanged)
 
   return message
 }
