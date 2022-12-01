@@ -21,8 +21,9 @@ import ShowPasswordButton from '@/components/ui/ShowPasswordButton'
 import { useTranslation } from 'react-i18next'
 import Tippy from '@tippyjs/react'
 import toast from 'react-hot-toast'
+import { policy } from '@/policy'
 
-const usernameRegex = /^[A-Za-z0-9-_]+$/gi
+const usernameRegex = /^[가-힣A-Za-z0-9-_]+$/gi
 
 export default function LoginDialog() {
   const { t } = useTranslation()
@@ -104,12 +105,12 @@ export default function LoginDialog() {
     setTimeout(() => {
       const _disabled = !(isCreateAccount
         ? !!username &&
-          username.length >= 3 &&
-          username.length <= 20 &&
+          username.length >= policy.user.nameMinLength &&
+          username.length <= policy.user.nameMaxLength &&
           usernameRegex.test(username) &&
           (!email || (!!email && isEmail(email))) &&
           !!password &&
-          password.length >= 6 &&
+          password.length >= policy.user.passwordMinLength &&
           !!confirmPassword &&
           confirmPassword === password &&
           emailVerified
@@ -195,13 +196,13 @@ export default function LoginDialog() {
                     {...register('username', {
                       required: true,
                       pattern: usernameRegex,
-                      maxLength: 20,
-                      minLength: 3
+                      maxLength: policy.user.nameMaxLength,
+                      minLength: policy.user.nameMinLength,
                     })}
                     className={`form-input-icon`}
                     placeholder={t('auth.createAccount.name')}
-                    minLength={3}
-                    maxLength={20}
+                    minLength={policy.user.nameMinLength}
+                    maxLength={policy.user.nameMaxLength}
                   />
                   <IconUser className={`form-input-icon-icon`} />
                 </div>
