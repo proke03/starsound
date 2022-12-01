@@ -197,7 +197,7 @@ export default function RoleSettings({ server }) {
             madeChanges ? 'translate-y-0' : 'translate-y-24'
           }`}
         >
-          <div className="text-tertiary text-sm">{t('permissions.notSaved')}</div>
+          <div className="text-tertiary text-sm">{t('permissions.confirmSave')}</div>
           <div className="flex items-center space-x-3 ml-auto">
             <button
               type="button"

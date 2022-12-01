@@ -13,7 +13,7 @@ export const permissions = {
   saveChanges: '변경사항 저장',
   discard: '취소',
   discardChanges: '변경 사항 취소',
-  notSaved: '변경 사항이 저장되지 않았습니다',
+  confirmSave: '변경사항을 저장하시겠습니까?',
   continue: '계속하기',
   color: '색상',
   permissions: '권한',

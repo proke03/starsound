@@ -13,7 +13,7 @@ export const permissions = {
   saveChanges: 'Save Changes',
   discard: 'Discard',
   discardChanges: 'Discard Changes',
-  notSaved: 'Changes not saved',
+  confirmSave: 'Changes not saved',
   continue: 'Continue',
   color: 'Color',
   permissions: 'Permissions',
