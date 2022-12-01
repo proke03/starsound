@@ -24,6 +24,7 @@ export async function seed(em: EntityManager) {
   if (!seedServer) {
     const seedUser = em.create(User, {
       username: process.env.SEED_USER_NAME,
+      email: process.env.SEED_USER_EMAIL,
       isAdmin: true,
       //FIXME: 교체
       // avatarUrl: process.env.SEED_USER_AVATAR_URL,
