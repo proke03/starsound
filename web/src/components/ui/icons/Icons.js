@@ -11,10 +11,6 @@ export {
 } from 'react-icons/ri'
 
 export {
-  GiPlantsAndAnimals as IconCategoryAnimal,
-} from 'react-icons/gi'
-
-export {
   HiAtSymbol as IconAt,
   HiHashtag as IconHashtag,
   HiBell as IconBell,
@@ -109,7 +105,8 @@ export {
   MdFormatListNumbered as IconFormatListNumbered,
   MdFormatListBulleted as IconFormatListBulleted,
   // CATEGORIES
-  MdTv as IconCategoryEntertainment
+  MdTv as IconCategoryEntertainment,
+  MdOutlinePets as IconCategoryAnimal,
 } from 'react-icons/md'
 
 export {
