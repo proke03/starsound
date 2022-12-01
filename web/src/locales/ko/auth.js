@@ -11,7 +11,7 @@ export const auth = {
     password: '비밀번호',
     passwordConfirm: '비밀번호 확인',
     userNameLength: '닉네임은 3-20자 사이여야 합니다',
-    usernameLimit: '알파벳, 숫자, 대시(-), 언더바(_)만 사용 가능합니다.',
+    usernameLimit: '한글, 알파벳, 숫자, 대시(-), 언더바(_)만 사용 가능합니다.',
     invalidEmail: '유효하지 않은 이메일입니다.',
     emailRequired: '이메일을 입력해주세요.',
     verifyEmail: '이메일 인증',
