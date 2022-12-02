@@ -19,7 +19,7 @@ export async function moveServerFolder(
   logger('moveServerFolder')
   const user = await em.findOneOrFail(User, userId)
   const folder = await em.findOneOrFail(Folder, folderId, ['server'])
-  if (!folder.server) throw new Error('Not a server folder')
+  if (!folder.server) throw new Error('error.folder.notForServer')
   await user.checkServerPermission(
     em,
     folder.server.id,

@@ -16,9 +16,9 @@ export async function deleteFolder(
   logger('deleteFolder')
   const user = await em.findOneOrFail(User, userId)
   const folder = await em.findOneOrFail(Folder, folderId, ['owner', 'server'])
-  if (folder.isDeleted) throw new Error('Folder already deleted')
+  if (folder.isDeleted) throw new Error('error.folder.alreadyDeleted')
   if (folder.owner && folder.owner !== user)
-    throw new Error('Must be owner to delete folder')
+    throw new Error('error.folder.notOwner')
   else if (folder.server)
     await user.checkServerPermission(
       em,

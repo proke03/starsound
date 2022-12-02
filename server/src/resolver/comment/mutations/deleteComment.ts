@@ -21,7 +21,7 @@ export async function deleteComment(
   const comment = await em.findOneOrFail(Comment, commentId, [
     'post.server.owner'
   ])
-  if (comment.isDeleted) throw new Error('Comment already deleted')
+  if (comment.isDeleted) throw new Error('error.comment.alreadyDeleted')
   if (comment.author !== user)
     await user.checkServerPermission(
       em,

@@ -25,7 +25,7 @@ export async function updateCommentVote(
     'post.server'
   ])
   if (type === VoteType.Down && !comment.post.server.isDownvotesEnabled)
-    throw new Error('This server does not allow downvotes')
+    throw new Error('error.comment.downvoteNotAllowed')
   let vote = await em.findOne(CommentVote, { comment, user })
   if (!vote) vote = em.create(CommentVote, { comment, user })
   if (type === VoteType.Up) {

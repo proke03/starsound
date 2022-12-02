@@ -8,6 +8,7 @@ import { policy } from '@/policy'
 
 @InputType()
 export class CreateCommentInput {
+  // TODO: literal error message
   @Field()
   @Length(policy.comment.minLength, policy.comment.maxLength, {
     message: `Text must be between ${policy.comment.minLength} and ${policy.comment.maxLength} characters`
@@ -38,7 +39,7 @@ export async function createComment(
     ? await em.findOneOrFail(Comment, parentCommentId, ['author'])
     : null
 
-  if (parentComment && parentComment.isDeleted) throw new Error('Cannot reply to deleted comment')
+  if (parentComment && parentComment.isDeleted) throw new Error('error.comment.deletedComment')
 
   text = handleText(text)
 

@@ -7,7 +7,10 @@ export const error = {
     '(useChannelPermissions) channelPermissions and serverPermissions must have same length',
   folder: {
     deleted: '폴더를 삭제했습니다',
+    alreadyDeleted: '이미 삭제된 폴더입니다',
     notOwner: '해당 폴더를 소유하고 있지 않습니다',
+    cannotFollowYourOwn: '자신의 폴더를 팔로우할 수 없습니다',
+    alreadyFollowing: '이미 팔로우한 폴더입니다',
     nameTooLong: '이름은 300자 이하여야 합니다',
     alreadyExists: '이미 존재하는 폴더 이름입니다',
     noPermission: '폴더를 수정할 권한이 없습니다',
@@ -20,6 +23,8 @@ export const error = {
     owner: '이 폴더의 소유자입니다',
     private: '비공개 폴더입니다',
     friends: `해당 폴더를 소유한 사용자의 친구만 볼 수 있습니다`,
+    notForServer: '서버 폴더가 아닙니다',
+    cannotChange: '서버 폴더의 협업, 공개 여부를 수정할 수 없습니다'
   },
   message: {
     notAuthor: '해당 메시지의 작성자가 아닙니다',
@@ -33,6 +38,9 @@ export const error = {
     empty: '댓글을 입력해주세요',
     alreadyDeleted: '댓글이 이미 삭제되었습니다',
     alreadyVoted: '당신은 이미 이 댓글에 투표했습니다',
+    deletedComment: '삭제된 댓글입니다',
+    notPined: '고정된 댓글이 아닙니다',
+    downvoteNotAllowed: '이 서버에서는 비추천을 할 수 없습니다.',
   },
   post: {
     notAuthor: '당신은 이 포스트의 작성자가 아닙니다',
@@ -54,7 +62,8 @@ export const error = {
     inviteExpired: '행성 초대가 만료되었습니다',
   },
   channel: {
-    missingPermission: 'Missing channel permission {{replace}}'
+    missingPermission: 'Missing channel permission {{replace}}',
+    nameAlradyExists: '이미 존재하는 채널명입니다.',
   },
   user: {
     blocking: '당신은 이 사용자를 차단했습니다',

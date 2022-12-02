@@ -42,7 +42,7 @@ export async function updateFolder(
   if (folder.server) {
     if (isCollaborative || visibility)
       throw new Error(
-        'Cannot change collaborative or visibility on server folders'
+        'error.folder.cannotChange'
       )
     await user.checkServerPermission(
       em,
@@ -51,7 +51,8 @@ export async function updateFolder(
     )
   } else if (folder.owner) {
     if (folder.owner !== user)
-      throw new Error('You must be the owner to edit this folder')
+      // throw new Error('You must be the owner to edit this folder')
+      throw new Error('error.folder.notOwner')
   }
 
   em.assign(folder, {
