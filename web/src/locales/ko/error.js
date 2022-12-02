@@ -33,6 +33,9 @@ export const error = {
     empty: '댓글을 입력해주세요',
     alreadyDeleted: '댓글이 이미 삭제되었습니다',
     alreadyVoted: '당신은 이미 이 댓글에 투표했습니다',
+    deletedComment: '삭제된 댓글입니다',
+    notPined: '고정된 댓글이 아닙니다',
+    downvoteNotAllowed: '이 서버에서는 비추천을 할 수 없습니다.',
   },
   post: {
     notAuthor: '당신은 이 포스트의 작성자가 아닙니다',
@@ -54,7 +57,8 @@ export const error = {
     inviteExpired: '행성 초대가 만료되었습니다',
   },
   channel: {
-    missingPermission: 'Missing channel permission {{replace}}'
+    missingPermission: 'Missing channel permission {{replace}}',
+    nameAlradyExists: '이미 존재하는 채널명입니다.',
   },
   user: {
     blocking: '당신은 이 사용자를 차단했습니다',

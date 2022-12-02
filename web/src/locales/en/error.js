@@ -32,7 +32,10 @@ export const error = {
     notAuthor: 'You are not the author of this comment',
     empty: 'Comment cannot be empty',
     alreadyDeleted: 'Comment already deleted',
-    alreadyVoted: 'You have already voted this comment'
+    alreadyVoted: 'You have already voted this comment',
+    deletedComment: 'Cannot reply to deleted comment',
+    notPined: 'Comment not pinned',
+    downvoteNotAllowed: 'This server does not allow downvotes',
   },
   post: {
     notAuthor: 'You are not the author of this post',
@@ -54,7 +57,8 @@ export const error = {
     inviteExpired: 'This invite has expired.'
   },
   channel: {
-    missingPermission: 'Missing channel permission {{replace}}'
+    missingPermission: 'Missing channel permission {{replace}}',
+    nameAlradyExists: 'Channel with that name already exists',
   },
   user: {
     blocking: 'You are blocking this user',

@@ -24,7 +24,7 @@ export async function updateComment(
   logger('updateComment')
   const comment = await em.findOneOrFail(Comment, commentId, ['author'])
   if (comment.author !== em.getReference(User, userId))
-    throw new Error('Not author')
+    throw new Error('error.comment.notAuthor')
   comment.text = handleText(text)
   await em.persistAndFlush(comment)
   await notifyCommentChanged({ id: comment.id, type: ChangeType.Updated })
