@@ -3,7 +3,7 @@ version: "3"
 services:
   # backend:
   #   build: .
-  #   image: jangmin/starsound-backend
+  #   image: jangmin/backend
   #   links: 
   #     - postgres:postgres
   #   ports:
@@ -17,9 +17,8 @@ services:
 
   # nginx:
   #   build: .
-  #   image: jangmin/starsound-nginx
+  #   image: jangmin/nginx
   #   ports:
-  #     - "8000:80"
   #     - "8000:443"
   #   networks:
   #     - postgres
