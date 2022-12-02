@@ -7,7 +7,10 @@ export const error = {
     '(useChannelPermissions) channelPermissions and serverPermissions must have same length',
   folder: {
     deleted: 'Folder has been deleted',
+    alreadyDeleted: 'Folder already deleted',
     notOwner: 'You do not own this folder',
+    cannotFollowYourOwn: 'Cannot follow your own folder',
+    alreadyFollowing: 'Already following this folder',
     nameTooLong: 'Name cannot be longer than 300 characters',
     alreadyExists: 'You already have a folder with that name',
     noPermission: 'You do not have permission to modify this folder.',
@@ -19,7 +22,9 @@ export const error = {
     notInFolder: 'That post is not in this folder.',
     owner: 'You are the owner of this folder',
     private: 'That folder is private.',
-    friends: `Must be friends with this folder's owner`
+    friends: `Must be friends with this folder's owner`,
+    notForServer: 'Not a server folder',
+    cannotChange: 'Cannot change collaborative or visibility on server folders',
   },
   message: {
     notAuthor: 'You are not the author of this message',
