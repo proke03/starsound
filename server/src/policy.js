@@ -1,5 +1,6 @@
 export const policy = {
   channel: {
+    nameRegex: /^[가-힣A-Za-z0-9-_]+/,
     nameLength: 30,
     descriptionLength: 500,
   },

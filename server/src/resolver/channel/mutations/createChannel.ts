@@ -20,7 +20,7 @@ export class CreateChannelInput {
 
   @Field()
   @MaxLength(policy.channel.nameLength)
-  @Matches(/^[a-z0-9-_]+/)
+  @Matches(policy.channel.nameRegex)
   name: string
 
   @Field({ nullable: true })
@@ -52,7 +52,7 @@ export async function createChannel(
     isDeleted: false,
     name: { $ilike: handleUnderscore(name) }
   })
-  if (foundChannel) throw new Error('Channel with that name already exists')
+  if (foundChannel) throw new Error('error.channel.nameAlreadyExists')
 
   const firstChannel = await em.findOne(
     Channel,
