@@ -22,6 +22,8 @@ import { useDebounce } from 'react-use'
 import { canEmbed } from '@/components/ui/CustomEmbed'
 import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import { useStore } from './../../../hooks/useStore';
+import { policy } from '@/policy'
+import PostDropZone from '@/components/post/create/PostDropZone'
 
 const labelClass = ctl(`
   block
@@ -148,8 +150,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
     })
   }
 
-  const onChangeImages = e => {
-    const files = e.target.files
+  function changeImages(files) {
     if (files && files.length > 0) {
       setImages(
         Array.from(files).map(file => ({ file, caption: '', linkUrl: '' }))
@@ -158,20 +159,24 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       for (let i = 0; i < files.length; i++) {
         readers.push(readFileAsDataURL(files[i]))
       }
-      Promise.all(readers).then(values =>
-        setImages(
-          values.map((data, i) => ({
-            file: files[i],
-            caption: '',
-            linkUrl: '',
-            data
-          }))
-        )
+      Promise.all(readers).then(values => setImages(
+        values.map((data, i) => ({
+          file: files[i],
+          caption: '',
+          linkUrl: '',
+          data
+        }))
+      )
       )
     }
   }
-  const onAddImages = e => {
+
+  const onChangeImages = e => {
     const files = e.target.files
+    changeImages(files)
+  }
+  
+  function addImages(files) {
     if (files && files.length > 0) {
       setImages([
         ...images,
@@ -194,6 +199,18 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       })
     }
   }
+
+  const onAddImages = e => {
+    const files = e.target.files
+    addImages(files)
+  }
+
+  const [files, setFiles] = useState([])
+  useEffect(() => {
+    // const files = e.target.files
+    changeImages(files)
+  }, [files])
+
   const [selectedImage, setSelectedImage] = useState(0)
   const { postToEdit, setPostToEdit } = useStore(state => state)
 
@@ -315,7 +332,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             setServer={setServer}
           />
           <div
-            className={tabClass(currentTab === Tab.Text)}
+            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Text)}`}
             onClick={() => {
               setCurrentTab(Tab.Text)
               setValue('linkUrl', '')
@@ -326,7 +343,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             {t('post.type.text_short')}
           </div>
           <div
-            className={tabClass(currentTab === Tab.Link)}
+            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Link)}`}
             onClick={() => {
               setCurrentTab(Tab.Link)
               setText('')
@@ -337,7 +354,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             {t('post.type.link_short')}
           </div>
           <div
-            className={tabClass(currentTab === Tab.Image)}
+            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Image)}`}
             onClick={() => {
               setCurrentTab(Tab.Image)
               setValue('linkUrl', '')
@@ -502,11 +519,11 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   </div>
 
                   {images && images?.length > 0 && (
-                    <div className="mt-5 flex space-x-5">
+                    <div className="mt-5 flex flex-col sm:flex-row sm:space-x-5">
                       {
                         images[selectedImage]?.file?
                           <div
-                            className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                            className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
                             style={{
                               backgroundImage: `url(${images[selectedImage]?.data})`
                             }}
@@ -518,10 +535,10 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                           />
                       }
 
-                      <div className="space-y-5 max-w-full flex-grow">
+                      <div className="mt-5 sm:mt-0 space-y-5 max-w-full flex-grow">
                         <div>
                           <label htmlFor="caption" className={labelClass}>
-                            Caption
+                            {t('post.create.caption')}
                             {images[selectedImage]?.caption?.length > 0 &&
                               ` (${images[selectedImage]?.caption?.length}/180)`}
                           </label>
@@ -548,7 +565,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
 
                         <div>
                           <label htmlFor="link" className={labelClass}>
-                            Link
+                            {t('post.create.link')}
                           </label>
                           <input
                             id="link"
@@ -572,22 +589,23 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   )}
                 </div>
               ) : (
-                <div className="relative">
-                  <input
-                    type="file"
-                    id="files"
-                    accept="image/png,image/jpeg,image/webp,image/gif"
-                    hidden
-                    multiple
-                    onChange={onChangeImages}
-                  />
-                  <label
-                    htmlFor="files"
-                    className="select-none cursor-pointer flex items-center justify-center text-base text-tertiary h-30 border border-dashed dark:border-gray-700 rounded-md transition dark:hover:bg-gray-775"
-                  >
-                    {t('post.create.imageDrop')}
-                  </label>
-                </div>
+                <PostDropZone placeholder={t('post.create.imageDrop')} setFiles={setFiles} />
+                // <div className="relative">
+                //   <input
+                //     type="file"
+                //     id="files"
+                //     accept="image/png,image/jpeg,image/webp,image/gif"
+                //     hidden
+                //     multiple
+                //     onChange={onChangeImages}
+                //   />
+                //   <label
+                //     htmlFor="files"
+                //     className="select-none cursor-pointer flex items-center justify-center text-base text-tertiary h-30 border border-dashed dark:border-gray-700 rounded-md transition dark:hover:bg-gray-775"
+                //   >
+                //     {t('post.create.imageDrop')}
+                //   </label>
+                // </div>
               )}
             </div>
           )}

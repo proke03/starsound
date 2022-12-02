@@ -113,11 +113,12 @@ export async function createPost(
     linkMetadata: linkUrl ? await scrapeMetadata(linkUrl) : null,
     images: postImages,
     text: text,
-    voteCount: 1
+    voteCount: 0
   })
   post.voteType = VoteType.Up
-  const vote = em.create(PostVote, { post, user, type: VoteType.Up })
-  await em.persistAndFlush([post, vote])
+  // const vote = em.create(PostVote, { post, user, type: VoteType.Up })
+  // await em.persistAndFlush([post, vote])
+  await em.persistAndFlush([post])
   await notifyPostChanged({ id: post.id, type: ChangeType.Added })
   return post
 }

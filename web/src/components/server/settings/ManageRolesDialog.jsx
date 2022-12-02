@@ -320,7 +320,7 @@ export default function ManageRolesDialog({ open, setOpen, server }) {
                   madeChanges ? '' : ''
                 }`}
               >
-                <div className="text-secondary text-sm">{t('permissions.notSaved')}</div>
+                <div className="text-secondary text-sm">{t('permissions.confirmSave')}</div>
                 <div className="flex items-center space-x-3 ml-auto">
                   <button
                     type="button"
@@ -331,7 +331,7 @@ export default function ManageRolesDialog({ open, setOpen, server }) {
                       setPermissions(selectedRole.permissions)
                     }}
                   >
-                    {t('permissions.cancel')}
+                    {t('permissions.discard')}
                   </button>
                   <button
                     type="button"

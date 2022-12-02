@@ -105,7 +105,8 @@ export {
   MdFormatListNumbered as IconFormatListNumbered,
   MdFormatListBulleted as IconFormatListBulleted,
   // CATEGORIES
-  MdTv as IconCategoryEntertainment
+  MdTv as IconCategoryEntertainment,
+  MdOutlinePets as IconCategoryAnimal,
 } from 'react-icons/md'
 
 export {

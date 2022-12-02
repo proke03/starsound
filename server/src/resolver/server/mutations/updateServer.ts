@@ -60,8 +60,14 @@ export async function updateServer(
     displayName: displayName ?? server.displayName,
     description: description ?? server.description,
     category: category ?? server.category,
-    avatarUrl: await uploadImageFileSingle(avatarFile, { width: policy.server.avatarWidth, height: policy.server.avatarHeight }, false, server.avatarUrl?? undefined),
-    bannerUrl: await uploadImageFileSingle(bannerFile, { width: policy.server.bannerWidth, height: policy.server.bannerHeight }, false, server.bannerUrl?? undefined),
+    avatarUrl: avatarFile?
+    await uploadImageFileSingle(avatarFile, { width: policy.server.avatarWidth, height: policy.server.avatarHeight }, false, server.avatarUrl?? undefined)
+    :
+    server.avatarUrl,
+    bannerUrl: bannerFile?
+    await uploadImageFileSingle(bannerFile, { width: policy.server.bannerWidth, height: policy.server.bannerHeight }, false, server.bannerUrl?? undefined)
+    :
+    server.bannerUrl,
     isDownvotesEnabled: isDownvotesEnabled ?? server.isDownvotesEnabled
   })
   await em.persistAndFlush(server)

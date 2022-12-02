@@ -1,3 +1,11 @@
+mutation verifyEmail($input: CheckEmailInput!) {
+  verifyEmail(input: $input)
+}
+
+mutation checkCode($input: CheckVerificationCodeInput!) {
+  checkCode(input: $input)
+}
+
 mutation createAccount($input: CreateAccountInput!) {
   createAccount(input: $input) {
     accessToken

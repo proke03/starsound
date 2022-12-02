@@ -92,6 +92,15 @@ export enum ChannelType {
   Restricted = 'Restricted'
 }
 
+export type CheckEmailInput = {
+  email?: Maybe<Scalars['EmailAddress']>;
+};
+
+export type CheckVerificationCodeInput = {
+  email?: Maybe<Scalars['EmailAddress']>;
+  verificationCode: Scalars['String'];
+};
+
 export type CloseDmInput = {
   userId: Scalars['ID'];
 };
@@ -445,6 +454,7 @@ export type Mutation = {
   changeOnlineStatus: User;
   changePassword: User;
   changeUserAvatar: User;
+  checkCode: Scalars['Boolean'];
   closeDm: User;
   createAccount: LoginResponse;
   createChannel: Channel;
@@ -509,6 +519,7 @@ export type Mutation = {
   updateRole: Role;
   updateServer: Server;
   updateTyping: Scalars['Boolean'];
+  verifyEmail: Scalars['Boolean'];
 };
 
 
@@ -549,6 +560,11 @@ export type MutationChangePasswordArgs = {
 
 export type MutationChangeUserAvatarArgs = {
   input: ChangeUserAvatarInput;
+};
+
+
+export type MutationCheckCodeArgs = {
+  input: CheckVerificationCodeInput;
 };
 
 
@@ -872,6 +888,11 @@ export type MutationUpdateTypingArgs = {
 };
 
 
+export type MutationVerifyEmailArgs = {
+  input: CheckEmailInput;
+};
+
+
 export enum OnlineStatus {
   Away = 'Away',
   DoNotDisturb = 'DoNotDisturb',
@@ -1142,6 +1163,7 @@ export type Server = BaseEntity & {
 };
 
 export enum ServerCategory {
+  Animal = 'Animal',
   Arts = 'Arts',
   Business = 'Business',
   Culture = 'Culture',
@@ -2478,6 +2500,26 @@ export type UnfeatureServerMutation = (
     { __typename?: 'Server' }
     & ServerFragment
   ) }
+);
+
+export type VerifyEmailMutationVariables = Exact<{
+  input: CheckEmailInput;
+}>;
+
+
+export type VerifyEmailMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'verifyEmail'>
+);
+
+export type CheckCodeMutationVariables = Exact<{
+  input: CheckVerificationCodeInput;
+}>;
+
+
+export type CheckCodeMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'checkCode'>
 );
 
 export type CreateAccountMutationVariables = Exact<{
@@ -5492,6 +5534,68 @@ export function useUnfeatureServerMutation(baseOptions?: Apollo.MutationHookOpti
 export type UnfeatureServerMutationHookResult = ReturnType<typeof useUnfeatureServerMutation>;
 export type UnfeatureServerMutationResult = Apollo.MutationResult<UnfeatureServerMutation>;
 export type UnfeatureServerMutationOptions = Apollo.BaseMutationOptions<UnfeatureServerMutation, UnfeatureServerMutationVariables>;
+export const VerifyEmailDocument = gql`
+    mutation verifyEmail($input: CheckEmailInput!) {
+  verifyEmail(input: $input)
+}
+    `;
+export type VerifyEmailMutationFn = Apollo.MutationFunction<VerifyEmailMutation, VerifyEmailMutationVariables>;
+
+/**
+ * __useVerifyEmailMutation__
+ *
+ * To run a mutation, you first call `useVerifyEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVerifyEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [verifyEmailMutation, { data, loading, error }] = useVerifyEmailMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useVerifyEmailMutation(baseOptions?: Apollo.MutationHookOptions<VerifyEmailMutation, VerifyEmailMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<VerifyEmailMutation, VerifyEmailMutationVariables>(VerifyEmailDocument, options);
+      }
+export type VerifyEmailMutationHookResult = ReturnType<typeof useVerifyEmailMutation>;
+export type VerifyEmailMutationResult = Apollo.MutationResult<VerifyEmailMutation>;
+export type VerifyEmailMutationOptions = Apollo.BaseMutationOptions<VerifyEmailMutation, VerifyEmailMutationVariables>;
+export const CheckCodeDocument = gql`
+    mutation checkCode($input: CheckVerificationCodeInput!) {
+  checkCode(input: $input)
+}
+    `;
+export type CheckCodeMutationFn = Apollo.MutationFunction<CheckCodeMutation, CheckCodeMutationVariables>;
+
+/**
+ * __useCheckCodeMutation__
+ *
+ * To run a mutation, you first call `useCheckCodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCheckCodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [checkCodeMutation, { data, loading, error }] = useCheckCodeMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCheckCodeMutation(baseOptions?: Apollo.MutationHookOptions<CheckCodeMutation, CheckCodeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CheckCodeMutation, CheckCodeMutationVariables>(CheckCodeDocument, options);
+      }
+export type CheckCodeMutationHookResult = ReturnType<typeof useCheckCodeMutation>;
+export type CheckCodeMutationResult = Apollo.MutationResult<CheckCodeMutation>;
+export type CheckCodeMutationOptions = Apollo.BaseMutationOptions<CheckCodeMutation, CheckCodeMutationVariables>;
 export const CreateAccountDocument = gql`
     mutation createAccount($input: CreateAccountInput!) {
   createAccount(input: $input) {

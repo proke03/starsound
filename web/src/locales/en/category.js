@@ -1,5 +1,6 @@
 export const category = {
   Featured: 'Featured',
+  Animal: 'Animal',
   Arts: 'Arts',
   Business: 'Business',
   Culture: 'Culture',
@@ -12,10 +13,10 @@ export const category = {
   Memes: 'Memes',
   Meta: 'Meta',
   News: 'News',
+  Other: 'Other',
   Politics: 'Politics',
   Programming: 'Programming',
   Science: 'Science',
   Sports: 'Sports',
   Technology: 'Technology',
-  Other: 'Other'
 }

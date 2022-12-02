@@ -1,4 +1,5 @@
 import {
+  IconCategoryAnimal,
   IconCategoryArts,
   IconCategoryBusiness,
   IconCategoryCulture,
@@ -18,7 +19,7 @@ import {
   IconCategoryScience,
   IconCategoryTechnology,
   IconAll,
-  IconFeatured
+  IconFeatured,
 } from '@/components/ui/icons/Icons'
 
 export const getCategoryIcon = category => {
@@ -26,6 +27,8 @@ export const getCategoryIcon = category => {
   switch (category) {
     case 'Featured':
       return IconFeatured
+    case 'Animal':
+      return IconCategoryAnimal
     case 'Arts':
       return IconCategoryArts
     case 'Business':

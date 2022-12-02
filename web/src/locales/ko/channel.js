@@ -39,4 +39,5 @@ export const channel = {
     description: '#{{channel}} 채널의 시작입니다.',
   },
   online: '온라인',
+  offline: '오프라인',
 }

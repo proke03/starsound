@@ -7,7 +7,9 @@ export const post = {
     invalidUrl: '유효한 주소가 아닙니다',
     imageDrop: "이미지를 여기에 끌어다 놓거나 클릭하여 이미지를 선택하세요",
     submit: '작성',
-    cancel: '취소'
+    cancel: '취소',
+    caption: '캡션',
+    link: '링크',
   },
   type: {
     text: '글 포스트',

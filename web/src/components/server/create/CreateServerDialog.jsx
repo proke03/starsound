@@ -20,7 +20,7 @@ import StyledDialog from '@/components/ui/dialog/StyledDialog'
 import Switch from '@/components/ui/Switch'
 import { useTranslation } from 'react-i18next'
 
-const serverRegex = /^[A-Za-z0-9_]+$/i
+const serverRegex = /^[가-힣A-Za-z0-9_]+$/i
 
 export default function CreateServerDialog({ open, setOpen, server }) {
   const { t } = useTranslation()
@@ -63,7 +63,7 @@ export default function CreateServerDialog({ open, setOpen, server }) {
     if (!nameChanged && displayName != null) {
       setValue(
         'name',
-        displayName.replace(' ', '_').replace(/[^A-Za-z0-9_]/i, '')
+        displayName.replace(' ', '_').replace(/[^가-힣A-Za-z0-9_]/i, '')
       )
     }
   }, [displayName])

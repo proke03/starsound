@@ -1,6 +1,7 @@
 import { registerEnumType } from 'type-graphql'
 
 export enum ServerCategory {
+  Animal = 'Animal',
   Arts = 'Arts',
   Business = 'Business',
   Culture = 'Culture',

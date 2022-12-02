@@ -191,7 +191,7 @@ function DeleteAccountDialog({ deleteOpen, setDeleteOpen }) {
 
   return (
     <Dialog isOpen={deleteOpen} close={() => setDeleteOpen(false)}>
-      <div className="max-w-md w-full rounded-md dark:bg-gray-800 shadow-lg p-4">
+      <div className="max-w-md w-full rounded-md bg-white dark:bg-gray-800 shadow-lg p-4">
         <div className="text-red-400 text-2xl font-semibold">
           {t('user.settings.deleteAccount')}
         </div>

@@ -10,7 +10,8 @@ export default function Page({ children, header, rightSidebar, leftSidebar }) {
       <div className="w-1 break-words flex flex-col flex-grow">
         {header}
         <div
-          className="h-full"
+          // className="h-full"
+          className="h-[calc(100%-3rem)]"
         >
           {children}
         </div>

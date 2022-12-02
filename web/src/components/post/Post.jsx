@@ -279,7 +279,7 @@ export default memo(function Post({
                 {!!post.linkUrl && (
                   <>
                     {post.linkMetadata ? (
-                      <div className="max-w-screen-sm w-full mt-2">
+                      <div className="max-w-full w-full mt-2">
                         <PostEmbed dark metadata={post.linkMetadata} />
                       </div>
                     ) : (

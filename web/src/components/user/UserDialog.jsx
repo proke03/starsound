@@ -213,7 +213,7 @@ export default memo(function UserDialog() {
     <Dialog closeOnOverlayClick isOpen={open} close={close}>
       <div
         onClick={e => e.stopPropagation()}
-        className="rounded-lg max-w-xl w-full dark:bg-gray-850"
+        className="rounded-lg max-w-xl w-full bg-white dark:bg-gray-850"
       >
         <div className="flex p-5">
           <UserAvatar

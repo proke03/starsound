@@ -7,7 +7,9 @@ export const post = {
     invalidUrl: 'Must be a valid URL',
     imageDrop: "Drag 'n' drop some images here, or click to select images",
     submit: 'Post',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    caption: 'CAPTION',
+    link: 'LINK',
   },
   type: {
     text: 'Text Post',
