@@ -22,6 +22,8 @@ import { useDebounce } from 'react-use'
 import { canEmbed } from '@/components/ui/CustomEmbed'
 import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import { useStore } from './../../../hooks/useStore';
+import { policy } from '@/policy'
+import PostDropZone from '@/components/post/create/PostDropZone'
 
 const labelClass = ctl(`
   block
@@ -148,8 +150,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
     })
   }
 
-  const onChangeImages = e => {
-    const files = e.target.files
+  function changeImages(files) {
     if (files && files.length > 0) {
       setImages(
         Array.from(files).map(file => ({ file, caption: '', linkUrl: '' }))
@@ -158,20 +159,24 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       for (let i = 0; i < files.length; i++) {
         readers.push(readFileAsDataURL(files[i]))
       }
-      Promise.all(readers).then(values =>
-        setImages(
-          values.map((data, i) => ({
-            file: files[i],
-            caption: '',
-            linkUrl: '',
-            data
-          }))
-        )
+      Promise.all(readers).then(values => setImages(
+        values.map((data, i) => ({
+          file: files[i],
+          caption: '',
+          linkUrl: '',
+          data
+        }))
+      )
       )
     }
   }
-  const onAddImages = e => {
+
+  const onChangeImages = e => {
     const files = e.target.files
+    changeImages(files)
+  }
+  
+  function addImages(files) {
     if (files && files.length > 0) {
       setImages([
         ...images,
@@ -194,6 +199,18 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       })
     }
   }
+
+  const onAddImages = e => {
+    const files = e.target.files
+    addImages(files)
+  }
+
+  const [files, setFiles] = useState([])
+  useEffect(() => {
+    // const files = e.target.files
+    changeImages(files)
+  }, [files])
+
   const [selectedImage, setSelectedImage] = useState(0)
   const { postToEdit, setPostToEdit } = useStore(state => state)
 
@@ -572,22 +589,23 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   )}
                 </div>
               ) : (
-                <div className="relative">
-                  <input
-                    type="file"
-                    id="files"
-                    accept="image/png,image/jpeg,image/webp,image/gif"
-                    hidden
-                    multiple
-                    onChange={onChangeImages}
-                  />
-                  <label
-                    htmlFor="files"
-                    className="select-none cursor-pointer flex items-center justify-center text-base text-tertiary h-30 border border-dashed dark:border-gray-700 rounded-md transition dark:hover:bg-gray-775"
-                  >
-                    {t('post.create.imageDrop')}
-                  </label>
-                </div>
+                <PostDropZone placeholder={t('post.create.imageDrop')} setFiles={setFiles} />
+                // <div className="relative">
+                //   <input
+                //     type="file"
+                //     id="files"
+                //     accept="image/png,image/jpeg,image/webp,image/gif"
+                //     hidden
+                //     multiple
+                //     onChange={onChangeImages}
+                //   />
+                //   <label
+                //     htmlFor="files"
+                //     className="select-none cursor-pointer flex items-center justify-center text-base text-tertiary h-30 border border-dashed dark:border-gray-700 rounded-md transition dark:hover:bg-gray-775"
+                //   >
+                //     {t('post.create.imageDrop')}
+                //   </label>
+                // </div>
               )}
             </div>
           )}
