@@ -47,12 +47,13 @@ export async function createComment(
     parentComment,
     post,
     author: user,
-    voteCount: 1
+    voteCount: 0
   })
   comment.voteType = VoteType.Up
-  const vote = em.create(CommentVote, { comment, user, type: VoteType.Up })
+  // const vote = em.create(CommentVote, { comment, user, type: VoteType.Up })
   post.commentCount++
-  await em.persistAndFlush([comment, post, vote])
+  // await em.persistAndFlush([comment, post, vote])
+  await em.persistAndFlush([comment, post])
 
   let reply: Reply
   if (parentComment) {
