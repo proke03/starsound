@@ -8,6 +8,7 @@ import Button from '@/components/ui/Button'
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { useCreateFolderMutation } from '@/graphql/hooks'
+import { policy } from '@/policy'
 
 export default function CreateFolder({ server }) {
   const { t } = useTranslation()
@@ -71,9 +72,11 @@ export default function CreateFolder({ server }) {
               <input
                 {...register('name', {
                   required: true,
-                  maxLength: 300
+                  minLength: policy.folder.nameMinLength,
+                  maxLength: policy.folder.nameMaxLength
                 })}
-                maxLength={300}
+                minLength={policy.folder.nameMinLength}
+                maxLength={policy.folder.nameMaxLength}
                 className="textbox px-3"
                 id="name"
               />
