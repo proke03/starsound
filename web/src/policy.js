@@ -45,6 +45,7 @@ export const policy = {
     nameMaxLength: 30,
   },
   server: {
+    maxOwn: 5,
     nameMinLength: 3,
     nameMaxLength: 21,
     displayNameMinLength: 1,
