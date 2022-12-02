@@ -36,7 +36,7 @@ export default function CommentContextMenu({ comment, post, ContextMenuItem }) {
             label={t('comment.context.edit')}
           />
         }
-        {/*{canManageComments && (
+        {canManageComments && (
           <ContextMenuItem
             label={
               comment.isPinned
@@ -45,7 +45,7 @@ export default function CommentContextMenu({ comment, post, ContextMenuItem }) {
             }
             onClick={() => togglePin()}
           />
-        )}*/}
+        )}
         {!!currentUser && !comment.isDeleted && (
           <ContextMenuItem
             onClick={() => setReplyingCommentId(comment?.id)}
