@@ -62,7 +62,8 @@ export async function createServer(
   logger('createServer')
 
   const ownerCount = await em.count(Server, { owner: userId })
-  if (ownerCount >= 10) throw new Error('Cannot own more than 10 planets')
+  if (ownerCount >= policy.server.maxOwn) 
+    throw new Error(`Cannot own more than ${policy.server.maxOwn} planets`)
 
   name = name.trim()
   displayName = displayName.trim()
@@ -95,7 +96,8 @@ export async function createServer(
     name: handleUnderscore(name),
     isDeleted: false
   })
-  if (foundServer) throw new Error('Planet with that name already exists')
+  if (foundServer) 
+    throw new Error('Planet with that name already exists')
 
   const server = em.create(Server, {
     name,
