@@ -26,7 +26,7 @@ export async function pinnedPosts(
     Post,
     {
       $and: [
-        {isPinned: true},
+        { isPinned: true },
         servers.length ? { server: servers } : {},
         // folder ? { folderPosts: { folder } } : {}
       ],

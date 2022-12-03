@@ -7,16 +7,19 @@ export async function pinnedComments(
   { em }: Context,
   postId : string,
 ): Promise<Comment[]> {
-  logger('comments')
+  logger('pinnedComments')
   const post = await em.findOneOrFail(Post, postId)
-  return em.find(
+  
+  const comments = await em.find(
     Comment,
     { 
       $and: [
-        {isPinned: true},
-        {post: post},
+        { isPinned: true },
+        { post: post },
       ],
     },
-    {orderBy: { pinnedAt: QueryOrder.DESC }}
+    {orderBy: { pinnedAt: QueryOrder.DESC }},
   )
+
+  return comments
 }
