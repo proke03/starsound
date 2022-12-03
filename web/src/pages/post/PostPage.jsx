@@ -70,6 +70,7 @@ export default function PostPage({ postId }) {
           
           <div className="space-y-2 md:px-4 pt-4 px-0 pb-96">
             {pinnedComments.map((comment) => (
+              comment.isPinned &&
               <Comment
                 key={comment.id}
                 comment={comment}
