@@ -1403,7 +1403,7 @@ export type ChannelFragment = (
 
 export type CommentFragment = (
   { __typename?: 'Comment' }
-  & Pick<Comment, 'id' | 'text' | 'voteCount' | 'voteType' | 'isDeleted' | 'createdAt' | 'updatedAt'>
+  & Pick<Comment, 'id' | 'isPinned' | 'text' | 'voteCount' | 'voteType' | 'isDeleted' | 'createdAt' | 'updatedAt'>
   & { parentComment?: Maybe<(
     { __typename?: 'Comment' }
     & Pick<Comment, 'id'>
@@ -3086,6 +3086,7 @@ export const CommentFragmentDoc = gql`
   parentComment {
     id
   }
+  isPinned
   text
   voteCount
   voteType
