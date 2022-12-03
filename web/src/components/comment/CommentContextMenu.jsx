@@ -26,7 +26,6 @@ export default function CommentContextMenu({ comment, post, ContextMenuItem }) {
 
   const { setCommentToEdit } = useStore(state => state)
 
-  const [] = useStore
   return (
     <>
       <ContextMenuSection>
