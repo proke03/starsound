@@ -7,7 +7,11 @@ export const useToggleCommentPin = comment => {
 
   return useCallback(() => {
     const input = { commentId: comment.id }
-    if (comment.isPinned) unpin({ variables: { input } })
-    else pin({ variables: { input } })
+    if (comment.isPinned) unpin({ variables: { input } }).then(() => {
+      location.reload()
+    })
+    else pin({ variables: { input } }).then(() => {
+      location.reload()
+    })
   }, [comment, pin, unpin])
 }

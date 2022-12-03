@@ -4,6 +4,7 @@ import {
   Authorized,
   Ctx,
   FieldResolver,
+  ID,
   Mutation,
   Publisher,
   PubSub,
@@ -29,6 +30,7 @@ import {
 } from './mutations'
 import { ChangePayload, SubscriptionTopic } from '@/resolver/subscriptions'
 import { CommentsArgs, comments } from '@/resolver/comment/queries/comments'
+import { pinnedComments } from './queries'
 
 @Resolver(() => Comment)
 export class CommentResolver {
@@ -66,6 +68,15 @@ export class CommentResolver {
   }
 
   // --- Queries ---
+  @Query(() => [Comment], { nullable: true })
+  async pinnedComments(
+    @Ctx() ctx: Context,
+    @Arg('postId', () => ID)
+    postId: string
+  ): Promise<Comment[]> {
+    return pinnedComments(ctx, postId)
+  }
+
   @Query(() => [Comment])
   async comments(
     @Ctx() ctx: Context,

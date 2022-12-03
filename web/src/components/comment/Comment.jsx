@@ -1,7 +1,8 @@
 import {
   IconChevronDown,
   IconChevronUp,
-  IconDotsVertical
+  IconDotsVertical,
+  IconPin,
 } from '@/components/ui/icons/Icons'
 import { useState } from 'react'
 import UserAvatar from '@/components/user/UserAvatar'
@@ -282,6 +283,12 @@ export default function Comment({
                   </div>
                 )}
               </div>
+              {comment.isPinned &&
+                <>
+                  <div className="flex-grow" />
+                  <IconPin className="ml-1"/>
+                </>
+              }
             </div>
         }
       </ContextMenuTrigger>

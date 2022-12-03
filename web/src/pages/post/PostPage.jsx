@@ -6,7 +6,11 @@ import Comment from '@/components/comment/Comment'
 import CreateCommentCard from '@/components/comment/CreateCommentCard'
 import PostHeader from '@/pages/post/PostHeader'
 import Page from '@/components/ui/page/Page'
-import { useCommentsQuery, usePostQuery } from '@/graphql/hooks'
+import { 
+  usePinnedCommentsQuery, 
+  useCommentsQuery, 
+  usePostQuery 
+} from '@/graphql/hooks'
 import { Helmet } from 'react-helmet-async'
 import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import NotFound from '@/pages/NotFound'
@@ -22,6 +26,14 @@ export default function PostPage({ postId }) {
   })
   const post = data?.post
 
+  const { data: pinnedCommentsData } = usePinnedCommentsQuery({
+    variables: { postId }
+  })
+  const pinnedComments = useMemo(
+    () => createCommentTree(pinnedCommentsData?.pinnedComments ?? []),
+    [pinnedCommentsData?.pinnedComments]
+  )
+
   const { data: commentsData } = useCommentsQuery({
     variables: { postId }
   })
@@ -29,6 +41,7 @@ export default function PostPage({ postId }) {
     () => createCommentTree(commentsData?.comments ?? []),
     [commentsData?.comments]
   )
+
   const users = useMemo(() => getParticipants(comments, post), [comments])
 
   return (
@@ -54,9 +67,18 @@ export default function PostPage({ postId }) {
               <CreateCommentCard postId={postId} />
             </div>
           )}
-
+          
           <div className="space-y-2 md:px-4 pt-4 px-0 pb-96">
+            {pinnedComments.map((comment) => (
+              comment.isPinned &&
+              <Comment
+                key={comment.id}
+                comment={comment}
+                post={post}
+              />
+            ))}
             {comments.map((comment) => (
+              !comment.isPinned &&
               <Comment
                 key={comment.id}
                 comment={comment}

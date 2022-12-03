@@ -1,0 +1,11 @@
+query pinnedComments($postId: ID!) {
+  pinnedComments(postId: $postId) {
+    ...Comment
+    author {
+      ...User
+    }
+    serverUser {
+      ...ServerUser
+    }
+  }
+}

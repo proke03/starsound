@@ -3,6 +3,7 @@ fragment Comment on Comment {
   parentComment {
     id
   }
+  isPinned
   text
   voteCount
   voteType
