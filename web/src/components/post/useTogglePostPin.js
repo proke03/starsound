@@ -7,7 +7,11 @@ export const useTogglePostPin = post => {
 
   return useCallback(() => {
     const input = { postId: post.id }
-    if (post.isPinned) unpin({ variables: { input } })
-    else pin({ variables: { input } })
+    if (post.isPinned) unpin({ variables: { input } }).then(() => {
+      location.reload()
+    })
+    else pin({ variables: { input } }).then(() => {
+      location.reload()
+    })
   }, [post, pin, unpin])
 }
