@@ -996,6 +996,7 @@ export type Query = {
   folder: Folder;
   getLinkMeta?: Maybe<LinkMetadata>;
   messages: MessagesResponse;
+  pinnedComments?: Maybe<Array<Comment>>;
   pinnedPosts?: Maybe<Array<Post>>;
   post: Post;
   posts: PostsResponse;
@@ -1030,6 +1031,11 @@ export type QueryMessagesArgs = {
   limit?: Maybe<Scalars['PositiveInt']>;
   pinned?: Maybe<Scalars['Boolean']>;
   userId?: Maybe<Scalars['ID']>;
+};
+
+
+export type QueryPinnedCommentsArgs = {
+  postId: Scalars['ID'];
 };
 
 
@@ -2713,6 +2719,26 @@ export type MessagesQuery = (
       & MessageFragment
     )> }
   ) }
+);
+
+export type PinnedCommentsQueryVariables = Exact<{
+  postId: Scalars['ID'];
+}>;
+
+
+export type PinnedCommentsQuery = (
+  { __typename?: 'Query' }
+  & { pinnedComments?: Maybe<Array<(
+    { __typename?: 'Comment' }
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & UserFragment
+    )>, serverUser?: Maybe<(
+      { __typename?: 'ServerUser' }
+      & ServerUserFragment
+    )> }
+    & CommentFragment
+  )>> }
 );
 
 export type PinnedPostsQueryVariables = Exact<{
@@ -6074,6 +6100,49 @@ export function useMessagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<M
 export type MessagesQueryHookResult = ReturnType<typeof useMessagesQuery>;
 export type MessagesLazyQueryHookResult = ReturnType<typeof useMessagesLazyQuery>;
 export type MessagesQueryResult = Apollo.QueryResult<MessagesQuery, MessagesQueryVariables>;
+export const PinnedCommentsDocument = gql`
+    query pinnedComments($postId: ID!) {
+  pinnedComments(postId: $postId) {
+    ...Comment
+    author {
+      ...User
+    }
+    serverUser {
+      ...ServerUser
+    }
+  }
+}
+    ${CommentFragmentDoc}
+${UserFragmentDoc}
+${ServerUserFragmentDoc}`;
+
+/**
+ * __usePinnedCommentsQuery__
+ *
+ * To run a query within a React component, call `usePinnedCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePinnedCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePinnedCommentsQuery({
+ *   variables: {
+ *      postId: // value for 'postId'
+ *   },
+ * });
+ */
+export function usePinnedCommentsQuery(baseOptions: Apollo.QueryHookOptions<PinnedCommentsQuery, PinnedCommentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PinnedCommentsQuery, PinnedCommentsQueryVariables>(PinnedCommentsDocument, options);
+      }
+export function usePinnedCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PinnedCommentsQuery, PinnedCommentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PinnedCommentsQuery, PinnedCommentsQueryVariables>(PinnedCommentsDocument, options);
+        }
+export type PinnedCommentsQueryHookResult = ReturnType<typeof usePinnedCommentsQuery>;
+export type PinnedCommentsLazyQueryHookResult = ReturnType<typeof usePinnedCommentsLazyQuery>;
+export type PinnedCommentsQueryResult = Apollo.QueryResult<PinnedCommentsQuery, PinnedCommentsQueryVariables>;
 export const PinnedPostsDocument = gql`
     query pinnedPosts($serverId: ID!) {
   pinnedPosts(serverId: $serverId) {
