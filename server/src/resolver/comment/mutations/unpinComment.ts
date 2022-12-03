@@ -17,7 +17,7 @@ export async function unpinComment(
 ): Promise<Comment> {
   logger('unpinComment')
   const user = await em.findOneOrFail(User, userId)
-  const comment = await em.findOneOrFail(Comment, commentId, ['post.server'])
+  const comment = await em.findOneOrFail(Comment, commentId, ['post'])
   if (!comment.isPinned) throw new Error('error.comment.notPined')
   await user.checkServerPermission(
     em,

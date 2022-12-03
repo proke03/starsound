@@ -17,7 +17,7 @@ export async function pinComment(
 ): Promise<Comment> {
   logger('pinComment')
   const user = await em.findOneOrFail(User, userId)
-  const comment = await em.findOneOrFail(Comment, commentId, ['post.server'])
+  const comment = await em.findOneOrFail(Comment, commentId, ['post'])
   if (comment.isPinned) throw new Error('Comment already pinned')
   await user.checkServerPermission(
     em,
