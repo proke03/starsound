@@ -31,7 +31,7 @@ import {
   UpdatePostVoteInput
 } from './mutations'
 import { ChangePayload, SubscriptionTopic } from '@/resolver/subscriptions'
-import { PostsArgs, posts, post, PostsResponse } from '@/resolver/post/queries'
+import { PostsArgs, posts, post, PostsResponse, pinnedPosts } from '@/resolver/post/queries'
 import { scrapeMetadata } from '@/util'
 import { IsUrl, MaxLength } from 'class-validator'
 
@@ -71,6 +71,16 @@ export class PostResolver {
   }
 
   // --- Queries ---
+
+  @Query(() => [Post], { nullable: true })
+  async pinnedPosts(
+    @Ctx() ctx: Context,
+    @Arg('serverId', () => ID)
+    serverId: string
+  ): Promise<Post[]> {
+    return pinnedPosts(ctx, serverId)
+  }
+
   @Query(() => PostsResponse)
   async posts(
     @Ctx() ctx: Context,
