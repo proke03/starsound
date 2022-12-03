@@ -12,7 +12,8 @@ import {
   IconChevronUp,
   IconDotsVertical,
   IconLinkWeb,
-  IconText
+  IconPin,
+  IconText,
 } from '@/components/ui/icons/Icons'
 import ContextMenuTrigger from '@/components/ui/context/ContextMenuTrigger'
 import { ContextMenuType } from '@/types/ContextMenuType'
@@ -373,7 +374,8 @@ export default memo(function Post({
                   </div>
                 )}
               </div>
-            )}
+            )
+          }
 
           <div className="flex items-center pt-1.5">
             <div
@@ -396,7 +398,14 @@ export default memo(function Post({
               </div>
             </ContextMenuTrigger>
           </div>
+
         </div>
+        {post.isPinned &&
+          <>
+            <div className="flex-grow" />
+            <IconPin className="ml-1"/>
+          </>
+        }
       </div>
     </ContextMenuTrigger>
   )
