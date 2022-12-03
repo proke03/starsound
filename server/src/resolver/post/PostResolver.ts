@@ -71,7 +71,6 @@ export class PostResolver {
   }
 
   // --- Queries ---
-
   @Query(() => [Post], { nullable: true })
   async pinnedPosts(
     @Ctx() ctx: Context,

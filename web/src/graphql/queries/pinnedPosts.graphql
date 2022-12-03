@@ -1,9 +1,5 @@
-query pinnedPosts(
-  $serverId: ID!
-) {
-  pinnedPosts(
-    serverId: $serverId
-  ) {
+query pinnedPosts($serverId: ID!) {
+  pinnedPosts(serverId: $serverId) {
     ...Post
     author {
       ...User
