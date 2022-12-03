@@ -996,6 +996,7 @@ export type Query = {
   folder: Folder;
   getLinkMeta?: Maybe<LinkMetadata>;
   messages: MessagesResponse;
+  pinnedPosts?: Maybe<Array<Post>>;
   post: Post;
   posts: PostsResponse;
   publicServers: Array<Server>;
@@ -1029,6 +1030,11 @@ export type QueryMessagesArgs = {
   limit?: Maybe<Scalars['PositiveInt']>;
   pinned?: Maybe<Scalars['Boolean']>;
   userId?: Maybe<Scalars['ID']>;
+};
+
+
+export type QueryPinnedPostsArgs = {
+  serverId: Scalars['ID'];
 };
 
 
@@ -2707,6 +2713,29 @@ export type MessagesQuery = (
       & MessageFragment
     )> }
   ) }
+);
+
+export type PinnedPostsQueryVariables = Exact<{
+  serverId: Scalars['ID'];
+}>;
+
+
+export type PinnedPostsQuery = (
+  { __typename?: 'Query' }
+  & { pinnedPosts?: Maybe<Array<(
+    { __typename?: 'Post' }
+    & { author?: Maybe<(
+      { __typename?: 'User' }
+      & UserFragment
+    )>, serverUser?: Maybe<(
+      { __typename?: 'ServerUser' }
+      & ServerUserFragment
+    )>, server: (
+      { __typename?: 'Server' }
+      & Pick<Server, 'id' | 'name' | 'avatarUrl' | 'isDownvotesEnabled' | 'displayName' | 'permissions'>
+    ) }
+    & PostFragment
+  )>> }
 );
 
 export type PostQueryVariables = Exact<{
@@ -6045,6 +6074,57 @@ export function useMessagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<M
 export type MessagesQueryHookResult = ReturnType<typeof useMessagesQuery>;
 export type MessagesLazyQueryHookResult = ReturnType<typeof useMessagesLazyQuery>;
 export type MessagesQueryResult = Apollo.QueryResult<MessagesQuery, MessagesQueryVariables>;
+export const PinnedPostsDocument = gql`
+    query pinnedPosts($serverId: ID!) {
+  pinnedPosts(serverId: $serverId) {
+    ...Post
+    author {
+      ...User
+    }
+    serverUser {
+      ...ServerUser
+    }
+    server {
+      id
+      name
+      avatarUrl
+      isDownvotesEnabled
+      displayName
+      permissions
+    }
+  }
+}
+    ${PostFragmentDoc}
+${UserFragmentDoc}
+${ServerUserFragmentDoc}`;
+
+/**
+ * __usePinnedPostsQuery__
+ *
+ * To run a query within a React component, call `usePinnedPostsQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePinnedPostsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePinnedPostsQuery({
+ *   variables: {
+ *      serverId: // value for 'serverId'
+ *   },
+ * });
+ */
+export function usePinnedPostsQuery(baseOptions: Apollo.QueryHookOptions<PinnedPostsQuery, PinnedPostsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PinnedPostsQuery, PinnedPostsQueryVariables>(PinnedPostsDocument, options);
+      }
+export function usePinnedPostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PinnedPostsQuery, PinnedPostsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PinnedPostsQuery, PinnedPostsQueryVariables>(PinnedPostsDocument, options);
+        }
+export type PinnedPostsQueryHookResult = ReturnType<typeof usePinnedPostsQuery>;
+export type PinnedPostsLazyQueryHookResult = ReturnType<typeof usePinnedPostsLazyQuery>;
+export type PinnedPostsQueryResult = Apollo.QueryResult<PinnedPostsQuery, PinnedPostsQueryVariables>;
 export const PostDocument = gql`
     query post($id: ID!) {
   post(id: $id) {

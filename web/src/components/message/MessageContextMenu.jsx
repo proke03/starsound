@@ -50,7 +50,7 @@ export default function MessageContextMenu({
     <>
       <ContextMenuSection>
         {/*{canEdit && <ContextMenuItem label={t('message.context.edit')} />}*/}
-        {/*{canPin && (
+        {canPin && (
           <ContextMenuItem
             label={
               message.isPinned
@@ -59,7 +59,7 @@ export default function MessageContextMenu({
             }
             onClick={() => togglePin()}
           />
-        )}*/}
+        )}
         {/*<ContextMenuItem
           onClick={() => {
             copyToClipboard(`${message.relativeUrl}`)

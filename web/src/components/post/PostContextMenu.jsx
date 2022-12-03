@@ -22,7 +22,7 @@ export default function PostContextMenu({ post, ContextMenuItem }) {
 
   const [deletePost] = useDeletePostMutation()
 
-  // const togglePin = useTogglePostPin(post)
+  const togglePin = useTogglePostPin(post)
 
   const [currentUser] = useCurrentUser()
   const isAuthor = !!post.author && !!currentUser && post.author.id === currentUser.id
@@ -116,14 +116,16 @@ export default function PostContextMenu({ post, ContextMenuItem }) {
             }
           />
         }
-        {/*{canManagePosts && (
+        {canManagePosts && (
           <ContextMenuItem
-            onClick={() => togglePin()}
+            onClick={() => {
+              togglePin()
+            }}
             label={
               post.isPinned ? t('post.context.unpin') : t('post.context.pin')
             }
           />
-        )}*/}
+        )}
         <ContextMenuItem
           onClick={() => {
             copyToClipboard(`${location.origin}${post.relativeUrl}`)

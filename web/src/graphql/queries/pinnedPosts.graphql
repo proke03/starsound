@@ -1,0 +1,23 @@
+query pinnedPosts(
+  $serverId: ID!
+) {
+  pinnedPosts(
+    serverId: $serverId
+  ) {
+    ...Post
+    author {
+      ...User
+    }
+    serverUser {
+      ...ServerUser
+    }
+    server {
+      id
+      name
+      avatarUrl
+      isDownvotesEnabled
+      displayName
+      permissions
+    }
+  }
+}

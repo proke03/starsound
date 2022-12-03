@@ -17,7 +17,7 @@ export async function pinPost(
 ): Promise<Post> {
   logger('pinPost')
   const user = await em.findOneOrFail(User, userId)
-  const post = await em.findOneOrFail(Post, postId, ['post.server'])
+  const post = await em.findOneOrFail(Post, postId, ['server'])
   if (post.isPinned) throw new Error('Post already pinned')
   await user.checkServerPermission(
     em,
