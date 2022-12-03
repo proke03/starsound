@@ -16,7 +16,7 @@ export async function unpinPost(
   notifyPostChanged: Publisher<ChangePayload>
 ): Promise<Post> {
   logger('unpinPost')
-  const post = await em.findOneOrFail(Post, postId, ['post.server'])
+  const post = await em.findOneOrFail(Post, postId, ['server'])
   if (!post.isPinned) throw new Error('Post not pinned')
   const user = await em.findOneOrFail(User, userId)
   await user.checkServerPermission(

@@ -119,7 +119,6 @@ export default function PostContextMenu({ post, ContextMenuItem }) {
         {canManagePosts && (
           <ContextMenuItem
             onClick={() => {
-              console.log(post)
               togglePin()
             }}
             label={
