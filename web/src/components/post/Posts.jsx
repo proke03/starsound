@@ -47,7 +47,12 @@ export default function Posts({ folderId, serverId, showServerName, header }) {
               pinnedPosts.pinnedPosts.map((post, index) => {
                 return (
                   <div className="md:px-4 pb-1.5 px-0">
-                    <Post post={post} showServerName={showServerName} index={index} />
+                    <Post 
+                      post={post} 
+                      showServerName={showServerName} 
+                      index={index}
+                      showPin={true}
+                    />
                   </div>
                 )
             })

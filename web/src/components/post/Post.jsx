@@ -29,7 +29,8 @@ export default memo(function Post({
   isPostPage = false,
   showServerName = false,
   className = '',
-  index
+  index,
+  showPin = false,
 }) {
   const { push } = useHistory()
   const [updatePostVote] = useUpdatePostVoteMutation()
@@ -400,7 +401,7 @@ export default memo(function Post({
           </div>
 
         </div>
-        {post.isPinned &&
+        {post.isPinned && showPin &&
           <>
             <div className="flex-grow" />
             <IconPin className="ml-1"/>
