@@ -9,6 +9,8 @@ import './styles/tippy.css'
 import App from './App'
 import { inject } from '@vercel/analytics'
 
+inject()
+
 if (window.electron) document.documentElement.classList.add('electron')
 
 if (
