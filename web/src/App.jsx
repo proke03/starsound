@@ -13,55 +13,51 @@ import ContextMenuProvider from '@/providers/ContextMenuProvider'
 import LoginDialog from '@/components/LoginDialog'
 import UserDialog from '@/components/user/UserDialog'
 import UserProvider from '@/providers/UserProvider'
-import { Analytics } from '@vercel/analytics/react'
 
 export default function App() {
   const isMac = getOS() === 'Mac OS'
   const Router = window.electron ? HashRouter : BrowserRouter
 
   return (
-    <>
-      <ApolloProvider client={apolloClient}>
-        <HelmetProvider>
-          <Helmet>
-            <meta charSet="UTF-8" />
-            <link rel="icon" type="image/svg+xml" href="/logos/logo_icon.svg" />
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1.0"
-            />
-            <title>별별소리</title>
-          </Helmet>
+    <ApolloProvider client={apolloClient}>
+      <HelmetProvider>
+        <Helmet>
+          <meta charSet="UTF-8" />
+          <link rel="icon" type="image/svg+xml" href="/logos/logo_icon.svg" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <title>별별소리</title>
+        </Helmet>
 
-          <UserProvider>
-            <Router>
-              <ContextMenuProvider>
-                <DndProvider
-                  backend={TouchBackend}
-                  options={{ enableTouchEvents: false, enableMouseEvents: true }}
+        <UserProvider>
+          <Router>
+            <ContextMenuProvider>
+              <DndProvider
+                backend={TouchBackend}
+                options={{ enableTouchEvents: false, enableMouseEvents: true }}
+              >
+                <ResponsiveToaster />
+                <CustomDragLayer />
+                {window.electron && !isMac && <TitleBar />}
+                <LoginDialog />
+                <UserDialog />
+                <div
+                  style={
+                    window.electron
+                      ? { height: isMac ? '100%' : 'calc(100% - 1.375rem)' }
+                      : { height: '100%' }
+                  }
+                  className="flex"
                 >
-                  <ResponsiveToaster />
-                  <CustomDragLayer />
-                  {window.electron && !isMac && <TitleBar />}
-                  <LoginDialog />
-                  <UserDialog />
-                  <div
-                    style={
-                      window.electron
-                        ? { height: isMac ? '100%' : 'calc(100% - 1.375rem)' }
-                        : { height: '100%' }
-                    }
-                    className="flex"
-                  >
-                    <Routes />
-                  </div>
-                </DndProvider>
-              </ContextMenuProvider>
-            </Router>
-          </UserProvider>
-        </HelmetProvider>
-      </ApolloProvider>
-      <Analytics />
-    </>
+                  <Routes />
+                </div>
+              </DndProvider>
+            </ContextMenuProvider>
+          </Router>
+        </UserProvider>
+      </HelmetProvider>
+    </ApolloProvider>
   )
 }
