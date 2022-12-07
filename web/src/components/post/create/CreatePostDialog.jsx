@@ -294,6 +294,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
         setOpen(false)
         reset()
         push(post.relativeUrl)
+        setPostToEdit(null)
       })
     }
   }
