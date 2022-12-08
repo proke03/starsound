@@ -501,7 +501,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                         </div>
                       ))}
 
-                      <div className="w-25 h-25 rounded relative flex items-center justify-center border dark:border-gray-700 border-dashed cursor-pointer transition dark:hover:bg-gray-775">
+                      <div className="min-w-[6.25rem] min-h-[6.25rem] w-25 h-25 rounded relative flex items-center justify-center border dark:border-gray-700 border-dashed cursor-pointer transition dark:hover:bg-gray-775">
                         <input
                           type="file"
                           id="file"
