@@ -939,6 +939,7 @@ export type Post = BaseEntity & {
   thumbnailUrl?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
+  videos?: Maybe<Array<PostVideo>>;
   voteCount: Scalars['Int'];
   voteType: VoteType;
 };
@@ -955,6 +956,13 @@ export type PostImage = {
   caption?: Maybe<Scalars['String']>;
   image: Image;
   linkUrl?: Maybe<Scalars['String']>;
+};
+
+export type PostVideo = {
+  __typename?: 'PostVideo';
+  caption?: Maybe<Scalars['String']>;
+  linkUrl?: Maybe<Scalars['String']>;
+  video: File;
 };
 
 export enum PostsFeed {
