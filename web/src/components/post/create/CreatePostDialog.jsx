@@ -244,7 +244,16 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                     caption,
                     linkUrl
                   }))
-                : null
+                : null,
+            videos:
+              videos && videos.length > 0 && currentTab === Tab.Image
+                ?
+                  videos.map(({ file, caption, linkUrl }) => ({
+                    file,
+                    caption,
+                    linkUrl
+                  }))
+                : null,
           }
         }
       }).then(({ data }) => {
@@ -285,7 +294,16 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                     console.log(result)
                     return result
                   })
-                : null
+                : null,
+            videos:
+              videos && videos.length > 0 && currentTab === Tab.Image
+                ?
+                  videos.map(({ file, caption, linkUrl }) => ({
+                    file,
+                    caption,
+                    linkUrl
+                  }))
+                : null,
           }
         }
       }).then(({ data }) => {
@@ -505,7 +523,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                         <input
                           type="file"
                           id="file"
-                          accept="image/png,image/jpeg,image/webp,image/gif"
+                          accept="image/png,image/jpeg,image/webp,image/gif, video/mp4, video/mpeg, video/x-msvideo, video/webm"
                           hidden
                           multiple
                           onChange={onAddImages}
@@ -522,18 +540,31 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   {images && images?.length > 0 && (
                     <div className="mt-5 flex flex-col sm:flex-row sm:space-x-5">
                       {
-                        images[selectedImage]?.file?
-                          <div
-                            className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
-                            style={{
-                              backgroundImage: `url(${images[selectedImage]?.data})`
-                            }}
-                          />
+                        images[selectedImage]?.file.type.includes('video')?
+                          images[selectedImage]?.file?
+                            <video
+                              src={images[selectedImage]?.data}
+                              controls={true}
+                              className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                            />
+                            :
+                            <video
+                              src={images[selectedImage]?.videoUrl}
+                              className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                            />
                           :
-                          <img
-                            src={images[selectedImage]?.image.originalUrl}
-                            className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
-                          />
+                          images[selectedImage]?.file?
+                            <div
+                              className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                              style={{
+                                backgroundImage: `url(${images[selectedImage]?.data})`
+                              }}
+                            />
+                            :
+                            <img
+                              src={images[selectedImage]?.image.originalUrl}
+                              className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                            />
                       }
 
                       <div className="mt-5 sm:mt-0 space-y-5 max-w-full flex-grow">
