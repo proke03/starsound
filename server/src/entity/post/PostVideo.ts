@@ -5,9 +5,9 @@ import { File } from '@/entity'
 @Embeddable()
 @ObjectType()
 export class PostVideo {
-  @Field(() => File)
-  @Embedded({ entity: () => File, object: true })
-  video: File
+  @Property({ nullable: true, columnType: 'text' })
+  @Field({ nullable: true })
+  videoUrl: string
 
   @Property({ nullable: true, columnType: 'text' })
   @Field({ nullable: true })

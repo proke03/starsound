@@ -199,6 +199,7 @@ export type CreatePostInput = {
   serverId: Scalars['ID'];
   text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
+  videos?: Maybe<Array<CreatePostImagesInput>>;
 };
 
 export type CreateRoleInput = {
@@ -962,7 +963,7 @@ export type PostVideo = {
   __typename?: 'PostVideo';
   caption?: Maybe<Scalars['String']>;
   linkUrl?: Maybe<Scalars['String']>;
-  video: File;
+  videoUrl?: Maybe<Scalars['String']>;
 };
 
 export enum PostsFeed {
@@ -1507,7 +1508,10 @@ export type PostFragment = (
       { __typename?: 'Image' }
       & ImageFragment
     ) }
-  )> }
+  )>, videos?: Maybe<Array<(
+    { __typename?: 'PostVideo' }
+    & Pick<PostVideo, 'videoUrl' | 'linkUrl' | 'caption'>
+  )>> }
 );
 
 export type RelatedUserFragment = (
@@ -3229,6 +3233,11 @@ export const PostFragmentDoc = gql`
     image {
       ...Image
     }
+    linkUrl
+    caption
+  }
+  videos {
+    videoUrl
     linkUrl
     caption
   }
