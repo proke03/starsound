@@ -228,7 +228,7 @@ export default memo(function Post({
 
         <div className="w-60 pr-4 flex-grow flex flex-col">
           <div className="flex flex-wrap items-center pb-1.5" onClick={onClick}>
-            <Link to={`/+${post.server.name}`} className="flex items-center">
+            <Link to={`/planets/${post.server.name}`} className="flex items-center">
               <ServerAvatar
                 server={post.server}
                 size={5}

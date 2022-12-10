@@ -29,7 +29,7 @@ export default function SidebarChannel({ channel, server }) {
   })
 
   const { hash } = useLocation()
-  const to = `/+${server?.name}/#${channel.name}`
+  const to = `/planets/${server?.name}/#${channel.name}`
   const active = hash.substring(1) === channel.name
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [editOpen, setEditOpen] = useState(false)
@@ -113,8 +113,8 @@ function DeleteChannelDialog({ server, channel, open, setOpen }) {
       }
     }).then(() => {
       setOpen(false)
-      if (pathname === `/+${server.name}/` && hash === `#${channel.name}`) {
-        push(`/+${server.name}`)
+      if (pathname === `/planets/${server.name}/` && hash === `#${channel.name}`) {
+        push(`/planets/${server.name}`)
       }
     })
   }

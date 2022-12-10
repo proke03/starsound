@@ -22,7 +22,7 @@ export default function PostHeader({ post }) {
             if (canGoBack) {
               goBack()
             } else {
-              push(`/+${post?.server.name}`)
+              push(`/planets/${post?.server.name}`)
             }
           }}
         >

@@ -24,7 +24,7 @@ export default function ServerInfoCard({
       }}
     >
       <Link
-        to={`/+${server.name}`}
+        to={`/planets/${server.name}`}
         className={`${className} relative flex flex-col w-full rounded-lg group dark:bg-gray-800 dark:hover:bg-gray-850 duration-200 transform transition hover:shadow-xl bg-white ${
           shadow ? 'shadow-lg' : ''
         }`}

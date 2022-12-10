@@ -91,7 +91,7 @@ export default function SidebarFolder({ folder, server }) {
           active={isActive}
           to={`${
             !!server || folder.server
-              ? `/+${server?.name ?? folder.server?.name}`
+              ? `/planets/${server?.name ?? folder.server?.name}`
               : ''
           }/folder/${folder.id}`}
           ref={dropRef}
