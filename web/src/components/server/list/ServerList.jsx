@@ -16,7 +16,7 @@ import {
 } from '@/graphql/hooks'
 import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import CreateServerButton from '@/components/server/create/CreateServerButton'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Dialog from '@/components/ui/dialog/Dialog'
 import StyledDialog from '@/components/ui/dialog/StyledDialog'
 import ShowPasswordButton from '@/components/ui/ShowPasswordButton'
@@ -36,9 +36,26 @@ export default function ServerList({ hide = false }) {
     fetchPolicy: 'cache-and-network',
     nextFetchPolicy: 'cache-first'
   })
-  const servers = currentUser
+  const [servers, setServers] = useState(currentUser
     ? currentUser.servers
-    : publicServersData?.publicServers ?? []
+    : publicServersData?.publicServers ?? [])
+  
+  useEffect(() => {
+    if(!currentUser || !currentUser.isAdmin) return
+    const tempServers = []
+    currentUser.servers.forEach(server => {
+      let result = false
+      publicServersData.publicServers.forEach(publicServer => {
+        if(server.id === publicServer.id) {
+          result = true
+        }
+      })
+      const temp = Object.assign({}, server)
+      temp.isFeatured = result
+      tempServers.push(temp)
+    })
+    setServers(tempServers)
+  }, [currentUser])
 
   return (
     <>
