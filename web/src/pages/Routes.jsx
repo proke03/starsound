@@ -22,7 +22,7 @@ import ServerProvider from '@/providers/ServerProvider'
 import { useCurrentServer } from '@/hooks/graphql/useCurrentServer'
 
 const serverRegex = `[가-힣A-Za-z0-9_]+`
-const usernameRegex = `@[A-Za-z0-9-_]+`
+const usernameRegex = `@[가-힣A-Za-z0-9-_]+`
 
 export default function Routes() {
   useMessagesSubscriptions()
