@@ -121,8 +121,8 @@ export default function ServerList({ hide = false }) {
 
 function ServerListServer({ server }) {
   const { pathname } = useLocation()
-  const matched = matchPath(pathname, { path: '/:server' })
-  const serverName = matched?.params?.server?.substring(1)
+  const matched = matchPath(pathname, { path: '/planets/:server' })
+  const serverName = matched?.params?.server?.substring(0)
   const serverPages = useStore(s => s.serverPages)
   const [canViewPrivateChannels] = useHasServerPermissions({
     server,
@@ -156,7 +156,7 @@ function ServerListServer({ server }) {
         }}
       >
         <ServerListItem
-          to={`/server/${server.name}${serverPages[server.name] ?? ''}`}
+          to={`/planets/${server.name}${serverPages[server.name] ?? ''}`}
           name={server.displayName}
           active={active}
           unread={unread}

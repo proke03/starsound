@@ -16,9 +16,9 @@ export const useMessagesSubscriptions = () => {
   const { push } = useHistory()
   const { pathname, hash } = useLocation()
   const matchedServer = matchPath(pathname, {
-    path: '/:server'
+    path: '/planets/:server'
   })
-  const server = matchedServer?.params?.server.substring(1)
+  const server = matchedServer?.params?.server.substring(0)
   const channelName = server && hash ? hash.substring(1) : null
 
   const matchedDm = matchPath(pathname, { path: '/dm/:username' })
@@ -175,7 +175,7 @@ export const useMessagesSubscriptions = () => {
                   if (messageUserId) push(`/dm/@${message.author.username}`)
                   else if (messageGroupId) push(`/group/${messageGroupId}`)
                   else if (messageChannelId)
-                    push(`/+${message.server.name}/#${message.channel.name}`)
+                    push(`/planets/${message.server.name}/#${message.channel.name}`)
                   if (window.electron) window.electron.show()
                 }
               })

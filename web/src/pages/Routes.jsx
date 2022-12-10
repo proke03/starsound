@@ -21,7 +21,7 @@ import { useMessagesSubscriptions } from '@/hooks/useMessagesSubscriptions'
 import ServerProvider from '@/providers/ServerProvider'
 import { useCurrentServer } from '@/hooks/graphql/useCurrentServer'
 
-const serverRegex = `\\+[가-힣A-Za-z0-9_]+`
+const serverRegex = `[가-힣A-Za-z0-9_]+`
 const usernameRegex = `@[A-Za-z0-9-_]+`
 
 export default function Routes() {
@@ -42,9 +42,9 @@ export default function Routes() {
               '/',
               '/inbox',
               `/dm/:username(${usernameRegex})`,
-              `/:server(${serverRegex})`,
-              `/:server(${serverRegex})/post/:postId`,
-              `/:server(${serverRegex})/post/:postId/:slug`,
+              `/planets/:server(${serverRegex})`,
+              `/planets/:server(${serverRegex})/post/:postId`,
+              `/planets/:server(${serverRegex})/post/:postId/:slug`,
               '/explore'
             ]}
             exact
@@ -58,7 +58,7 @@ export default function Routes() {
                 <Route path="/explore">
                   <ExplorePage />
                 </Route>
-                <Route path={`/:server(${serverRegex})`}>
+                <Route path={`/planets/:server(${serverRegex})`}>
                   <ServerRoutes />
                 </Route>
                 <Route
@@ -92,7 +92,7 @@ export default function Routes() {
 
 function ServerRoutes() {
   const { server: s } = useParams()
-  const serverName = s.substring(1)
+  const serverName = s.substring(0)
 
   return (
     <ServerProvider name={serverName}>
@@ -107,7 +107,7 @@ function ServerPages() {
   const channelName = hash.substring(1)
 
   const matchedPost = matchPath(pathname, {
-    path: '/:server/post/:postId'
+    path: '/planets/:server/post/:postId'
   })
   const postId = matchedPost?.params?.postId
 
@@ -119,7 +119,7 @@ function ServerPages() {
     <>
       <ServerSidebar />
       <Route
-        path={`/:server(${serverRegex})`}
+        path={`/planets/:server(${serverRegex})`}
         exact
         render={({ location }) =>
           location.hash ? (
@@ -131,8 +131,8 @@ function ServerPages() {
       />
       <Route
         path={[
-          `/:server(${serverRegex})/post/:postId`,
-          `/:server(${serverRegex})/post/:postId/:slug`
+          `/planets/:server(${serverRegex})/post/:postId`,
+          `/planets/:server(${serverRegex})/post/:postId/:slug`
         ]}
       >
         <PostPage postId={postId} />
