@@ -26,7 +26,8 @@ export default function ServerList({ hide = false }) {
   const { pathname } = useLocation()
   const { t } = useTranslation()
   const homePage = useStore(s => s.homePage)
-  const homeActive = pathname !== '/explore' && !pathname.startsWith('/+')
+  // const homeActive = pathname !== '/explore' && !pathname.startsWith('/+')
+  const homeActive = pathname !== '/explore' && !pathname.startsWith('/server')
   const exploreActive = pathname.startsWith('/explore')
   const isMac = getOS() === 'Mac OS' && window.electron
   const [currentUser] = useCurrentUser()
@@ -42,6 +43,7 @@ export default function ServerList({ hide = false }) {
   
   useEffect(() => {
     if(!currentUser || !currentUser.isAdmin) return
+    if(!publicServersData || !publicServersData.publicServers) return
     const tempServers = []
     currentUser.servers.forEach(server => {
       let result = false
@@ -154,7 +156,7 @@ function ServerListServer({ server }) {
         }}
       >
         <ServerListItem
-          to={`/+${server.name}${serverPages[server.name] ?? ''}`}
+          to={`/server/${server.name}${serverPages[server.name] ?? ''}`}
           name={server.displayName}
           active={active}
           unread={unread}
