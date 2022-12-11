@@ -27,8 +27,8 @@ export default function FolderContextMenu({ folder, ContextMenuItem }) {
   const [deleteFolder] = useDeleteFolderMutation()
   const { push } = useHistory()
   const { pathname } = useLocation()
-  const matched = matchPath(pathname, { path: '/:server' })
-  const serverName = matched?.params?.server?.substring(1)
+  const matched = matchPath(pathname, { path: '/planets/:server' })
+  const serverName = matched?.params?.server?.substring(0)
 
   return (
     <>

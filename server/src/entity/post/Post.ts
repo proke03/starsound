@@ -135,7 +135,7 @@ export class Post extends BaseEntity {
       .join('_')
       .replace(/[^a-z0-9_]+/gi, '')
       .replace(/[_](.)\1+/g, '$1')
-    return `/+${this.server.name}/post/${this.id}/${slug}`
+    return `/planets/${this.server.name}/post/${this.id}/${slug}`
   }
 
   @Formula(

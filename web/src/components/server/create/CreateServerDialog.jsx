@@ -117,7 +117,7 @@ export default function CreateServerDialog({ open, setOpen, server }) {
         }
       }).then(({ data: { createServer } }) => {
         setOpen(false)
-        push(`/+${createServer.name}`)
+        push(`/planets/${createServer.name}`)
       })
     } else {
       updateServer({
@@ -250,7 +250,7 @@ export default function CreateServerDialog({ open, setOpen, server }) {
         <div>
           <div className="text-sm text-accent flex items-center pt-3">
           <span className={`h-7 flex items-center`}>
-            {t('identity.dns')}/+{server?.name ?? ''}
+            {t('identity.dns')}/planets/{server?.name ?? ''}
           </span>
             {!server && (
               <input

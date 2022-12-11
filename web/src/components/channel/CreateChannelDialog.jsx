@@ -88,7 +88,7 @@ export default function CreateChannelDialog({ open, setOpen, server, channel }) 
         variables: { input: { name, description, serverId: server.id, type } }
       }).then(({ data: { createChannel } }) => {
         close()
-        push(`/+${server.name}/#${createChannel.name}`)
+        push(`/planets/${server.name}/#${createChannel.name}`)
         reset()
         setType(ChannelType.Public)
       })

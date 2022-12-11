@@ -38,7 +38,7 @@ export default function PostContextMenu({ post, ContextMenuItem }) {
     path: '/folder/:folder'
   })
   const matchedServerFolder = matchPath(pathname, {
-    path: '/:server/folder/:folder'
+    path: '/planets/:server/folder/:folder'
   })
   const folderName =
     matchedUserFolder?.params?.folder || matchedServerFolder?.params?.folder

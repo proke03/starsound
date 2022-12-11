@@ -7,6 +7,6 @@ export const useSetServerPage = page => {
   const setServerPage = useStore(s => s.setServerPage)
   useEffect(() => {
     if (page == null) return
-    setServerPage(server.substring(1), page)
+    setServerPage(server.substring(0), page)
   }, [page, server, setServerPage])
 }

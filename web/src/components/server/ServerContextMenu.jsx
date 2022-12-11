@@ -47,24 +47,24 @@ export default function ServerContextMenu({
       <ContextMenuSection>
         {currentUser?.isAdmin && (
           <>
-            {!!enableFeatured && (
-              <ContextMenuItem
-                label={
-                  server.isFeatured ? 'Remove from Featured' : 'Make Featured'
+            {/* {!!enableFeatured && ( */}
+            <ContextMenuItem
+              label={
+                server.isFeatured ? 'Remove from Featured' : 'Make Featured'
+              }
+              onClick={() => {
+                if (server.isFeatured) {
+                  unfeatureServer({
+                    variables: { input: { serverId: server.id } }
+                  })
+                } else {
+                  featureServer({
+                    variables: { input: { serverId: server.id } }
+                  })
                 }
-                onClick={() => {
-                  if (server.isFeatured) {
-                    unfeatureServer({
-                      variables: { input: { serverId: server.id } }
-                    })
-                  } else {
-                    featureServer({
-                      variables: { input: { serverId: server.id } }
-                    })
-                  }
-                }}
-              />
-            )}
+              }}
+            />
+            {/* )} */}
           </>
         )}
         {!!currentUser && !!server.owner && server.owner.id !== currentUser.id && (
@@ -72,7 +72,7 @@ export default function ServerContextMenu({
             label={t('server.context.leave')}
             red
             onClick={() => {
-              if (pathname.startsWith(`/+${server.id}`)) push('/')
+              if (pathname.startsWith(`/planets/${server.id}`)) push('/')
               leaveServer({ variables: { input: { serverId: server.id } } })
               const data = apolloClient.cache.readQuery({
                 query: CurrentUserDocument

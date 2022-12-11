@@ -16,7 +16,7 @@ import {
 } from '@/graphql/hooks'
 import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import CreateServerButton from '@/components/server/create/CreateServerButton'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Dialog from '@/components/ui/dialog/Dialog'
 import StyledDialog from '@/components/ui/dialog/StyledDialog'
 import ShowPasswordButton from '@/components/ui/ShowPasswordButton'
@@ -26,7 +26,8 @@ export default function ServerList({ hide = false }) {
   const { pathname } = useLocation()
   const { t } = useTranslation()
   const homePage = useStore(s => s.homePage)
-  const homeActive = pathname !== '/explore' && !pathname.startsWith('/+')
+  // const homeActive = pathname !== '/explore' && !pathname.startsWith('/+')
+  const homeActive = pathname !== '/explore' && !pathname.startsWith('/server')
   const exploreActive = pathname.startsWith('/explore')
   const isMac = getOS() === 'Mac OS' && window.electron
   const [currentUser] = useCurrentUser()
@@ -36,9 +37,27 @@ export default function ServerList({ hide = false }) {
     fetchPolicy: 'cache-and-network',
     nextFetchPolicy: 'cache-first'
   })
-  const servers = currentUser
+  const [servers, setServers] = useState(currentUser
     ? currentUser.servers
-    : publicServersData?.publicServers ?? []
+    : publicServersData?.publicServers ?? [])
+  
+  useEffect(() => {
+    if(!currentUser || !currentUser.isAdmin) return
+    if(!publicServersData || !publicServersData.publicServers) return
+    const tempServers = []
+    currentUser.servers.forEach(server => {
+      let result = false
+      publicServersData.publicServers.forEach(publicServer => {
+        if(server.id === publicServer.id) {
+          result = true
+        }
+      })
+      const temp = Object.assign({}, server)
+      temp.isFeatured = result
+      tempServers.push(temp)
+    })
+    setServers(tempServers)
+  }, [currentUser])
 
   return (
     <>
@@ -102,8 +121,8 @@ export default function ServerList({ hide = false }) {
 
 function ServerListServer({ server }) {
   const { pathname } = useLocation()
-  const matched = matchPath(pathname, { path: '/:server' })
-  const serverName = matched?.params?.server?.substring(1)
+  const matched = matchPath(pathname, { path: '/planets/:server' })
+  const serverName = matched?.params?.server?.substring(0)
   const serverPages = useStore(s => s.serverPages)
   const [canViewPrivateChannels] = useHasServerPermissions({
     server,
@@ -137,7 +156,7 @@ function ServerListServer({ server }) {
         }}
       >
         <ServerListItem
-          to={`/+${server.name}${serverPages[server.name] ?? ''}`}
+          to={`/planets/${server.name}${serverPages[server.name] ?? ''}`}
           name={server.displayName}
           active={active}
           unread={unread}

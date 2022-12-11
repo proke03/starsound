@@ -290,7 +290,7 @@ export default memo(function UserDialog() {
                 (mutualServers.length > 0 ? (
                   mutualServers.map(server => (
                     <Link
-                      to={`/+${server.name}`}
+                      to={`/planets/${server.name}`}
                       key={server.id}
                       className={itemClass}
                       onClick={() => close()}
