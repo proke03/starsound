@@ -452,6 +452,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               setValue('linkUrl', '')
               trigger('linkUrl')
               setText('')
+              setImages([])
             }}
           >
             <IconFormatImage className="mr-2 w-5 h-5" />
