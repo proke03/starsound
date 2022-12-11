@@ -8,12 +8,13 @@ import {
 } from '@/components/ui/icons/Icons'
 import { useTranslation } from 'react-i18next'
 
-export default function PostDropZone({ channel, user, group, setFiles }) {
+export default function PostDropZone({ channel, user, group, setFiles, forImages }) {
   const { t } = useTranslation()
   const [files, isDragging] = useDropZone()
 
   useEffect(() => {
     setFiles(files)
+    console.log(forImages)
   }, [files, setFiles])
 
   const name = useMemo(() => {
@@ -21,7 +22,6 @@ export default function PostDropZone({ channel, user, group, setFiles }) {
     else if (user) return `@${user.username}`
     else if (group) return `${group.displayName}`
   }, [channel, user, group])
-
 
   return (
     <>
@@ -31,11 +31,23 @@ export default function PostDropZone({ channel, user, group, setFiles }) {
           multiple
           id="input-file"
           className="hidden"
-          accept={{
-            'image/jpg': ['.jpg'],
-            'image/jpeg': ['.jpeg'],
-            'image/png': ['.png'],
-          }}
+          accept={
+            forImages? 
+            "image/png, image/jpeg, image/webp, image/gif" 
+            // {
+            // 'image/jpg': ['.jpg'],
+            // 'image/jpeg': ['.jpeg'],
+            // 'image/png': ['.png'],
+            // }
+            :
+            "video/mp4, video/mpeg, video/x-msvideo, video/webm"
+            // {
+            //   'video/mp4': ['.mp4'],
+            //   'video/webm': ['.webm'],
+            //   'video/mpeg': ['.mpeg'],
+            //   'video/x-msvideo': ['.avi'],
+            // }
+          }
           onChange={e => {
             setFiles(e.target.files)
           }}

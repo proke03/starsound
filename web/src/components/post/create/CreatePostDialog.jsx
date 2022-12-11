@@ -7,7 +7,8 @@ import {
   IconPlus,
   IconSpinner,
   IconText,
-  IconX
+  IconX,
+  IconFileVideo,
 } from '@/components/ui/icons/Icons'
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -99,6 +100,7 @@ const Tab = {
   Text: 'Text',
   Link: 'Link',
   Image: 'Image',
+  Video: 'Video',
 }
 
 export default function CreatePostDialog({ open, setOpen, serverId }) {
@@ -134,6 +136,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   const linkMeta = linkMetaData?.getLinkMeta
 
   const [images, setImages] = useState([])
+  const [isForImage, setIsForImage] = useState(false)
   function readFileAsDataURL(file) {
     return new Promise(function (resolve, reject) {
       let fr = new FileReader()
@@ -384,6 +387,17 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             <IconFormatImage className="mr-2 w-5 h-5" />
             {t('post.type.image_short')}
           </div>
+          <div
+            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Video)}`}
+            onClick={() => {
+              setCurrentTab(Tab.Video)
+              setValue('linkUrl', '')
+              setImages([])
+            }}
+          >
+            <IconFileVideo className="mr-2 w-5 h-5" />
+            {t('post.type.video_short')}
+          </div>
         </div>
 
         <div className="p-5">
@@ -465,7 +479,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             </>
           )}
 
-          {currentTab === Tab.Image && (
+          {(currentTab === Tab.Image || currentTab === Tab.Video) && (
             <div className="mt-5">
               {images && images.length > 0 ? (
                 <div>
@@ -523,7 +537,11 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                         <input
                           type="file"
                           id="file"
-                          accept="image/png,image/jpeg,image/webp,image/gif, video/mp4, video/mpeg, video/x-msvideo, video/webm"
+                          accept={currentTab === Tab.Image?
+                            "image/png, image/jpeg, image/webp, image/gif" 
+                            : 
+                            "video/mp4, video/mpeg, video/x-msvideo, video/webm"
+                          }
                           hidden
                           multiple
                           onChange={onAddImages}
@@ -621,7 +639,11 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   )}
                 </div>
               ) : (
-                <PostDropZone placeholder={t('post.create.imageDrop')} setFiles={setFiles} />
+                <PostDropZone 
+                  placeholder={t('post.create.imageDrop')} 
+                  setFiles={setFiles} 
+                  forImages={currentTab === Tab.Image}
+                />
                 // <div className="relative">
                 //   <input
                 //     type="file"

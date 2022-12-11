@@ -18,7 +18,10 @@ export const post = {
     link_short: 'Link',
     image: 'Image Post',
     image_short: 'Image',
-    album: 'Image Album'
+    album: 'Image Album',
+    album_short: 'Album',
+    video: 'Video Post',
+    video_short: 'Video',
   },
   createComment: 'Write a comment',
   commentCount: '{{count}} Comment',
