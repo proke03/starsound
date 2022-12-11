@@ -199,6 +199,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
     changeImages(files)
   }
   
+  //FIXME: changeImages와 코드 중복
   function addImages(files) {
     if (files && files.length > 0) {
       setImages([
