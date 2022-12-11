@@ -5,6 +5,7 @@ import { Context } from '@/types'
 import {
   Post,
   PostImage,
+  PostVideo,
   PostVote,
   Server,
   User,
@@ -15,6 +16,8 @@ import {
   imageMimeTypes, logger,
   scrapeMetadata,
   uploadImageFile,
+  uploadVideoFileSingle,
+  videoMimeTypes,
 } from '@/util'
 import { ChangePayload, ChangeType } from '@/resolver/subscriptions'
 import mime from 'mime'
@@ -50,6 +53,13 @@ export class CreatePostInput {
     { message: `Cannot upload more than ${policy.post.imagesLength} images` }
   )
   images?: CreatePostImagesInput[]
+
+  @Field(() => [CreatePostImagesInput], { nullable: true })
+  @ArrayMaxSize(
+    policy.post.videosLength, 
+    { message: `Cannot upload more than ${policy.post.imagesLength} videos` }
+  )
+  videos?: CreatePostImagesInput[]
 }
 
 @InputType()
@@ -70,7 +80,7 @@ class CreatePostImagesInput {
 //TODO: check invalid url
 export async function createPost(
   { em, userId }: Context,
-  { title, linkUrl, text, serverId, images }: CreatePostInput,
+  { title, linkUrl, text, serverId, images, videos }: CreatePostInput,
   notifyPostChanged: Publisher<ChangePayload>
 ): Promise<Post> {
   logger('createPost')
@@ -104,6 +114,23 @@ export async function createPost(
       })
     }
   }
+  
+  const postVideos: PostVideo[] = []
+
+  if (videos && videos.length > 0) {
+    for (const video of videos) {
+      const { createReadStream, mimetype } = await video.file
+      const ext = mime.getExtension(mimetype)
+      if (!videoMimeTypes.includes(mimetype))
+        throw new Error('Files must be videos')
+      const i = await uploadVideoFileSingle(video.file)
+      postVideos.push({
+        videoUrl: i,
+        linkUrl: video.linkUrl,
+        caption: video.caption
+      })
+    }
+  }
 
   const post = em.create(Post, {
     title,
@@ -112,6 +139,7 @@ export async function createPost(
     server,
     linkMetadata: linkUrl ? await scrapeMetadata(linkUrl) : null,
     images: postImages,
+    videos: postVideos,
     text: text,
     voteCount: 0
   })

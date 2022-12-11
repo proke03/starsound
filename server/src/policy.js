@@ -32,6 +32,7 @@ export const policy = {
     linkLength: 1000,
     textLength: 4000,
     imagesLength: 10,
+    videosLength: 5,
     captionLength: 180,
     posts: {
       defaultOffset: 0,
