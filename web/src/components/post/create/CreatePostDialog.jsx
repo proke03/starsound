@@ -161,16 +161,63 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       let readers = []
       for (let i = 0; i < files.length; i++) {
         readers.push(readFileAsDataURL(files[i]))
+        // if (files[i].type.includes('image')) {
+        //   readers.push(readFileAsDataURL(files[i]))
+        // }
+        // else {
+        //   readers.push(getVideoCover(files[i]))
+        // }
       }
-      Promise.all(readers).then(values => setImages(
-        values.map((data, i) => ({
-          file: files[i],
-          caption: '',
-          linkUrl: '',
-          data
-        }))
-      )
-      )
+      Promise.all(readers).then(async values => {
+        console.log(values)
+        values.map(async (data, i) => {
+          String(data).includes('image')?
+            setImages([
+              ...images,
+              {
+                file: files[i],
+                caption: '',
+                linkUrl: '',
+                data,
+              }
+            ])
+            :
+            await getVideoCover(files[i])
+            .then((thumbnail) => {
+                console.log(thumbnail)
+                setImages([
+                  ...images,
+                  {
+                    file: files[i],
+                    caption: '',
+                    linkUrl: '',
+                    data,
+                    thumbnail: URL.createObjectURL(thumbnail),
+                  }
+                ])
+                console.log(images)
+            })
+        })
+        // await setImages( await
+        //   values.map(async(data, i) => ({
+        //     file: files[i],
+        //     caption: '',
+        //     linkUrl: '',
+        //     // data
+        //     // data: String(data).includes('image')? data : URL.createObjectURL(data),
+        //     data,
+        //     thumbnail: 
+        //       String(data).includes('video')? 
+        //         await getVideoCover(files[i])
+        //                 .then((thumbnail) => {
+        //                   // console.log(thumbnail)
+        //                   URL.createObjectURL(thumbnail)
+        //                 })
+        //         : 
+        //         null,
+        //   }))
+        // )
+      })
     }
   }
 
@@ -186,8 +233,14 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
         ...Array.from(files).map(file => ({ file, caption: '', linkUrl: '' }))
       ])
       let readers = []
+      //FIXME: foreach
       for (let i = 0; i < files.length; i++) {
-        readers.push(readFileAsDataURL(files[i]))
+        if (files[i].type.includes('image')) {
+          readers.push(readFileAsDataURL(files[i]))
+        }
+        else {
+          readers.push(getVideoCover(files[i]))
+        }
       }
       Promise.all(readers).then(values => {
         setImages([
@@ -196,11 +249,59 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             file: files[i],
             caption: '',
             linkUrl: '',
-            data
+            data: String(data).includes('image')? data : URL.createObjectURL(data),
           }))
         ])
       })
+
+      // getVideoCover(files[0]).then((cover) => {
+      //   URL.createObjectURL(cover)
+      // })
     }
+  }
+
+  function getVideoCover(file, seekTo = 0.0) {
+    console.log("getting video cover for file: ", file);
+    return new Promise((resolve, reject) => {
+        // load the file to a video player
+        const videoPlayer = document.createElement('video');
+        videoPlayer.setAttribute('src', URL.createObjectURL(file));
+        videoPlayer.load();
+        videoPlayer.addEventListener('error', (ex) => {
+            reject("error when loading video file", ex);
+        });
+        // load metadata of the video to get video duration and dimensions
+        videoPlayer.addEventListener('loadedmetadata', () => {
+            // seek to user defined timestamp (in seconds) if possible
+            if (videoPlayer.duration < seekTo) {
+                reject("video is too short.");
+                return;
+            }
+            // delay seeking or else 'seeked' event won't fire on Safari
+            setTimeout(() => {
+              videoPlayer.currentTime = seekTo;
+            }, 200);
+            // extract video thumbnail once seeking is complete
+            videoPlayer.addEventListener('seeked', () => {
+                console.log('video is now paused at %ss.', seekTo);
+                // define a canvas to have the same dimension as the video
+                const canvas = document.createElement("canvas");
+                canvas.width = videoPlayer.videoWidth;
+                canvas.height = videoPlayer.videoHeight;
+                // draw the video frame to canvas
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(videoPlayer, 0, 0, canvas.width, canvas.height);
+                // return the canvas image as a blob
+                ctx.canvas.toBlob(
+                    blob => {
+                        resolve(blob);
+                    },
+                    "image/jpeg",
+                    0.75 /* quality */
+                );
+            });
+        });
+    });
   }
 
   const onAddImages = e => {
@@ -211,8 +312,13 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   const [files, setFiles] = useState([])
   useEffect(() => {
     // const files = e.target.files
+    console.log(files)
     changeImages(files)
   }, [files])
+
+  useEffect(() => {
+    console.log(images)
+  }, [images])
 
   const [selectedImage, setSelectedImage] = useState(0)
   const { postToEdit, setPostToEdit } = useStore(state => state)
@@ -520,10 +626,12 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                             {
                               image.file?
                               <div
-                                style={{ backgroundImage: `url(${image.data})` }}
+                                style={{ backgroundImage: `url(${image.thumbnail? image.thumbnail : image.data})` }}
+                                // style={{ backgroundImage: `url(${image.data})` }}
                                 className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
                               />
                               :
+                              currentTab === Tab.Image &&
                               <img
                                 src={image.image.smallUrl}
                                 className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
@@ -558,7 +666,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   {images && images?.length > 0 && (
                     <div className="mt-5 flex flex-col sm:flex-row sm:space-x-5">
                       {
-                        images[selectedImage]?.file.type.includes('video')?
+                        images[selectedImage]?.file?.type.includes('video')?
                           images[selectedImage]?.file?
                             <video
                               src={images[selectedImage]?.data}
@@ -580,7 +688,11 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                             />
                             :
                             <img
-                              src={images[selectedImage]?.image.originalUrl}
+                              src={currentTab === Tab.Image? 
+                                images[selectedImage]?.image.originalUrl
+                                :
+                                images[selectedImage]?.thumbnail
+                              }
                               className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
                             />
                       }
