@@ -332,9 +332,9 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   }))
                 : null,
             videos:
-              videos && videos.length > 0 && currentTab === Tab.Image
+              images && images.length > 0 && currentTab === Tab.Video
                 ?
-                  videos.map(({ file, caption, linkUrl }) => ({
+                  images.map(({ file, caption, linkUrl }) => ({
                     file,
                     caption,
                     linkUrl
@@ -382,12 +382,12 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   })
                 : null,
             videos:
-              videos && videos.length > 0 && currentTab === Tab.Image
+              images && images.length > 0 && currentTab === Tab.Video
                 ?
-                  videos.map(({ file, caption, linkUrl }) => ({
+                  images.map(({ file, caption, linkUrl }) => ({
                     file,
                     caption,
-                    linkUrl
+                    linkUrl,
                   }))
                 : null,
           }
