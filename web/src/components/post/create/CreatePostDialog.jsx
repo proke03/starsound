@@ -163,7 +163,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
         readers.push(readFileAsDataURL(files[i]))
       }
       Promise.all(readers).then(async values => {
-        console.log(values)
         values.map(async (data, i) => {
           String(data).includes('image')?
             setImages([
@@ -209,23 +208,36 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       let readers = []
       //FIXME: foreach
       for (let i = 0; i < files.length; i++) {
-        if (files[i].type.includes('image')) {
-          readers.push(readFileAsDataURL(files[i]))
-        }
-        else {
-          readers.push(getVideoCover(files[i]))
-        }
+        readers.push(readFileAsDataURL(files[i]))
       }
       Promise.all(readers).then(values => {
-        setImages([
-          ...images,
-          ...values.map((data, i) => ({
-            file: files[i],
-            caption: '',
-            linkUrl: '',
-            data: String(data).includes('image')? data : URL.createObjectURL(data),
-          }))
-        ])
+        values.map(async (data, i) => {
+          String(data).includes('image')?
+            setImages([
+              ...images,
+              {
+                file: files[i],
+                caption: '',
+                linkUrl: '',
+                data,
+              }
+            ])
+            :
+            await getVideoCover(files[i])
+            .then((thumbnail) => {
+                console.log(thumbnail)
+                setImages([
+                  ...images,
+                  {
+                    file: files[i],
+                    caption: '',
+                    linkUrl: '',
+                    data,
+                    thumbnail: URL.createObjectURL(thumbnail),
+                  }
+                ])
+            })
+        })
       })
     }
   }
