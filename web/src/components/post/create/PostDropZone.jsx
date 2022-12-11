@@ -14,7 +14,6 @@ export default function PostDropZone({ channel, user, group, setFiles, forImages
 
   useEffect(() => {
     setFiles(files)
-    console.log(forImages)
   }, [files, setFiles])
 
   const name = useMemo(() => {
@@ -34,19 +33,8 @@ export default function PostDropZone({ channel, user, group, setFiles, forImages
           accept={
             forImages? 
             "image/png, image/jpeg, image/webp, image/gif" 
-            // {
-            // 'image/jpg': ['.jpg'],
-            // 'image/jpeg': ['.jpeg'],
-            // 'image/png': ['.png'],
-            // }
             :
             "video/mp4, video/mpeg, video/x-msvideo, video/webm"
-            // {
-            //   'video/mp4': ['.mp4'],
-            //   'video/webm': ['.webm'],
-            //   'video/mpeg': ['.mpeg'],
-            //   'video/x-msvideo': ['.avi'],
-            // }
           }
           onChange={e => {
             setFiles(e.target.files)
