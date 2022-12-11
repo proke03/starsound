@@ -161,12 +161,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       let readers = []
       for (let i = 0; i < files.length; i++) {
         readers.push(readFileAsDataURL(files[i]))
-        // if (files[i].type.includes('image')) {
-        //   readers.push(readFileAsDataURL(files[i]))
-        // }
-        // else {
-        //   readers.push(getVideoCover(files[i]))
-        // }
       }
       Promise.all(readers).then(async values => {
         console.log(values)
@@ -195,28 +189,8 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                     thumbnail: URL.createObjectURL(thumbnail),
                   }
                 ])
-                console.log(images)
             })
         })
-        // await setImages( await
-        //   values.map(async(data, i) => ({
-        //     file: files[i],
-        //     caption: '',
-        //     linkUrl: '',
-        //     // data
-        //     // data: String(data).includes('image')? data : URL.createObjectURL(data),
-        //     data,
-        //     thumbnail: 
-        //       String(data).includes('video')? 
-        //         await getVideoCover(files[i])
-        //                 .then((thumbnail) => {
-        //                   // console.log(thumbnail)
-        //                   URL.createObjectURL(thumbnail)
-        //                 })
-        //         : 
-        //         null,
-        //   }))
-        // )
       })
     }
   }
@@ -253,10 +227,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
           }))
         ])
       })
-
-      // getVideoCover(files[0]).then((cover) => {
-      //   URL.createObjectURL(cover)
-      // })
     }
   }
 
@@ -311,14 +281,8 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
 
   const [files, setFiles] = useState([])
   useEffect(() => {
-    // const files = e.target.files
-    console.log(files)
     changeImages(files)
   }, [files])
-
-  useEffect(() => {
-    console.log(images)
-  }, [images])
 
   const [selectedImage, setSelectedImage] = useState(0)
   const { postToEdit, setPostToEdit } = useStore(state => state)
@@ -666,7 +630,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   {images && images?.length > 0 && (
                     <div className="mt-5 flex flex-col sm:flex-row sm:space-x-5">
                       {
-                        images[selectedImage]?.file?.type.includes('video')?
+                        images[selectedImage]?.file.type.includes('video')?
                           images[selectedImage]?.file?
                             <video
                               src={images[selectedImage]?.data}
