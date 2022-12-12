@@ -644,7 +644,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   {images && images?.length > 0 && (
                     <div className="mt-5 flex flex-col sm:flex-row sm:space-x-5">
                       {
-                        images[selectedImage]?.file.type.includes('video')?
+                        images[selectedImage]?.file?.type.includes('video')?
                           images[selectedImage]?.file?
                             <video
                               src={images[selectedImage]?.data}
@@ -769,13 +769,14 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                 disabled={
                   !formState.isValid || 
                   !server || 
-                  loading || 
+                  loading ||
+                  updateLoading ||
                   (debouncedLinkUrl && !linkMeta) ||
                   (currentTab === Tab.Image && images?.length === 0)
                 }
               >
                 {t('post.create.submit')}
-                {loading && (
+                {(loading || updateLoading)&& (
                   <IconSpinner className="w-5 h-5 text-primary ml-3" />
                 )}
               </button>
