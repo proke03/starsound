@@ -22,7 +22,7 @@ import isURL from 'validator/es/lib/isURL'
 import { useDebounce } from 'react-use'
 import { canEmbed } from '@/components/ui/CustomEmbed'
 import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
-import { useStore } from './../../../hooks/useStore';
+import { useStore } from '@/hooks/useStore';
 import { policy } from '@/policy'
 import PostDropZone from '@/components/post/create/PostDropZone'
 
