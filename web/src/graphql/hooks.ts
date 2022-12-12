@@ -1347,6 +1347,7 @@ export type UpdatePostInput = {
   postId: Scalars['ID'];
   text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
+  videos?: Maybe<Array<UpdatePostImagesInput>>;
 };
 
 export type UpdatePostVoteInput = {

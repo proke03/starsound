@@ -2,13 +2,15 @@ import { Field, ID, InputType, Publisher } from 'type-graphql'
 import { ArrayMaxSize, IsUrl, Length, MaxLength } from 'class-validator'
 import { Context } from '@/types'
 import { ChangePayload, ChangeType } from '@/resolver/subscriptions'
-import { Image, Post, PostImage, Server, User } from '@/entity'
+import { Image, Post, PostImage, PostVideo, Server, User } from '@/entity'
 import { 
   handleText, 
   imageMimeTypes, 
   logger,
   scrapeMetadata,
   uploadImageFile,
+  uploadVideoFileSingle,
+  videoMimeTypes,
 } from '@/util'
 import { FileUpload, GraphQLUpload } from 'graphql-upload'
 import mime from 'mime'
@@ -88,6 +90,13 @@ export class UpdatePostInput {
     { message: `Cannot upload more than ${policy.post.imagesLength} images` }
   )
   images?: UpdatePostImagesInput[]
+
+  @Field(() => [UpdatePostImagesInput], { nullable: true })
+  @ArrayMaxSize(
+    policy.post.videosLength, 
+    { message: `Cannot upload more than ${policy.post.imagesLength} videos` }
+  )
+  videos?: UpdatePostImagesInput[]
 }
 
 export async function updatePost(
@@ -98,13 +107,12 @@ export async function updatePost(
     linkUrl,
     text,
     images,
+    videos,
   }: UpdatePostInput,
   notifyPostChanged: Publisher<ChangePayload>
 ): Promise<Post> {
   logger('updatePost')
-  console.log('updatePost', postId, title, linkUrl, text, images)
   const post = await em.findOneOrFail(Post, postId, ['author'])
-  console.log('post', post)
   
   const server = await em.findOneOrFail(Server, post.server.id, { isDeleted: false })
   const user = await em.findOneOrFail(User, userId)
@@ -115,7 +123,6 @@ export async function updatePost(
 
   post.title = title
 
-  // post.text = handleText(text)
   if (text) {
     text = handleText(text)
     if (!text) text = null
@@ -123,6 +130,7 @@ export async function updatePost(
     post.text = text
   }
 
+  //FIXME: 검증
   if(linkUrl){
     post.linkUrl = linkUrl
     post.linkMetadata = await scrapeMetadata(linkUrl)?? null
@@ -165,6 +173,23 @@ export async function updatePost(
     }
   }
   post.images = postImages
+
+  const postVideos: PostVideo[] = []
+
+  if (videos && videos.length > 0) {
+    for (const video of videos) {
+      const { createReadStream, mimetype } = await video.file
+      const ext = mime.getExtension(mimetype)
+      if (!videoMimeTypes.includes(mimetype))
+        throw new Error('Files must be videos')
+      const i = await uploadVideoFileSingle(video.file)
+      postVideos.push({
+        videoUrl: i,
+        linkUrl: video.linkUrl,
+        caption: video.caption
+      })
+    }
+  }
 
   await em.persistAndFlush(post)
   await notifyPostChanged({ id: postId, type: ChangeType.Updated })
