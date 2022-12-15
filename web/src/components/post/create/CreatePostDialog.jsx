@@ -249,7 +249,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
         // load the file to a video player
         const videoPlayer = document.createElement('video')
         videoPlayer.setAttribute('src', typeof(file) === 'object'? URL.createObjectURL(file) : file)
-        console.log(videoPlayer.src)
         videoPlayer.load()
         videoPlayer.addEventListener('error', (ex) => {
             reject("error when loading video file", ex)
@@ -258,27 +257,27 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
         videoPlayer.addEventListener('loadedmetadata', () => {
             // seek to user defined timestamp (in seconds) if possible
             if (videoPlayer.duration < seekTo) {
-                reject("video is too short.");
-                return;
+                reject("video is too short.")
+                return
             }
             // delay seeking or else 'seeked' event won't fire on Safari
             setTimeout(() => {
-              videoPlayer.currentTime = seekTo;
-            }, 200);
+              videoPlayer.currentTime = seekTo
+            }, 200)
             // extract video thumbnail once seeking is complete
             videoPlayer.addEventListener('seeked', () => {
                 // console.log('video is now paused at %ss.', seekTo);
                 // define a canvas to have the same dimension as the video
-                const canvas = document.createElement("canvas");
-                canvas.width = videoPlayer.videoWidth;
-                canvas.height = videoPlayer.videoHeight;
+                const canvas = document.createElement("canvas")
+                canvas.width = videoPlayer.videoWidth
+                canvas.height = videoPlayer.videoHeight
                 // draw the video frame to canvas
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(videoPlayer, 0, 0, canvas.width, canvas.height);
+                const ctx = canvas.getContext("2d")
+                ctx.drawImage(videoPlayer, 0, 0, canvas.width, canvas.height)
                 // return the canvas image as a blob
                 ctx.canvas.toBlob(
                     blob => {
-                        resolve(blob);
+                        resolve(blob)
                     },
                     "image/jpeg",
                     0.75 /* quality */
@@ -403,25 +402,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       })
     }
   }
-
-  useEffect(() => {
-    images.forEach(image => {
-      if(image.videoUrl && !image.thumbnail){
-        console.log("HI")
-        getVideoCover(image.videoUrl).then(blob => {
-          setImages([
-            ...images,
-            {
-              videoUrl: image.videoUrl,
-              caption: image.caption,
-              linkUrl: image.linkUrl,
-              thumbnail: URL.createObjectURL(thumbnail),
-            }
-          ])
-        })
-      }
-    })
-  }, [images])
 
   useLayoutEffect(() => {
     if(postToEdit){
@@ -593,7 +573,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               {images && images.length > 0 ? (
                 <div>
                   {
-                    // currentTab === Tab.Image &&
+                    currentTab === Tab.Image &&
                     <div className="flex">
                       <div className="flex scrollbar-custom items-center space-x-3 overflow-x-auto border dark:border-gray-700 rounded-md h-31 px-3 max-w-full w-full">
                         {images.map((image, i) => (
