@@ -653,25 +653,26 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                     <div className="mt-5 flex flex-col sm:flex-row sm:space-x-5">
                       <div className="flex relative">
                       {
-                        images[selectedImage]?.file?.type.includes('video')?
-                          images[selectedImage]?.file?
-                            <video
-                              src={images[selectedImage]?.data}
-                              controls={true}
-                              className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
-                            />
-                            :
-                            <video
-                              src={images[selectedImage]?.videoUrl}
-                              className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
-                            />
-                          :
-                          images[selectedImage]?.file?
+                        images[selectedImage]?.file?
+                          images[selectedImage]?.file?.type.includes('image')?
                             <div
                               className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
                               style={{
                                 backgroundImage: `url(${images[selectedImage]?.data})`
                               }}
+                            />
+                            :
+                            <video
+                              src={images[selectedImage]?.data}
+                              controls={true}
+                              className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                            />
+                          :
+                          images[selectedImage]?.videoUrl?
+                            <video
+                              onClick={console.log(images[selectedImage]?.videoUrl)}
+                              src={images[selectedImage]?.videoUrl}
+                              className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
                             />
                             :
                             <img
