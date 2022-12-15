@@ -362,7 +362,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               images && images.length > 0 && currentTab === Tab.Image
                 ?
                   images.map(image => {
-                    console.log(image);
                     let result = image.file?
                       {
                         file: image.file,
@@ -377,18 +376,27 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                         linkUrl: image.image.linkUrl,
                         caption: image.image.caption,
                       }
-                    console.log(result)
                     return result
                   })
                 : null,
             videos:
               images && images.length > 0 && currentTab === Tab.Video
                 ?
-                  images.map(({ file, caption, linkUrl }) => ({
-                    file,
-                    caption,
-                    linkUrl,
-                  }))
+                  images.map(video => {
+                    const result = video.file?
+                      {
+                        file: video.file,
+                        caption: video.caption,
+                        linkUrl: video.linkUrl,
+                      }
+                      :
+                      {
+                        videoUrl: video.videoUrl,
+                        caption: video.caption,
+                        linkUrl: video.linkUrl,
+                      }
+                    return result;
+                  })
                 : null,
           }
         }
@@ -707,15 +715,15 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                         <div
                           className="absolute top-1 right-1 rounded-full bg-black p-0.5 group-hover:block z-10"
                           onClick={() => {
-                            const newImages = images.slice()
-                            newImages.splice(selectedImage, 1)
-                            setImages(newImages)
                             if (selectedImage > 0) {
                               // setImmediate(() =>
                                 // setSelectedImage(selectedImage - 1)
                               // )
                               setSelectedImage(selectedImage - 1)
                             }
+                            const newImages = images.slice()
+                            newImages.splice(selectedImage, 1)
+                            setImages(newImages)
                           }}
                         >
                           <IconX className="w-4.5 h-4.5 text-white" />
