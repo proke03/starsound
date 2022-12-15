@@ -16,6 +16,7 @@ import {
   imageMimeTypes, logger,
   scrapeMetadata,
   uploadImageFile,
+  uploadImageFileSingle,
   uploadVideoFileSingle,
   videoMimeTypes,
 } from '@/util'
@@ -54,18 +55,36 @@ export class CreatePostInput {
   )
   images?: CreatePostImagesInput[]
 
-  @Field(() => [CreatePostImagesInput], { nullable: true })
+  @Field(() => [CreatePostVidoesInput], { nullable: true })
   @ArrayMaxSize(
     policy.post.videosLength, 
     { message: `Cannot upload more than ${policy.post.imagesLength} videos` }
   )
-  videos?: CreatePostImagesInput[]
+  videos?: CreatePostVidoesInput[]
 }
 
 @InputType()
 class CreatePostImagesInput {
   @Field(() => GraphQLUpload)
   file: FileUpload
+
+  @Field({ nullable: true })
+  @MaxLength(policy.post.captionLength)
+  caption?: string
+
+  @Field({ nullable: true })
+  @MaxLength(policy.post.linkLength)
+  @IsUrl()
+  linkUrl?: string
+}
+
+@InputType()
+class CreatePostVidoesInput {
+  @Field(() => GraphQLUpload)
+  file: FileUpload
+
+  // @Field(() => GraphQLUpload)
+  // thumbnail: FileUpload
 
   @Field({ nullable: true })
   @MaxLength(policy.post.captionLength)
@@ -124,10 +143,12 @@ export async function createPost(
       if (!videoMimeTypes.includes(mimetype))
         throw new Error('Files must be videos')
       const i = await uploadVideoFileSingle(video.file)
+      // const thumbnailUrl = await uploadImageFileSingle(video.thumbnail, { width: 400, height: 300 }, false)
       postVideos.push({
         videoUrl: i,
+        // thumbnailUrl: thumbnailUrl,
         linkUrl: video.linkUrl,
-        caption: video.caption
+        caption: video.caption,
       })
     }
   }
