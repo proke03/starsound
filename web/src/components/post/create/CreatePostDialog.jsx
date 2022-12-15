@@ -247,11 +247,12 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   function getVideoCover(file, seekTo = 0.0) {
     return new Promise((resolve, reject) => {
         // load the file to a video player
-        const videoPlayer = document.createElement('video');
-        videoPlayer.setAttribute('src', typeof(file) === 'object'? URL.createObjectURL(file) : file);
-        videoPlayer.load();
+        const videoPlayer = document.createElement('video')
+        videoPlayer.setAttribute('src', typeof(file) === 'object'? URL.createObjectURL(file) : file)
+        console.log(videoPlayer.src)
+        videoPlayer.load()
         videoPlayer.addEventListener('error', (ex) => {
-            reject("error when loading video file", ex);
+            reject("error when loading video file", ex)
         });
         // load metadata of the video to get video duration and dimensions
         videoPlayer.addEventListener('loadedmetadata', () => {
@@ -402,6 +403,25 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       })
     }
   }
+
+  useEffect(() => {
+    images.forEach(image => {
+      if(image.videoUrl && !image.thumbnail){
+        console.log("HI")
+        getVideoCover(image.videoUrl).then(blob => {
+          setImages([
+            ...images,
+            {
+              videoUrl: image.videoUrl,
+              caption: image.caption,
+              linkUrl: image.linkUrl,
+              thumbnail: URL.createObjectURL(thumbnail),
+            }
+          ])
+        })
+      }
+    })
+  }, [images])
 
   useLayoutEffect(() => {
     if(postToEdit){
@@ -573,7 +593,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               {images && images.length > 0 ? (
                 <div>
                   {
-                    currentTab === Tab.Image &&
+                    // currentTab === Tab.Image &&
                     <div className="flex">
                       <div className="flex scrollbar-custom items-center space-x-3 overflow-x-auto border dark:border-gray-700 rounded-md h-31 px-3 max-w-full w-full">
                         {images.map((image, i) => (
@@ -670,7 +690,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                           :
                           images[selectedImage]?.videoUrl?
                             <video
-                              onClick={console.log(images[selectedImage]?.videoUrl)}
                               src={images[selectedImage]?.videoUrl}
                               className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
                             />
