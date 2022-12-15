@@ -652,58 +652,74 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   {images && images?.length > 0 && (
                     <div className="mt-5 flex flex-col sm:flex-row sm:space-x-5">
                       <div className="flex relative">
-                      {
-                        images[selectedImage]?.file?
-                          images[selectedImage]?.file?.type.includes('image')?
-                            <div
-                              className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
-                              style={{
-                                backgroundImage: `url(${images[selectedImage]?.data})`
-                              }}
-                            />
+                        {
+                          images[selectedImage]?.file?
+                            images[selectedImage]?.file?.type.includes('image')?
+                              <div
+                                className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                                style={{
+                                  backgroundImage: `url(${images[selectedImage]?.data})`
+                                }}
+                              />
+                              :
+                              <video
+                                src={images[selectedImage]?.data}
+                                controls={true}
+                                className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                              />
                             :
-                            <video
-                              src={images[selectedImage]?.data}
-                              controls={true}
-                              className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
-                            />
-                          :
-                          images[selectedImage]?.videoUrl?
-                            <video
-                              src={images[selectedImage]?.videoUrl}
-                              className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
-                            />
-                            :
-                            <img
-                              src={currentTab === Tab.Image? 
-                                images[selectedImage]?.image.originalUrl
-                                :
-                                images[selectedImage]?.thumbnail
-                              }
-                              className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
-                            />
-                      }
-                      {images.length > 1 && (
-                        <>
-                          {currentImage > 0 && (
-                            <div
-                              onClick={() => setCurrentImage(currentImage - 1)}
-                              className="absolute left-3 top-1/2 transform -translate-y-1/2 rounded-full shadow flex items-center justify-center w-10 h-10 dark:bg-white"
-                            >
-                              <IconChevronLeft className="w-5 h-5 dark:text-black" />
-                            </div>
-                          )}
+                            images[selectedImage]?.videoUrl?
+                              <video
+                                src={images[selectedImage]?.videoUrl}
+                                className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                              />
+                              :
+                              <img
+                                src={currentTab === Tab.Image? 
+                                  images[selectedImage]?.image.originalUrl
+                                  :
+                                  images[selectedImage]?.thumbnail
+                                }
+                                className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                              />
+                        }
+                        {images.length > 1 && (
+                          <>
+                            {currentImage > 0 && (
+                              <div
+                                onClick={() => setCurrentImage(currentImage - 1)}
+                                className="absolute left-3 top-1/2 transform -translate-y-1/2 rounded-full shadow flex items-center justify-center w-10 h-10 dark:bg-white"
+                              >
+                                <IconChevronLeft className="w-5 h-5 dark:text-black" />
+                              </div>
+                            )}
 
-                          {currentImage < images.length - 1 && (
-                            <div
-                              onClick={() => setCurrentImage(currentImage + 1)}
-                              className="absolute right-3 top-1/2 transform -translate-y-1/2 rounded-full shadow flex items-center justify-center w-10 h-10 dark:bg-white"
-                            >
-                              <IconChevronRight className="w-5 h-5 dark:text-black" />
-                            </div>
-                          )}
-                        </>
-                      )}
+                            {currentImage < images.length - 1 && (
+                              <div
+                                onClick={() => setCurrentImage(currentImage + 1)}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 rounded-full shadow flex items-center justify-center w-10 h-10 dark:bg-white"
+                              >
+                                <IconChevronRight className="w-5 h-5 dark:text-black" />
+                              </div>
+                            )}
+                          </>
+                        )}
+                        <div
+                          className="absolute top-1 right-1 rounded-full bg-black p-0.5 group-hover:block z-10"
+                          onClick={() => {
+                            const newImages = images.slice()
+                            newImages.splice(selectedImage, 1)
+                            setImages(newImages)
+                            if (selectedImage > 0) {
+                              // setImmediate(() =>
+                                // setSelectedImage(selectedImage - 1)
+                              // )
+                              setSelectedImage(selectedImage - 1)
+                            }
+                          }}
+                        >
+                          <IconX className="w-4.5 h-4.5 text-white" />
+                        </div>
                       </div>
 
                       <div className="mt-5 sm:mt-0 space-y-5 max-w-full flex-grow">
