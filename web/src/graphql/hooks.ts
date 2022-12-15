@@ -199,7 +199,13 @@ export type CreatePostInput = {
   serverId: Scalars['ID'];
   text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
-  videos?: Maybe<Array<CreatePostImagesInput>>;
+  videos?: Maybe<Array<CreatePostVidoesInput>>;
+};
+
+export type CreatePostVidoesInput = {
+  caption?: Maybe<Scalars['String']>;
+  file: Scalars['Upload'];
+  linkUrl?: Maybe<Scalars['String']>;
 };
 
 export type CreateRoleInput = {
@@ -1347,7 +1353,14 @@ export type UpdatePostInput = {
   postId: Scalars['ID'];
   text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
-  videos?: Maybe<Array<UpdatePostImagesInput>>;
+  videos?: Maybe<Array<UpdatePostVideosInput>>;
+};
+
+export type UpdatePostVideosInput = {
+  caption?: Maybe<Scalars['String']>;
+  file?: Maybe<Scalars['Upload']>;
+  linkUrl?: Maybe<Scalars['String']>;
+  videoUrl?: Maybe<Scalars['String']>;
 };
 
 export type UpdatePostVoteInput = {
