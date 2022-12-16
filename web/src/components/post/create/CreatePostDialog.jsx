@@ -138,8 +138,11 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   const linkMeta = linkMetaData?.getLinkMeta
 
   const [images, setImages] = useState([])
+  useEffect(() => {
+    console.log(images)
+  }, [images])
   const [isForImage, setIsForImage] = useState(false)
-  const [currentImage, setCurrentImage] = useState(0)
+  // const [currentImage, setCurrentImage] = useState(0)
   function readFileAsDataURL(file) {
     return new Promise(function (resolve, reject) {
       let fr = new FileReader()
@@ -178,8 +181,8 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               }
             ])
             :
-            await getVideoCover(files[i])
-            .then((thumbnail) => {
+            // await getVideoCover(files[i])
+            // .then((thumbnail) => {
               setImages([
                 ...images,
                 {
@@ -187,10 +190,10 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   caption: '',
                   linkUrl: '',
                   data,
-                  thumbnail: URL.createObjectURL(thumbnail),
+                  // thumbnail: URL.createObjectURL(thumbnail),
                 }
               ])
-            })
+            // })
         })
       })
     }
@@ -226,8 +229,8 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               }
             ])
             :
-            await getVideoCover(files[i])
-            .then((thumbnail) => {
+            // await getVideoCover(files[i])
+            // .then((thumbnail) => {
                 setImages([
                   ...images,
                   {
@@ -235,10 +238,10 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                     caption: '',
                     linkUrl: '',
                     data,
-                    thumbnail: URL.createObjectURL(thumbnail),
+                    // thumbnail: URL.createObjectURL(thumbnail),
                   }
                 ])
-            })
+            // })
         })
       })
     }
@@ -293,6 +296,10 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   }
 
   const [files, setFiles] = useState([])
+  // const addFiles = (_files) => {
+  //   console.log(files.length, _files.length)
+  //   setFiles([...files, ..._files])
+  // }
   useEffect(() => {
     changeImages(files)
   }, [files])
@@ -679,6 +686,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                             images[selectedImage]?.videoUrl?
                               <video
                                 src={images[selectedImage]?.videoUrl}
+                                controls={true}
                                 className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
                               />
                               :
@@ -693,18 +701,18 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                         }
                         {images.length > 1 && (
                           <>
-                            {currentImage > 0 && (
+                            {selectedImage > 0 && (
                               <div
-                                onClick={() => setCurrentImage(currentImage - 1)}
+                                onClick={() => setSelectedImage(selectedImage - 1)}
                                 className="absolute left-3 top-1/2 transform -translate-y-1/2 rounded-full shadow flex items-center justify-center w-10 h-10 dark:bg-white"
                               >
                                 <IconChevronLeft className="w-5 h-5 dark:text-black" />
                               </div>
                             )}
 
-                            {currentImage < images.length - 1 && (
+                            {selectedImage < images.length - 1 && (
                               <div
-                                onClick={() => setCurrentImage(currentImage + 1)}
+                                onClick={() => setSelectedImage(selectedImage + 1)}
                                 className="absolute right-3 top-1/2 transform -translate-y-1/2 rounded-full shadow flex items-center justify-center w-10 h-10 dark:bg-white"
                               >
                                 <IconChevronRight className="w-5 h-5 dark:text-black" />
@@ -779,6 +787,28 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                               </div>
                             )}
                         </div>
+                        {
+                          currentTab === Tab.Video &&
+                          <div className="min-w-[6.25rem] min-h-[6.25rem] w-25 h-25 rounded relative flex items-center justify-center border dark:border-gray-700 border-dashed cursor-pointer transition dark:hover:bg-gray-775">
+                            <input
+                              type="file"
+                              id="file"
+                              accept={currentTab === Tab.Image?
+                                "image/png, image/jpeg, image/webp, image/gif" 
+                                : 
+                                "video/mp4, video/mpeg, video/x-msvideo, video/webm"
+                              }
+                              hidden
+                              multiple
+                              onChange={onAddImages}
+                            />
+                            <label
+                              htmlFor="file"
+                              className="absolute inset-0 block cursor-pointer"
+                            />
+                            <IconPlus className="w-1/2 h-1/2 text-tertiary" />
+                          </div>
+                        }
                       </div>
                     </div>
                   )}
