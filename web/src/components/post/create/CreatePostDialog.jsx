@@ -138,11 +138,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   const linkMeta = linkMetaData?.getLinkMeta
 
   const [images, setImages] = useState([])
-  useEffect(() => {
-    console.log(images)
-  }, [images])
   const [isForImage, setIsForImage] = useState(false)
-  // const [currentImage, setCurrentImage] = useState(0)
   function readFileAsDataURL(file) {
     return new Promise(function (resolve, reject) {
       let fr = new FileReader()
@@ -181,19 +177,15 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               }
             ])
             :
-            // await getVideoCover(files[i])
-            // .then((thumbnail) => {
-              setImages([
-                ...images,
-                {
-                  file: files[i],
-                  caption: '',
-                  linkUrl: '',
-                  data,
-                  // thumbnail: URL.createObjectURL(thumbnail),
-                }
-              ])
-            // })
+            setImages([
+              ...images,
+              {
+                file: files[i],
+                caption: '',
+                linkUrl: '',
+                data,
+              }
+            ])
         })
       })
     }
@@ -229,19 +221,15 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               }
             ])
             :
-            // await getVideoCover(files[i])
-            // .then((thumbnail) => {
-                setImages([
-                  ...images,
-                  {
-                    file: files[i],
-                    caption: '',
-                    linkUrl: '',
-                    data,
-                    // thumbnail: URL.createObjectURL(thumbnail),
-                  }
-                ])
-            // })
+            setImages([
+              ...images,
+              {
+                file: files[i],
+                caption: '',
+                linkUrl: '',
+                data,
+              }
+            ])
         })
       })
     }
@@ -296,10 +284,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   }
 
   const [files, setFiles] = useState([])
-  // const addFiles = (_files) => {
-  //   console.log(files.length, _files.length)
-  //   setFiles([...files, ..._files])
-  // }
   useEffect(() => {
     changeImages(files)
   }, [files])
