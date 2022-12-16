@@ -1,5 +1,5 @@
 import ctl from '@netlify/classnames-template-literals'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useDropZone } from '@/hooks/useDropZone'
 import {
   IconFileCode,
@@ -11,10 +11,6 @@ import { useTranslation } from 'react-i18next'
 export default function PostDropZone({ channel, user, group, setFiles, forImages }) {
   const { t } = useTranslation()
   const [files, isDragging] = useDropZone()
-
-  useEffect(() => {
-    setFiles(files)
-  }, [files, setFiles])
 
   const name = useMemo(() => {
     if (channel) return `#${channel.name}`
