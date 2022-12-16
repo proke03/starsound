@@ -1,5 +1,5 @@
 import ctl from '@netlify/classnames-template-literals'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useDropZone } from '@/hooks/useDropZone'
 import {
   IconFileCode,
@@ -8,20 +8,15 @@ import {
 } from '@/components/ui/icons/Icons'
 import { useTranslation } from 'react-i18next'
 
-export default function PostDropZone({ channel, user, group, setFiles }) {
+export default function PostDropZone({ channel, user, group, setFiles, forImages }) {
   const { t } = useTranslation()
   const [files, isDragging] = useDropZone()
-
-  useEffect(() => {
-    setFiles(files)
-  }, [files, setFiles])
 
   const name = useMemo(() => {
     if (channel) return `#${channel.name}`
     else if (user) return `@${user.username}`
     else if (group) return `${group.displayName}`
   }, [channel, user, group])
-
 
   return (
     <>
@@ -31,11 +26,12 @@ export default function PostDropZone({ channel, user, group, setFiles }) {
           multiple
           id="input-file"
           className="hidden"
-          accept={{
-            'image/jpg': ['.jpg'],
-            'image/jpeg': ['.jpeg'],
-            'image/png': ['.png'],
-          }}
+          accept={
+            forImages? 
+            "image/png, image/jpeg, image/webp, image/gif" 
+            :
+            "video/mp4, video/mpeg, video/x-msvideo, video/webm"
+          }
           onChange={e => {
             setFiles(e.target.files)
           }}

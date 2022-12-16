@@ -2,12 +2,15 @@ import { useEffect, useLayoutEffect, useState } from 'react'
 import ctl from '@netlify/classnames-template-literals'
 import Editor from '@/components/ui/editor/Editor'
 import {
+  IconChevronLeft,
+  IconChevronRight,
   IconFormatImage,
   IconLinkChain,
   IconPlus,
   IconSpinner,
   IconText,
-  IconX
+  IconX,
+  IconFileVideo,
 } from '@/components/ui/icons/Icons'
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -21,7 +24,7 @@ import isURL from 'validator/es/lib/isURL'
 import { useDebounce } from 'react-use'
 import { canEmbed } from '@/components/ui/CustomEmbed'
 import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
-import { useStore } from './../../../hooks/useStore';
+import { useStore } from '@/hooks/useStore';
 import { policy } from '@/policy'
 import PostDropZone from '@/components/post/create/PostDropZone'
 
@@ -99,6 +102,7 @@ const Tab = {
   Text: 'Text',
   Link: 'Link',
   Image: 'Image',
+  Video: 'Video',
 }
 
 export default function CreatePostDialog({ open, setOpen, serverId }) {
@@ -134,6 +138,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   const linkMeta = linkMetaData?.getLinkMeta
 
   const [images, setImages] = useState([])
+  const [isForImage, setIsForImage] = useState(false)
   function readFileAsDataURL(file) {
     return new Promise(function (resolve, reject) {
       let fr = new FileReader()
@@ -159,15 +164,30 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       for (let i = 0; i < files.length; i++) {
         readers.push(readFileAsDataURL(files[i]))
       }
-      Promise.all(readers).then(values => setImages(
-        values.map((data, i) => ({
-          file: files[i],
-          caption: '',
-          linkUrl: '',
-          data
-        }))
-      )
-      )
+      Promise.all(readers).then(async values => {
+        values.map(async (data, i) => {
+          String(data).includes('image')?
+            setImages([
+              ...images,
+              {
+                file: files[i],
+                caption: '',
+                linkUrl: '',
+                data,
+              }
+            ])
+            :
+            setImages([
+              ...images,
+              {
+                file: files[i],
+                caption: '',
+                linkUrl: '',
+                data,
+              }
+            ])
+        })
+      })
     }
   }
 
@@ -176,6 +196,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
     changeImages(files)
   }
   
+  //FIXME: changeImages와 코드 중복
   function addImages(files) {
     if (files && files.length > 0) {
       setImages([
@@ -183,21 +204,78 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
         ...Array.from(files).map(file => ({ file, caption: '', linkUrl: '' }))
       ])
       let readers = []
+      //FIXME: foreach
       for (let i = 0; i < files.length; i++) {
         readers.push(readFileAsDataURL(files[i]))
       }
       Promise.all(readers).then(values => {
-        setImages([
-          ...images,
-          ...values.map((data, i) => ({
-            file: files[i],
-            caption: '',
-            linkUrl: '',
-            data
-          }))
-        ])
+        values.map(async (data, i) => {
+          String(data).includes('image')?
+            setImages([
+              ...images,
+              {
+                file: files[i],
+                caption: '',
+                linkUrl: '',
+                data,
+              }
+            ])
+            :
+            setImages([
+              ...images,
+              {
+                file: files[i],
+                caption: '',
+                linkUrl: '',
+                data,
+              }
+            ])
+        })
       })
     }
+  }
+
+  function getVideoCover(file, seekTo = 0.0) {
+    return new Promise((resolve, reject) => {
+        // load the file to a video player
+        const videoPlayer = document.createElement('video')
+        videoPlayer.setAttribute('src', typeof(file) === 'object'? URL.createObjectURL(file) : file)
+        videoPlayer.load()
+        videoPlayer.addEventListener('error', (ex) => {
+            reject("error when loading video file", ex)
+        });
+        // load metadata of the video to get video duration and dimensions
+        videoPlayer.addEventListener('loadedmetadata', () => {
+            // seek to user defined timestamp (in seconds) if possible
+            if (videoPlayer.duration < seekTo) {
+                reject("video is too short.")
+                return
+            }
+            // delay seeking or else 'seeked' event won't fire on Safari
+            setTimeout(() => {
+              videoPlayer.currentTime = seekTo
+            }, 200)
+            // extract video thumbnail once seeking is complete
+            videoPlayer.addEventListener('seeked', () => {
+                // console.log('video is now paused at %ss.', seekTo);
+                // define a canvas to have the same dimension as the video
+                const canvas = document.createElement("canvas")
+                canvas.width = videoPlayer.videoWidth
+                canvas.height = videoPlayer.videoHeight
+                // draw the video frame to canvas
+                const ctx = canvas.getContext("2d")
+                ctx.drawImage(videoPlayer, 0, 0, canvas.width, canvas.height)
+                // return the canvas image as a blob
+                ctx.canvas.toBlob(
+                    blob => {
+                        resolve(blob)
+                    },
+                    "image/jpeg",
+                    0.75 /* quality */
+                );
+            });
+        });
+    });
   }
 
   const onAddImages = e => {
@@ -207,7 +285,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
 
   const [files, setFiles] = useState([])
   useEffect(() => {
-    // const files = e.target.files
     changeImages(files)
   }, [files])
 
@@ -244,7 +321,16 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                     caption,
                     linkUrl
                   }))
-                : null
+                : null,
+            videos:
+              images && images.length > 0 && currentTab === Tab.Video
+                ?
+                  images.map(({ file, caption, linkUrl }) => ({
+                    file,
+                    caption,
+                    linkUrl
+                  }))
+                : null,
           }
         }
       }).then(({ data }) => {
@@ -267,7 +353,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               images && images.length > 0 && currentTab === Tab.Image
                 ?
                   images.map(image => {
-                    console.log(image);
                     let result = image.file?
                       {
                         file: image.file,
@@ -282,10 +367,28 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                         linkUrl: image.image.linkUrl,
                         caption: image.image.caption,
                       }
-                    console.log(result)
                     return result
                   })
-                : null
+                : null,
+            videos:
+              images && images.length > 0 && currentTab === Tab.Video
+                ?
+                  images.map(video => {
+                    const result = video.file?
+                      {
+                        file: video.file,
+                        caption: video.caption,
+                        linkUrl: video.linkUrl,
+                      }
+                      :
+                      {
+                        videoUrl: video.videoUrl,
+                        caption: video.caption,
+                        linkUrl: video.linkUrl,
+                      }
+                    return result;
+                  })
+                : null,
           }
         }
       }).then(({ data }) => {
@@ -306,6 +409,11 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
         //image
         setCurrentTab(Tab.Image)
         setImages(postToEdit.images)
+      }
+      else if(postToEdit.videos.length > 0){
+        //video
+        setCurrentTab(Tab.Video)
+        setImages(postToEdit.videos)
       }
       else if(postToEdit.linkUrl){
         //link
@@ -361,10 +469,22 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
               setValue('linkUrl', '')
               trigger('linkUrl')
               setText('')
+              setImages([])
             }}
           >
             <IconFormatImage className="mr-2 w-5 h-5" />
             {t('post.type.image_short')}
+          </div>
+          <div
+            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Video)}`}
+            onClick={() => {
+              setCurrentTab(Tab.Video)
+              setValue('linkUrl', '')
+              setImages([])
+            }}
+          >
+            <IconFileVideo className="mr-2 w-5 h-5" />
+            {t('post.type.video_short')}
           </div>
         </div>
 
@@ -447,94 +567,160 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             </>
           )}
 
-          {currentTab === Tab.Image && (
+          {(currentTab === Tab.Image || currentTab === Tab.Video) && (
             <div className="mt-5">
               {images && images.length > 0 ? (
                 <div>
-                  <div className="flex">
-                    <div className="flex scrollbar-custom items-center space-x-3 overflow-x-auto border dark:border-gray-700 rounded-md h-31 px-3 max-w-full w-full">
-                      {images.map((image, i) => (
-                        <div
-                          key={i}
-                          onClick={() => setSelectedImage(i)}
-                          className={`cursor-pointer group relative rounded border ${
-                            selectedImage === i
-                              ? 'dark:border-gray-500'
-                              : 'dark:border-transparent'
-                          }`}
-                        >
+                  {
+                    currentTab === Tab.Image &&
+                    <div className="flex">
+                      <div className="flex scrollbar-custom items-center space-x-3 overflow-x-auto border dark:border-gray-700 rounded-md h-31 px-3 max-w-full w-full">
+                        {images.map((image, i) => (
                           <div
-                            className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] transform ${
-                              selectedImage === i ? 'scale-85' : ''
+                            key={i}
+                            onClick={() => setSelectedImage(i)}
+                            className={`cursor-pointer group relative rounded border ${
+                              selectedImage === i
+                                ? 'dark:border-gray-500'
+                                : 'dark:border-transparent'
                             }`}
                           >
                             <div
-                              className="absolute top-1 right-1 rounded-full bg-black p-0.5 hidden group-hover:block z-10"
-                              onClick={() => {
-                                if (selectedImage >= i && selectedImage > 0) {
-                                  // setImmediate(() =>
-                                    // setSelectedImage(selectedImage - 1)
-                                  // )
-                                  setSelectedImage(selectedImage - 1)
-                                }
-                                const newImages = images.slice()
-                                newImages.splice(i, 1)
-                                setImages(newImages)
-                              }}
+                              className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] transform ${
+                                selectedImage === i ? 'scale-85' : ''
+                              }`}
                             >
-                              <IconX className="w-4.5 h-4.5 text-white" />
-                            </div>
-                            <div className="absolute inset-0 bg-black rounded bg-opacity-0 group-hover:bg-opacity-50" />
-                            {
-                              image.file?
                               <div
-                                style={{ backgroundImage: `url(${image.data})` }}
-                                className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
-                              />
-                              :
-                              <img
-                                src={image.image.smallUrl}
-                                className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
-                              />
-                            }
+                                className="absolute top-1 right-1 rounded-full bg-black p-0.5 hidden group-hover:block z-10"
+                                onClick={() => {
+                                  if (selectedImage >= i && selectedImage > 0) {
+                                    // setImmediate(() =>
+                                      // setSelectedImage(selectedImage - 1)
+                                    // )
+                                    setSelectedImage(selectedImage - 1)
+                                  }
+                                  const newImages = images.slice()
+                                  newImages.splice(i, 1)
+                                  setImages(newImages)
+                                }}
+                              >
+                                <IconX className="w-4.5 h-4.5 text-white" />
+                              </div>
+                              <div className="absolute inset-0 bg-black rounded bg-opacity-0 group-hover:bg-opacity-50" />
+                              {
+                                image.file?
+                                <div
+                                  style={{ backgroundImage: `url(${image.thumbnail? image.thumbnail : image.data})` }}
+                                  // style={{ backgroundImage: `url(${image.data})` }}
+                                  className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
+                                />
+                                :
+                                currentTab === Tab.Image &&
+                                <img
+                                  src={image.image.smallUrl}
+                                  className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
+                                />
+                              }
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
 
-                      <div className="min-w-[6.25rem] min-h-[6.25rem] w-25 h-25 rounded relative flex items-center justify-center border dark:border-gray-700 border-dashed cursor-pointer transition dark:hover:bg-gray-775">
-                        <input
-                          type="file"
-                          id="file"
-                          accept="image/png,image/jpeg,image/webp,image/gif"
-                          hidden
-                          multiple
-                          onChange={onAddImages}
-                        />
-                        <label
-                          htmlFor="file"
-                          className="absolute inset-0 block cursor-pointer"
-                        />
-                        <IconPlus className="w-1/2 h-1/2 text-tertiary" />
+                        <div className="min-w-[6.25rem] min-h-[6.25rem] w-25 h-25 rounded relative flex items-center justify-center border dark:border-gray-700 border-dashed cursor-pointer transition dark:hover:bg-gray-775">
+                          <input
+                            type="file"
+                            id="file"
+                            accept={currentTab === Tab.Image?
+                              "image/png, image/jpeg, image/webp, image/gif" 
+                              : 
+                              "video/mp4, video/mpeg, video/x-msvideo, video/webm"
+                            }
+                            hidden
+                            multiple
+                            onChange={onAddImages}
+                          />
+                          <label
+                            htmlFor="file"
+                            className="absolute inset-0 block cursor-pointer"
+                          />
+                          <IconPlus className="w-1/2 h-1/2 text-tertiary" />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  }
 
                   {images && images?.length > 0 && (
                     <div className="mt-5 flex flex-col sm:flex-row sm:space-x-5">
-                      {
-                        images[selectedImage]?.file?
-                          <div
-                            className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
-                            style={{
-                              backgroundImage: `url(${images[selectedImage]?.data})`
-                            }}
-                          />
-                          :
-                          <img
-                            src={images[selectedImage]?.image.originalUrl}
-                            className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
-                          />
-                      }
+                      <div className="flex relative">
+                        {
+                          images[selectedImage]?.file?
+                            images[selectedImage]?.file?.type.includes('image')?
+                              <div
+                                className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                                style={{
+                                  backgroundImage: `url(${images[selectedImage]?.data})`
+                                }}
+                              />
+                              :
+                              <video
+                                src={images[selectedImage]?.data}
+                                controls={true}
+                                className="mx-auto sm:mx-0 w-full sm:w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                              />
+                            :
+                            images[selectedImage]?.videoUrl?
+                              <video
+                                src={images[selectedImage]?.videoUrl}
+                                controls={true}
+                                className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                              />
+                              :
+                              <img
+                                src={currentTab === Tab.Image? 
+                                  images[selectedImage]?.image.originalUrl
+                                  :
+                                  images[selectedImage]?.thumbnail
+                                }
+                                className="w-81 h-81 bg-contain bg-center bg-no-repeat dark:bg-gray-775 flex-shrink-0"
+                              />
+                        }
+                        {images.length > 1 && (
+                          <>
+                            {selectedImage > 0 && (
+                              <div
+                                onClick={() => setSelectedImage(selectedImage - 1)}
+                                className="absolute left-3 top-1/2 transform -translate-y-1/2 rounded-full shadow flex items-center justify-center w-10 h-10 dark:bg-white"
+                              >
+                                <IconChevronLeft className="w-5 h-5 dark:text-black" />
+                              </div>
+                            )}
+
+                            {selectedImage < images.length - 1 && (
+                              <div
+                                onClick={() => setSelectedImage(selectedImage + 1)}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 rounded-full shadow flex items-center justify-center w-10 h-10 dark:bg-white"
+                              >
+                                <IconChevronRight className="w-5 h-5 dark:text-black" />
+                              </div>
+                            )}
+                          </>
+                        )}
+                        <div
+                          className="absolute top-1 right-1 rounded-full bg-black p-0.5 group-hover:block z-10"
+                          onClick={() => {
+                            if (selectedImage > 0) {
+                              // setImmediate(() =>
+                                // setSelectedImage(selectedImage - 1)
+                              // )
+                              setSelectedImage(selectedImage - 1)
+                            }
+                            const newImages = images.slice()
+                            newImages.splice(selectedImage, 1)
+                            setImages(newImages)
+                          }}
+                        >
+                          <IconX className="w-4.5 h-4.5 text-white" />
+                        </div>
+                      </div>
 
                       <div className="mt-5 sm:mt-0 space-y-5 max-w-full flex-grow">
                         <div>
@@ -585,12 +771,38 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                               </div>
                             )}
                         </div>
+                        {
+                          currentTab === Tab.Video &&
+                          <div className="min-w-[6.25rem] min-h-[6.25rem] w-25 h-25 rounded relative flex items-center justify-center border dark:border-gray-700 border-dashed cursor-pointer transition dark:hover:bg-gray-775">
+                            <input
+                              type="file"
+                              id="file"
+                              accept={currentTab === Tab.Image?
+                                "image/png, image/jpeg, image/webp, image/gif" 
+                                : 
+                                "video/mp4, video/mpeg, video/x-msvideo, video/webm"
+                              }
+                              hidden
+                              multiple
+                              onChange={onAddImages}
+                            />
+                            <label
+                              htmlFor="file"
+                              className="absolute inset-0 block cursor-pointer"
+                            />
+                            <IconPlus className="w-1/2 h-1/2 text-tertiary" />
+                          </div>
+                        }
                       </div>
                     </div>
                   )}
                 </div>
               ) : (
-                <PostDropZone placeholder={t('post.create.imageDrop')} setFiles={setFiles} />
+                <PostDropZone 
+                  placeholder={t('post.create.imageDrop')} 
+                  setFiles={setFiles} 
+                  forImages={currentTab === Tab.Image}
+                />
                 // <div className="relative">
                 //   <input
                 //     type="file"
@@ -626,13 +838,14 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                 disabled={
                   !formState.isValid || 
                   !server || 
-                  loading || 
+                  loading ||
+                  updateLoading ||
                   (debouncedLinkUrl && !linkMeta) ||
                   (currentTab === Tab.Image && images?.length === 0)
                 }
               >
                 {t('post.create.submit')}
-                {loading && (
+                {(loading || updateLoading)&& (
                   <IconSpinner className="w-5 h-5 text-primary ml-3" />
                 )}
               </button>

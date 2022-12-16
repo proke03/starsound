@@ -17,10 +17,18 @@ export const imageMimeTypes = [
   'image/webp'
 ]
 
+export const videoMimeTypes = [
+  'video/mp4',
+  'video/mpeg',
+  'video/x-msvideo',
+  'video/webm'
+]
+
 const genKey = (ext: string) => `${nanoid()}.${ext}`
 
 const initSharp = () => sharp({ pages: -1 }).webp({ quality: 80 })
 
+// for messages
 export const uploadFileOrImage = async (
   file: FileUpload
 ): Promise<File | Image> => {
@@ -53,6 +61,7 @@ export const uploadImageUrl = async (linkUrl: string): Promise<Image> => {
   return uploadImageFile(createStream, ext)
 }
 
+// for posts
 export const uploadImageFile = async (
   createStream: () => any,
   ext: string
@@ -127,6 +136,25 @@ export const uploadImageFileSingle = async (
   }
   else {
     return s3upload(ext, body, 'image/webp')
+  }
+}
+
+export const uploadVideoFileSingle = async (
+  file: FileUpload,
+  videoUrl?: string
+): Promise<string> => {
+  if(!file) return
+  const { createReadStream, mimetype } = await file
+  if (!videoMimeTypes.includes(mimetype))
+    throw new Error('error.upload.invalidMime')
+  let body: Readable = createReadStream()
+  const ext = mime.getExtension(mimetype)
+  
+  if(videoUrl){
+    return s3upload(ext, body, `video/${ext}`, getImageName(videoUrl)) 
+  }
+  else {
+    return s3upload(ext, body, `video/${ext}`)
   }
 }
 

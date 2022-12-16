@@ -5,6 +5,7 @@ import { Context } from '@/types'
 import {
   Post,
   PostImage,
+  PostVideo,
   PostVote,
   Server,
   User,
@@ -15,6 +16,9 @@ import {
   imageMimeTypes, logger,
   scrapeMetadata,
   uploadImageFile,
+  uploadImageFileSingle,
+  uploadVideoFileSingle,
+  videoMimeTypes,
 } from '@/util'
 import { ChangePayload, ChangeType } from '@/resolver/subscriptions'
 import mime from 'mime'
@@ -50,6 +54,13 @@ export class CreatePostInput {
     { message: `Cannot upload more than ${policy.post.imagesLength} images` }
   )
   images?: CreatePostImagesInput[]
+
+  @Field(() => [CreatePostVidoesInput], { nullable: true })
+  @ArrayMaxSize(
+    policy.post.videosLength, 
+    { message: `Cannot upload more than ${policy.post.imagesLength} videos` }
+  )
+  videos?: CreatePostVidoesInput[]
 }
 
 @InputType()
@@ -67,10 +78,28 @@ class CreatePostImagesInput {
   linkUrl?: string
 }
 
+@InputType()
+class CreatePostVidoesInput {
+  @Field(() => GraphQLUpload)
+  file: FileUpload
+
+  // @Field(() => GraphQLUpload)
+  // thumbnail: FileUpload
+
+  @Field({ nullable: true })
+  @MaxLength(policy.post.captionLength)
+  caption?: string
+
+  @Field({ nullable: true })
+  @MaxLength(policy.post.linkLength)
+  @IsUrl()
+  linkUrl?: string
+}
+
 //TODO: check invalid url
 export async function createPost(
   { em, userId }: Context,
-  { title, linkUrl, text, serverId, images }: CreatePostInput,
+  { title, linkUrl, text, serverId, images, videos }: CreatePostInput,
   notifyPostChanged: Publisher<ChangePayload>
 ): Promise<Post> {
   logger('createPost')
@@ -104,6 +133,25 @@ export async function createPost(
       })
     }
   }
+  
+  const postVideos: PostVideo[] = []
+
+  if (videos && videos.length > 0) {
+    for (const video of videos) {
+      const { createReadStream, mimetype } = await video.file
+      const ext = mime.getExtension(mimetype)
+      if (!videoMimeTypes.includes(mimetype))
+        throw new Error('Files must be videos')
+      const i = await uploadVideoFileSingle(video.file)
+      // const thumbnailUrl = await uploadImageFileSingle(video.thumbnail, { width: 400, height: 300 }, false)
+      postVideos.push({
+        videoUrl: i,
+        // thumbnailUrl: thumbnailUrl,
+        linkUrl: video.linkUrl,
+        caption: video.caption,
+      })
+    }
+  }
 
   const post = em.create(Post, {
     title,
@@ -112,6 +160,7 @@ export async function createPost(
     server,
     linkMetadata: linkUrl ? await scrapeMetadata(linkUrl) : null,
     images: postImages,
+    videos: postVideos,
     text: text,
     voteCount: 0
   })

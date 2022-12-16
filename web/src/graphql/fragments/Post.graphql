@@ -23,4 +23,9 @@ fragment Post on Post {
     linkUrl
     caption
   }
+  videos {
+    videoUrl
+    linkUrl
+    caption
+  }
 }

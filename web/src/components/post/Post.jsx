@@ -23,6 +23,7 @@ import { useOpenLogin } from '@/hooks/useLoginDialog'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { useUpdatePostVoteMutation, VoteType } from '@/graphql/hooks'
 import MessageImageDialog from '@/components/message/MessageImageDialog'
+import MessageVideoDialog from '@/components/message/MessageVideoDialog'
 
 export default memo(function Post({
   post,
@@ -60,12 +61,15 @@ export default memo(function Post({
       post.text ||
       (!post.text &&
         !post.linkUrl &&
-        (!post.images || post.images.length === 0))
+        (!post.images || post.images.length === 0) &&
+        (!post.videos || post.videos.length === 0)
+      )
     )
       return 'text post'
     else if (post.linkUrl) return post.domain
     else if (post.images?.length === 1) return 'image post'
     else if (post.images?.length > 1) return 'image album'
+    else if (post.videos?.length >= 1) return 'video post'
   }, [post.domain, post.images, post.linkUrl, post.text])
 
   const onClick = e => {
@@ -267,7 +271,7 @@ export default memo(function Post({
 
           {isPostPage &&
             type &&
-            (!!post.text || !!post.linkUrl || !!post.images.length) && (
+            (!!post.text || !!post.linkUrl || !!post.images.length || !!post.videos.length) && (
               <div className="mt-0.5 pb-2">
                 {!!post.text && (
                   <div
@@ -368,6 +372,85 @@ export default memo(function Post({
                             className="ml-auto text-blue-400 hover:underline cursor-pointer"
                           >
                             {post.images[currentImage].linkUrl}
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {!!post.videos.length && (
+                  <div className="mt-2 max-w-[400px]">
+                    <div className="flex relative">
+                      <div className="w-full h-[300px] relative flex items-center justify-center dark:bg-gray-775">
+                        {post.videos.map((video, i) => (
+                          <div
+                            key={i}
+                            className={`select-none ${
+                              i === currentImage ? 'block' : 'hidden'
+                            }`}
+                          >
+                            <MessageVideoDialog
+                              rounded={false}
+                              video={video}
+                              key={i}
+                            />
+                            {/* <video src={video.videoUrl}/> */}
+                          </div>
+
+                          /*<img
+                              key={i}
+                              alt=""
+                              src={image.url}
+                              className={`w-full h-full object-contain select-none ${
+                                i === currentImage ? 'block' : 'hidden'
+                              }`}
+                            />*/
+                        ))}
+                      </div>
+                      {post.videos.length > 1 && (
+                        <>
+                          {currentImage > 0 && (
+                            <div
+                              onClick={() => setCurrentImage(currentImage - 1)}
+                              className="absolute left-3 top-1/2 transform -translate-y-1/2 rounded-full shadow flex items-center justify-center w-10 h-10 dark:bg-white"
+                            >
+                              <IconChevronLeft className="w-5 h-5 dark:text-black" />
+                            </div>
+                          )}
+
+                          {currentImage < post.videos.length - 1 && (
+                            <div
+                              onClick={() => setCurrentImage(currentImage + 1)}
+                              className="absolute right-3 top-1/2 transform -translate-y-1/2 rounded-full shadow flex items-center justify-center w-10 h-10 dark:bg-white"
+                            >
+                              <IconChevronRight className="w-5 h-5 dark:text-black" />
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                    {!!post.videos.find(
+                      image => image.caption || image.linkUrl
+                    ) && (
+                      <div className="h-12 dark:bg-gray-750 flex items-center px-5 text-sm select-none">
+                        {post.videos[currentImage].caption && (
+                          <div
+                            className="text-primary truncate pr-3"
+                            title={post.videos[currentImage].caption}
+                          >
+                            {post.videos[currentImage].caption}
+                          </div>
+                        )}
+
+                        {post.videos[currentImage].linkUrl && (
+                          <a
+                            href={post.videos[currentImage].linkUrl}
+                            target="_blank"
+                            rel="noopener nofollow noreferrer"
+                            className="ml-auto text-blue-400 hover:underline cursor-pointer"
+                          >
+                            {post.videos[currentImage].linkUrl}
                           </a>
                         )}
                       </div>

@@ -5,11 +5,12 @@ import {
   FolderPost,
   LinkMetadata,
   PostImage,
+  PostVideo,
   Server,
   ServerUser,
   User,
   PostVote,
-  VoteType
+  VoteType,
 } from '@/entity'
 import { URL } from 'url'
 import {
@@ -52,6 +53,10 @@ export class Post extends BaseEntity {
   @Field(() => [PostImage])
   @Embedded(() => PostImage, { object: true, array: true })
   images: PostImage[] = []
+
+  @Field(() => [PostVideo], { nullable: true })
+  @Embedded(() => PostVideo, { object: true, array: true, nullable: true })
+  videos?: PostVideo[] = []
 
   @Field({ nullable: true })
   get thumbnailUrl(): string | null {

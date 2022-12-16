@@ -199,6 +199,13 @@ export type CreatePostInput = {
   serverId: Scalars['ID'];
   text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
+  videos?: Maybe<Array<CreatePostVidoesInput>>;
+};
+
+export type CreatePostVidoesInput = {
+  caption?: Maybe<Scalars['String']>;
+  file: Scalars['Upload'];
+  linkUrl?: Maybe<Scalars['String']>;
 };
 
 export type CreateRoleInput = {
@@ -939,6 +946,7 @@ export type Post = BaseEntity & {
   thumbnailUrl?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   updatedAt?: Maybe<Scalars['DateTime']>;
+  videos?: Maybe<Array<PostVideo>>;
   voteCount: Scalars['Int'];
   voteType: VoteType;
 };
@@ -955,6 +963,13 @@ export type PostImage = {
   caption?: Maybe<Scalars['String']>;
   image: Image;
   linkUrl?: Maybe<Scalars['String']>;
+};
+
+export type PostVideo = {
+  __typename?: 'PostVideo';
+  caption?: Maybe<Scalars['String']>;
+  linkUrl?: Maybe<Scalars['String']>;
+  videoUrl?: Maybe<Scalars['String']>;
 };
 
 export enum PostsFeed {
@@ -1338,6 +1353,14 @@ export type UpdatePostInput = {
   postId: Scalars['ID'];
   text?: Maybe<Scalars['String']>;
   title: Scalars['String'];
+  videos?: Maybe<Array<UpdatePostVideosInput>>;
+};
+
+export type UpdatePostVideosInput = {
+  caption?: Maybe<Scalars['String']>;
+  file?: Maybe<Scalars['Upload']>;
+  linkUrl?: Maybe<Scalars['String']>;
+  videoUrl?: Maybe<Scalars['String']>;
 };
 
 export type UpdatePostVoteInput = {
@@ -1499,7 +1522,10 @@ export type PostFragment = (
       { __typename?: 'Image' }
       & ImageFragment
     ) }
-  )> }
+  )>, videos?: Maybe<Array<(
+    { __typename?: 'PostVideo' }
+    & Pick<PostVideo, 'videoUrl' | 'linkUrl' | 'caption'>
+  )>> }
 );
 
 export type RelatedUserFragment = (
@@ -3221,6 +3247,11 @@ export const PostFragmentDoc = gql`
     image {
       ...Image
     }
+    linkUrl
+    caption
+  }
+  videos {
+    videoUrl
     linkUrl
     caption
   }
