@@ -410,7 +410,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
         setCurrentTab(Tab.Image)
         setImages(postToEdit.images)
       }
-      else if(postToEdit.videos.length > 0){
+      else if(postToEdit.videos?.length > 0){
         //video
         setCurrentTab(Tab.Video)
         setImages(postToEdit.videos)
@@ -443,6 +443,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
           <div
             className={`whitespace-nowrap ${tabClass(currentTab === Tab.Text)}`}
             onClick={() => {
+              if(!!postToEdit) return
               setCurrentTab(Tab.Text)
               setValue('linkUrl', '')
               setImages([])
@@ -454,6 +455,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
           <div
             className={`whitespace-nowrap ${tabClass(currentTab === Tab.Link)}`}
             onClick={() => {
+              if(!!postToEdit) return
               setCurrentTab(Tab.Link)
               setText('')
               setImages([])
@@ -465,6 +467,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
           <div
             className={`whitespace-nowrap ${tabClass(currentTab === Tab.Image)}`}
             onClick={() => {
+              if(!!postToEdit) return
               setCurrentTab(Tab.Image)
               setValue('linkUrl', '')
               trigger('linkUrl')
@@ -478,6 +481,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
           <div
             className={`whitespace-nowrap ${tabClass(currentTab === Tab.Video)}`}
             onClick={() => {
+              if(!!postToEdit) return
               setCurrentTab(Tab.Video)
               setValue('linkUrl', '')
               setImages([])
