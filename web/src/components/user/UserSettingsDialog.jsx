@@ -1,11 +1,19 @@
 import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import Dialog from '@/components/ui/dialog/Dialog'
-import {IconCheck, IconDelete, IconEdit, IconImage, IconLogout, IconSpinner, IconX} from '@/components/ui/icons/Icons'
+import {
+  IconCheck, 
+  IconDelete, 
+  IconEdit, 
+  IconImage, 
+  IconLogout, 
+  IconSpinner, 
+  IconX,
+} from '@/components/ui/icons/Icons'
 import UserAvatar from '@/components/user/UserAvatar'
 import {
   useChangeUserAvatarMutation,
   useDeleteAccountMutation,
-  useChangePasswordMutation
+  useChangePasswordMutation,
 } from '@/graphql/hooks'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -39,7 +47,9 @@ export default function UserSettingsDialog({ open, setOpen }) {
     useChangePasswordMutation()
 
   const [changeAvatar] = useChangeUserAvatarMutation()
+  const [disabled, setDisabled] = useState(false)
   const logout = () => {
+    setDisabled(true)
     localStorage.removeItem('token')
     location.reload()
   }
@@ -67,9 +77,16 @@ export default function UserSettingsDialog({ open, setOpen }) {
       <StyledDialog onSubmit={handleSubmit(onSubmit)} open={open} close={close} closeOnOverlayClick
         buttons={
           <>
-            <button onClick={() => logout()} className="form-button-delete">
+            <button 
+              disabled={disabled}
+              onClick={() => logout()} 
+              className="form-button-delete"
+            >
               {t('settings.user.logout')}
               <IconLogout className="ml-2 w-5 h-5" />
+              {disabled && (
+                <IconSpinner className="w-5 h-5 text-primary ml-3" />
+              )}
             </button>
             <button onClick={() => close()} className="form-button-submit">
               {t('settings.user.done')}
