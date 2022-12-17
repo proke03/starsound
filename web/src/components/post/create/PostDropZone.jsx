@@ -38,7 +38,7 @@ export default function PostDropZone({ channel, user, group, setFiles, forImages
         />
         <label
           htmlFor="input-file"
-          className="select-none cursor-pointer flex items-center justify-center text-base text-tertiary h-30 border border-dashed dark:border-gray-700 rounded-md transition dark:hover:bg-gray-775"
+          className="pl-2 sm:pl-0 select-none cursor-pointer flex items-center justify-center text-base text-tertiary h-30 border border-dashed dark:border-gray-700 rounded-md transition dark:hover:bg-gray-775"
         >
           {t('post.create.imageDrop')}
         </label>
