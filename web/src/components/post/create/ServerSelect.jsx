@@ -51,11 +51,11 @@ const listboxOptionClass = active =>
   focus:outline-none
 `)
 
-export default function ServerSelect({ servers = [], server, setServer }) {
+export default function ServerSelect({ servers = [], server, setServer, disabled }) {
   const { t } = useTranslation()
   return (
     <div className="col-span-1 z-10">
-      <Listbox value={server} onChange={setServer}>
+      <Listbox value={server} onChange={setServer} disabled={disabled}>
         {({ open }) => (
           <>
             <div className="relative">

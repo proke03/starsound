@@ -436,6 +436,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       >
         <div className="grid grid-cols-4">
           <ServerSelect
+            disabled={!!postToEdit}
             servers={servers}
             server={server}
             setServer={setServer}
