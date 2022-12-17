@@ -42,6 +42,12 @@ export default function ServerList({ hide = false }) {
     : publicServersData?.publicServers ?? [])
   
   useEffect(() => {
+    if(!publicServersData || !publicServersData.publicServers) return
+
+    setServers(currentUser? currentUser.servers : publicServersData?.publicServers?? [])
+  }, [currentUser])
+
+  useEffect(() => {
     if(!currentUser || !currentUser.isAdmin) return
     if(!publicServersData || !publicServersData.publicServers) return
     const tempServers = []
