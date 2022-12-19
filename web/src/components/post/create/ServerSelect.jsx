@@ -5,7 +5,8 @@ import ServerAvatar from '@/components/server/ServerAvatar'
 import { IconChevronDown } from '@/components/ui/icons/Icons'
 import { useTranslation } from 'react-i18next'
 
-const listboxClass = ctl(`
+const listboxClass = disabled => 
+ctl(`
   relative
   w-full
   h-12
@@ -17,7 +18,11 @@ const listboxClass = ctl(`
   bg-white
   dark:bg-gray-800
   dark:hover:bg-gray-775
-  cursor-pointer
+  ${
+    disabled
+      ? 'opacity-50 cursor-not-allowed'
+      : 'cursor-pointer'
+  }
   focus:outline-none
   text-sm
   rounded-none
