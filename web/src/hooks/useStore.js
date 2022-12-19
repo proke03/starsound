@@ -16,6 +16,8 @@ export const useStore = create((set, get) => ({
   setCommentsSort: commentsSort => set({ commentsSort }),
   liveMode: false,
   setLiveMode: liveMode => set({ liveMode }),
+  showEmojiPicker: false,
+  setShowEmojiPicker: showEmojiPicker => set({ showEmojiPicker }),
 
   serverPages: {},
   setServerPage: (name, page) =>

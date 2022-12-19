@@ -22,7 +22,9 @@ import StarterKit from '@tiptap/starter-kit'
 import Link from '@/components/ui/editor/Link'
 import Underline from '@tiptap/extension-underline'
 import { Spoiler } from './Spoiler'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import EmojiPicker from './EmojiPicker'
+import { useStore } from '@/hooks/useStore'
 
 export default function Editor({ text, setText, target }) {
   const editor = useEditor({
@@ -134,8 +136,10 @@ function FormatGroup({ children }) {
 
 function MenuBar({ editor }) {
   if (!editor) return null
+  const [showEmojiPicker, setShowEmojiPicker] = useStore(s => [s.showEmojiPicker, s.setShowEmojiPicker])
 
   return (
+    <>
     <div className="min-h-[2.25rem] border-b dark:border-gray-700 border-gray-300 flex flex-wrap items-center divide-x dark:divide-gray-700 divide-gray-300">
       <FormatGroup>
         <FormatButton
@@ -252,8 +256,15 @@ function MenuBar({ editor }) {
         />
       </FormatGroup>
       <FormatGroup>
-        <FormatButton label="Emoji" icon={IconFormatEmoji} />
+        <FormatButton 
+          label="Emoji" 
+          icon={IconFormatEmoji}
+          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+          active={showEmojiPicker}
+        />
       </FormatGroup>
     </div>
+    {showEmojiPicker && <EmojiPicker />}
+    </>
   )
 }
