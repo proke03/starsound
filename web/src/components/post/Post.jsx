@@ -379,7 +379,7 @@ export default memo(function Post({
                   </div>
                 )}
 
-                {!!post.videos.length && (
+                {!!post.videos?.length && (
                   <div className="mt-2 max-w-[400px]">
                     <div className="flex relative">
                       <div className="w-full h-[300px] relative flex items-center justify-center dark:bg-gray-775">
