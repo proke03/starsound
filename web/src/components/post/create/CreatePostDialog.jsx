@@ -64,13 +64,18 @@ const cancelBtnClass = ctl(`
   select-none
 `)
 
-const tabClass = active =>
+const tabClass = (active, disabled) =>
   ctl(`
   px-5
   h-12
   border-b-2
   dark:hover:bg-gray-775
   hover:bg-gray-200
+  ${
+    disabled
+      ? 'cursor-not-allowed opacity-50'
+      : ''
+  }
   ${
     active
       ? 'dark:border-gray-100 text-primary dark:bg-gray-775 bg-gray-200'
@@ -442,7 +447,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             setServer={setServer}
           />
           <div
-            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Text)}`}
+            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Text, !!postToEdit)}`}
             onClick={() => {
               if(!!postToEdit) return
               setCurrentTab(Tab.Text)
@@ -454,7 +459,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             {t('post.type.text_short')}
           </div>
           <div
-            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Link)}`}
+            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Link, !!postToEdit)}`}
             onClick={() => {
               if(!!postToEdit) return
               setCurrentTab(Tab.Link)
@@ -466,7 +471,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             {t('post.type.link_short')}
           </div>
           <div
-            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Image)}`}
+            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Image, !!postToEdit)}`}
             onClick={() => {
               if(!!postToEdit) return
               setCurrentTab(Tab.Image)
@@ -480,7 +485,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             {t('post.type.image_short')}
           </div>
           <div
-            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Video)}`}
+            className={`whitespace-nowrap ${tabClass(currentTab === Tab.Video, !!postToEdit)}`}
             onClick={() => {
               if(!!postToEdit) return
               setCurrentTab(Tab.Video)
