@@ -2555,6 +2555,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@emoji-mart/data@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@emoji-mart/data@npm:1.1.0"
+  checksum: 6adf2bf746a7b46de31ac0f6f5b80b9beef8b9d75f22396730f57ba3edd02bdbaccccb970fa3af4dba78c34c517e6403b401ab23a17227f15ffa3e7274a149f4
+  languageName: node
+  linkType: hard
+
+"@emoji-mart/react@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@emoji-mart/react@npm:1.1.0"
+  peerDependencies:
+    emoji-mart: ^5.2
+    react: ^16.8 || ^17 || ^18
+  checksum: 7ac5f13ce2adb3363af624d3d51896c36ac46237113ec1d0ec3833188ce2926311c946df8fd877aa53451b97d6a5ee006baf165a1334468c64571cf7a664d165
+  languageName: node
+  linkType: hard
+
 "@emotion/is-prop-valid@npm:^0.8.2":
   version: 0.8.8
   resolution: "@emotion/is-prop-valid@npm:0.8.8"
@@ -8327,6 +8344,13 @@ __metadata:
   version: 1.0.1
   resolution: "elegant-spinner@npm:1.0.1"
   checksum: d6a773d950c5d403b5f0fa402787e37dde99989ab6c943558fe8491cf7cd0df0e2747a9ff4d391d5a5f20a447cc9e9a63bdc956354ba47bea462f1603a5b04fe
+  languageName: node
+  linkType: hard
+
+"emoji-mart@npm:^5.4.0":
+  version: 5.4.0
+  resolution: "emoji-mart@npm:5.4.0"
+  checksum: fe51dcd5afd29f01e923f64d85cdb78d43729e65daa9beae764783fef92d6133976120c9d78a816be45b10aa756f5df9df6bd2bc72e3efc67b5757349784db08
   languageName: node
   linkType: hard
 
@@ -18436,6 +18460,8 @@ ts-node-dev@latest:
   dependencies:
     "@apollo/client": ^3.3.21
     "@electron/remote": ^1.2.0
+    "@emoji-mart/data": ^1.1.0
+    "@emoji-mart/react": ^1.1.0
     "@headlessui/react": ^1.3.0
     "@n1ru4l/graphql-live-query": ^0.7.1
     "@n1ru4l/graphql-live-query-patch": ^0.3.2
@@ -18467,6 +18493,7 @@ ts-node-dev@latest:
     date-fns: ^2.22.1
     dayjs: ^1.10.6
     dayjs-twitter: ^0.4.0
+    emoji-mart: ^5.4.0
     eslint-plugin-react: ^7.24.0
     eslint-plugin-react-hooks: ^4.2.0
     extract-files: ^11.0.0
