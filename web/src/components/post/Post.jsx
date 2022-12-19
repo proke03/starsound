@@ -62,7 +62,7 @@ export default memo(function Post({
       (!post.text &&
         !post.linkUrl &&
         (!post.images || post.images.length === 0) &&
-        (!post.videos || post.videos.length === 0)
+        (!post.videos || post.videos?.length === 0)
       )
     )
       return 'text post'
@@ -271,7 +271,7 @@ export default memo(function Post({
 
           {isPostPage &&
             type &&
-            (!!post.text || !!post.linkUrl || !!post.images.length || !!post.videos.length) && (
+            (!!post.text || !!post.linkUrl || !!post.images.length || !!post.videos?.length) && (
               <div className="mt-0.5 pb-2">
                 {!!post.text && (
                   <div
@@ -379,7 +379,7 @@ export default memo(function Post({
                   </div>
                 )}
 
-                {!!post.videos.length && (
+                {!!post.videos?.length && (
                   <div className="mt-2 max-w-[400px]">
                     <div className="flex relative">
                       <div className="w-full h-[300px] relative flex items-center justify-center dark:bg-gray-775">
@@ -408,7 +408,7 @@ export default memo(function Post({
                             />*/
                         ))}
                       </div>
-                      {post.videos.length > 1 && (
+                      {post.videos?.length > 1 && (
                         <>
                           {currentImage > 0 && (
                             <div
@@ -419,7 +419,7 @@ export default memo(function Post({
                             </div>
                           )}
 
-                          {currentImage < post.videos.length - 1 && (
+                          {currentImage < post.videos?.length - 1 && (
                             <div
                               onClick={() => setCurrentImage(currentImage + 1)}
                               className="absolute right-3 top-1/2 transform -translate-y-1/2 rounded-full shadow flex items-center justify-center w-10 h-10 dark:bg-white"
@@ -430,7 +430,7 @@ export default memo(function Post({
                         </>
                       )}
                     </div>
-                    {!!post.videos.find(
+                    {!!post.videos?.find(
                       image => image.caption || image.linkUrl
                     ) && (
                       <div className="h-12 dark:bg-gray-750 flex items-center px-5 text-sm select-none">
@@ -443,7 +443,7 @@ export default memo(function Post({
                           </div>
                         )}
 
-                        {post.videos[currentImage].linkUrl && (
+                        {post.videos[currentImage]?.linkUrl && (
                           <a
                             href={post.videos[currentImage].linkUrl}
                             target="_blank"
