@@ -7,12 +7,15 @@ import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import ChannelUsersSidebar from '@/pages/server/channel/ChannelUsersSidebar'
 import { Helmet } from 'react-helmet-async'
 import { useCurrentServer } from '@/hooks/graphql/useCurrentServer'
+import { useStore } from '@/hooks/useStore'
 
 export default function ServerPostsPage() {
   const { server, users: serverUsers } = useCurrentServer()
   const [currentUser] = useCurrentUser()
 
   useSetServerPage(``)
+
+  const postFetchDone = useStore(state => state.postFetchDone)
 
   return (
     <Page
@@ -26,7 +29,7 @@ export default function ServerPostsPage() {
       </Helmet>
       <Posts
         serverId={server?.id}
-        header={currentUser ? <CreatePostHeader server={server} /> : <div className="h-4" />}
+        header={currentUser && postFetchDone ? <CreatePostHeader server={server} /> : <div className="h-4" />}
       />
     </Page>
   )
