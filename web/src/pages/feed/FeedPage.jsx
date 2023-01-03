@@ -17,6 +17,8 @@ export default function FeedPage() {
   const [currentUser] = useCurrentUser()
   useSetHomePage(null)
 
+  const postFetchDone = useStore(state => state.postFetchDone)
+
   useEffect(() => {
     if (!isNotificationsSupported()) return
     if (Notification.permission === 'default') {
@@ -44,7 +46,7 @@ export default function FeedPage() {
       >
         <Posts
           showServerName
-          header={currentUser ? <CreatePostHeader /> : <div className="h-4" />}
+          header={currentUser && postFetchDone? <CreatePostHeader /> : <div className="h-4" />}
         />
       </Page>
     </>
