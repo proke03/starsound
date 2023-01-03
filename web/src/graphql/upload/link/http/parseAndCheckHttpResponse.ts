@@ -27,11 +27,11 @@ export function parseAndCheckHttpResponse(operations: Operation | Operation[]) {
       .then((result: any) => {
         if (response.status >= 300) {
           // Network error
-          throwServerError(
-            response,
-            result,
-            `Response not successful: Received status code ${response.status}`
-          );
+          // throwServerError(
+          //   response,
+          //   result,
+          //   `Response not successful: Received status code ${response.status}`
+          // );
         }
 
         if (
