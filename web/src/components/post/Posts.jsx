@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 import { usePosts } from '@/components/post/usePosts'
 import Post from '@/components/post/Post'
@@ -6,6 +7,7 @@ import { useCallback, useRef } from 'react'
 import EndReached from '@/components/ui/EndReached'
 import { useTranslation } from 'react-i18next'
 import { usePinnedPostsQuery } from '@/graphql/hooks'
+import { useStore } from '@/hooks/useStore'
 
 export default function Posts({ folderId, serverId, showServerName, header }) {
   const { t } = useTranslation();
@@ -13,6 +15,11 @@ export default function Posts({ folderId, serverId, showServerName, header }) {
   const virtuoso = useRef(null)
 
   const [posts, fetching, fetchMore, hasMore] = usePosts({ folderId, serverId })
+
+  const { postFetchDone, setPostFetchDone } = useStore(state => state)
+  useEffect(() => {
+    if (!fetching && !postFetchDone) setPostFetchDone(true);
+  }, [fetching])
 
   const postRenderer = useCallback(
     (postsList, index) => {
