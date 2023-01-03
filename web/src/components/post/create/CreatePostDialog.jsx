@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState, useRef } from 'react'
 import ctl from '@netlify/classnames-template-literals'
 import Editor from '@/components/ui/editor/Editor'
 import {
@@ -143,6 +143,15 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   const linkMeta = linkMetaData?.getLinkMeta
 
   const [images, setImages] = useState([])
+  const thumbnailContainerRef = useRef(null)
+  useEffect(() => {
+    if(!thumbnailContainerRef.current) return
+    const scroll = thumbnailContainerRef.current
+    if(images.length > 2){
+      scroll.scrollTo(scroll?.scrollWidth, 0)
+    }
+  }, [images])
+
   const [isForImage, setIsForImage] = useState(false)
   function readFileAsDataURL(file) {
     return new Promise(function (resolve, reject) {
@@ -584,7 +593,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                   {
                     currentTab === Tab.Image &&
                     <div className="flex">
-                      <div className="flex scrollbar-custom items-center space-x-3 overflow-x-auto border dark:border-gray-700 rounded-md h-31 px-3 max-w-full w-full">
+                      <div ref={thumbnailContainerRef} className="flex scrollbar-custom items-center space-x-3 overflow-x-auto border dark:border-gray-700 rounded-md h-31 px-3 max-w-full w-full">
                         {images.map((image, i) => (
                           <div
                             key={i}
