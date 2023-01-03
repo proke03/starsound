@@ -29,7 +29,7 @@ export default function Posts({ folderId, serverId, showServerName, header }) {
 
   //FIXME: 400 error in main page. 각 페이지에 분리해야 하나?
   const { data: pinnedPosts, loading } = usePinnedPostsQuery({ 
-    variables: {serverId: serverId},
+    variables: {serverId: serverId?? ""},
     fetchPolicy: 'cache-and-network',
     nextFetchPolicy: 'cache-first', 
   })
