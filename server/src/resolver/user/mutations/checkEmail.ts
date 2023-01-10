@@ -6,9 +6,8 @@ import { GraphQLEmailAddress } from 'graphql-scalars'
 import { smtpTransport } from '@/config/email'
 import { CacheManager } from '@/util'
 
-var generateRandom = (min, max) => {
-  var ranNum = Math.floor(Math.random()*(max-min+1)) + min;
-  return ranNum;
+const generateRandom = (min, max) => {
+  return Math.floor(Math.random()*(max-min+1)) + min;
 }
 
 @InputType()
