@@ -94,6 +94,7 @@ export enum ChannelType {
 
 export type CheckEmailInput = {
   email?: Maybe<Scalars['EmailAddress']>;
+  isForEmailVerification?: Maybe<Scalars['Boolean']>;
 };
 
 export type CheckVerificationCodeInput = {
@@ -483,6 +484,7 @@ export type Mutation = {
   deleteRole: Scalars['ID'];
   deleteServer: Scalars['ID'];
   featureServer: Server;
+  findPassword: Scalars['Boolean'];
   followFolder: Folder;
   globalBan: Scalars['Boolean'];
   joinServer: Server;
@@ -677,6 +679,11 @@ export type MutationDeleteServerArgs = {
 
 export type MutationFeatureServerArgs = {
   input: FeatureServerInput;
+};
+
+
+export type MutationFindPasswordArgs = {
+  input: CheckEmailInput;
 };
 
 
@@ -2538,6 +2545,16 @@ export type UnfeatureServerMutation = (
     { __typename?: 'Server' }
     & ServerFragment
   ) }
+);
+
+export type FindPasswordMutationVariables = Exact<{
+  input: CheckEmailInput;
+}>;
+
+
+export type FindPasswordMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'findPassword'>
 );
 
 export type VerifyEmailMutationVariables = Exact<{
@@ -5621,6 +5638,37 @@ export function useUnfeatureServerMutation(baseOptions?: Apollo.MutationHookOpti
 export type UnfeatureServerMutationHookResult = ReturnType<typeof useUnfeatureServerMutation>;
 export type UnfeatureServerMutationResult = Apollo.MutationResult<UnfeatureServerMutation>;
 export type UnfeatureServerMutationOptions = Apollo.BaseMutationOptions<UnfeatureServerMutation, UnfeatureServerMutationVariables>;
+export const FindPasswordDocument = gql`
+    mutation findPassword($input: CheckEmailInput!) {
+  findPassword(input: $input)
+}
+    `;
+export type FindPasswordMutationFn = Apollo.MutationFunction<FindPasswordMutation, FindPasswordMutationVariables>;
+
+/**
+ * __useFindPasswordMutation__
+ *
+ * To run a mutation, you first call `useFindPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFindPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [findPasswordMutation, { data, loading, error }] = useFindPasswordMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useFindPasswordMutation(baseOptions?: Apollo.MutationHookOptions<FindPasswordMutation, FindPasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FindPasswordMutation, FindPasswordMutationVariables>(FindPasswordDocument, options);
+      }
+export type FindPasswordMutationHookResult = ReturnType<typeof useFindPasswordMutation>;
+export type FindPasswordMutationResult = Apollo.MutationResult<FindPasswordMutation>;
+export type FindPasswordMutationOptions = Apollo.BaseMutationOptions<FindPasswordMutation, FindPasswordMutationVariables>;
 export const VerifyEmailDocument = gql`
     mutation verifyEmail($input: CheckEmailInput!) {
   verifyEmail(input: $input)

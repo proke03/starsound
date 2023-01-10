@@ -117,6 +117,15 @@ export class UserResolver {
   // --- Mutations --- //
 
   @Mutation(() => Boolean)
+  async findPassword(
+    @Ctx() ctx: Context,
+    @Arg('input') input: CheckEmailInput,
+  ): Promise<boolean> {
+    input.isForEmailVerification = false
+    return checkEmail(ctx, input)
+  }
+
+  @Mutation(() => Boolean)
   async verifyEmail(
     @Ctx() ctx: Context,
     @Arg('input') input: CheckEmailInput,

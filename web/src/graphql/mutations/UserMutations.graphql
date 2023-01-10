@@ -1,3 +1,7 @@
+mutation findPassword($input: CheckEmailInput!) {
+  findPassword(input: $input)
+}
+
 mutation verifyEmail($input: CheckEmailInput!) {
   verifyEmail(input: $input)
 }
