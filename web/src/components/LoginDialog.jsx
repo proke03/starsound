@@ -4,7 +4,8 @@ import {
   useVerifyEmailMutation, 
   useCheckCodeMutation,
   useCreateAccountMutation,
-  useLoginMutation 
+  useLoginMutation,
+  useFindPasswordMutation
 } from '@/graphql/hooks'
 import {
   IconEmail,
@@ -46,6 +47,9 @@ export default function LoginDialog() {
   const [emailSended, setEmailSended] = useState(false)
   const [checkVerifyEmail, { loading: checkVerifyEmailLoading }] =
     useVerifyEmailMutation()
+
+  const [findPassword, {loading: findPasswordLoading}] = 
+    useFindPasswordMutation()
   
   const verifyCode = watch('verifyCode')
   const [checkCode, { loading: checkCodeLoading }] =
@@ -121,6 +125,7 @@ export default function LoginDialog() {
 
   }, [isCreateAccount, username, email, password, confirmPassword, usernameOrEmail, emailVerified])
 
+  
   return (
     <StyledDialog
       close={close}
@@ -260,7 +265,6 @@ export default function LoginDialog() {
                                 }
                               })
                               .then((res) => {
-                                console.log('then', res.data)
                                 if(res.data.verifyEmail){
                                   setEmailSended(true)
                                 }
@@ -401,19 +405,39 @@ export default function LoginDialog() {
               </div>
             </>
           ) : (
-            <div className="relative">
-              <input
-                id="password"
-                {...register('password', { required: true })}
-                className={`form-input`}
-                placeholder={t('auth.login.password')}
-                type={showPassword ? 'text' : 'password'}
-              />
-              <ShowPasswordButton
-                showPassword={showPassword}
-                setShowPassword={setShowPassword}
-              />
-            </div>
+            <>
+              <div className="relative">
+                <input
+                  id="password"
+                  {...register('password', { required: true })}
+                  className={`form-input`}
+                  placeholder={t('auth.login.password')}
+                  type={showPassword ? 'text' : 'password'}
+                />
+                <ShowPasswordButton
+                  showPassword={showPassword}
+                  setShowPassword={setShowPassword}
+                />
+              </div>
+              <button 
+                className="text-base cursor-pointer text-blue-500 hover:text-blue-700"
+                onClick={() => {
+                  findPassword({
+                    variables: {
+                      input: {
+                        email: email ?? null,
+                      }
+                    }
+                  }).then((res) => {
+                    if(res.data.verifyEmail){
+                      setEmailSended(true)
+                    }
+                  })
+                }}
+              >
+                비밀번호를 잊으셨나요?
+              </button>
+            </>
           )}
         </div>
       </div>
