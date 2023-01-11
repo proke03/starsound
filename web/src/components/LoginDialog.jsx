@@ -28,10 +28,7 @@ const usernameRegex = /^[가-힣A-Za-z0-9-_]+$/gi
 
 export default function LoginDialog() {
   const { t } = useTranslation()
-  const [open, setOpen, tabIndex, setTabIndex] = useLoginDialog()
-  useEffect(() => {
-    console.log(tabIndex)
-  }, [tabIndex])
+  const [open, setOpen, isCreateAccount, setCreateAccount] = useLoginDialog()
   const [showPassword, setShowPassword] = useState(false)
   const {
     handleSubmit,
@@ -65,7 +62,7 @@ export default function LoginDialog() {
     useCreateAccountMutation()
   const [login, { loading: loginLoading }] = useLoginMutation()
   const onSubmit = ({ usernameOrEmail, email, username, password }) => {
-    if (tabIndex === 1) {
+    if (isCreateAccount) {
       createAccount({
         variables: {
           input: {
@@ -108,9 +105,9 @@ export default function LoginDialog() {
   const [disabled, setDisabled] = useState(true)
 
   useEffect(() => {
-    if(tabIndex === 1 && !username) return;
+    if(isCreateAccount && !username) return;
     setTimeout(() => {
-      const _disabled = !(tabIndex === 1
+      const _disabled = !(isCreateAccount
         ? !!username &&
           username.length >= policy.user.nameMinLength &&
           username.length <= policy.user.nameMaxLength &&
@@ -126,7 +123,7 @@ export default function LoginDialog() {
       setDisabled(_disabled)
     }, 100)
 
-  }, [tabIndex, username, email, password, confirmPassword, usernameOrEmail, emailVerified])
+  }, [isCreateAccount, username, email, password, confirmPassword, usernameOrEmail, emailVerified])
 
   
   return (
@@ -140,8 +137,8 @@ export default function LoginDialog() {
           className={`form-button-submit`}
           disabled={disabled}
         >
-          {(tabIndex === 1 && createAccountLoading) ||
-          (tabIndex === 0 && loginLoading) ? (
+          {(isCreateAccount && createAccountLoading) ||
+          (!isCreateAccount && loginLoading) ? (
             <IconSpinner className="w-5 h-5" />
           ) : (
             <IconUserToServerArrow className="w-5 h-5" />
@@ -154,13 +151,13 @@ export default function LoginDialog() {
         <div className="pb-4 flex items-center">
           <div
             onClick={() => {
-              if (tabIndex === 1) {
-                setTabIndex(0)
+              if (isCreateAccount) {
+                setCreateAccount(false)
                 reset()
               }
             }}
             className={`text-sm cursor-pointer mr-3 py-3 border-b-2 inline-flex items-center justify-center px-3 ${
-              tabIndex === 1
+              isCreateAccount
                 ? 'border-transparent text-secondary'
                 : 'dark:border-gray-300 text-primary'
             }`}
@@ -170,13 +167,13 @@ export default function LoginDialog() {
 
           <div
             onClick={() => {
-              if (tabIndex === 0) {
-                setTabIndex(1)
+              if (!isCreateAccount) {
+                setCreateAccount(true)
                 reset()
               }
             }}
             className={`text-sm cursor-pointer py-3 border-b-2 inline-flex items-center justify-center px-3 ${
-              tabIndex === 1
+              isCreateAccount
                 ? 'dark:border-gray-300 text-primary'
                 : 'border-transparent text-secondary'
             }`}
@@ -195,7 +192,7 @@ export default function LoginDialog() {
         </div>
 
         <div className="space-y-4">
-          {tabIndex === 1? (
+          {isCreateAccount ? (
             <>
               <div>
                 <div className="relative">
@@ -300,7 +297,7 @@ export default function LoginDialog() {
             />
           )}
 
-          {tabIndex === 1? (
+          {isCreateAccount ? (
             <>
               {emailSended && !emailVerified &&
                 <div>

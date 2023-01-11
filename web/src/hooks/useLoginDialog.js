@@ -4,8 +4,8 @@ export const useLoginDialog = () =>
   useStore(s => [
     s.loginDialog,
     s.setLoginDialog,
-    s.loginDialogTabIndex,
-    s.setLoginDialogTabIndex
+    s.createAccount,
+    s.setCreateAccount
   ])
 
 export const useOpenLogin = () => {

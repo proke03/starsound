@@ -49,8 +49,8 @@ export const useStore = create((set, get) => ({
   loginDialog: false,
   setLoginDialog: open => set({ loginDialog: open }),
 
-  loginDialogTabIndex: 0,
-  setLoginDialogTabIndex: loginDialogTabIndex => set({ loginDialogTabIndex }),
+  createAccount: false,
+  setCreateAccount: createAccount => set({ createAccount }),
 
   showLeftSidebar: false,
   setShowLeftSidebar: showLeftSidebar => set({showLeftSidebar}),

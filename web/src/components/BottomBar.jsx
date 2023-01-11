@@ -57,7 +57,7 @@ export default function BottomBar() {
 
   const downloadLink = getDownloadLink()
   const os = getOS()
-  const [loginOpen, setLoginOpen, tabIndex, setTabIndex] =
+  const [loginOpen, setLoginOpen, isCreateAccount, setCreateAccount] =
     useLoginDialog()
   return (
     <>
@@ -77,7 +77,7 @@ export default function BottomBar() {
             <div
               className="cursor-pointer hover:underline"
               onClick={() => {
-                setTabIndex(0)
+                setCreateAccount(false)
                 setLoginOpen(true)
               }}
             >
@@ -87,7 +87,7 @@ export default function BottomBar() {
             <div
               className="cursor-pointer hover:underline"
               onClick={() => {
-                setTabIndex(1)
+                setCreateAccount(true)
                 setLoginOpen(true)
               }}
             >
