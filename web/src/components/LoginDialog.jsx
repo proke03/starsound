@@ -435,7 +435,7 @@ export default function LoginDialog() {
                   })
                 }}
               >
-                비밀번호 찾기
+                {t('auth.findPassword.label')}
               </button>
             </>
           )}

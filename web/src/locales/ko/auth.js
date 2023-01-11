@@ -24,6 +24,9 @@ export const auth = {
     showPassword: '비밀번호 보기',
     hidePassword: '비밀번호 숨기기',
   },
+  findPassword: {
+    label: '비밀번호 찾기',
+  },
   welcomeBack: '돌아오신 걸 환영합니다!',
   name: '이름',
   password: '비밀번호',

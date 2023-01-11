@@ -24,6 +24,9 @@ export const auth = {
     showPassword: 'Show Password',
     hidePassword: 'Hide Password',
   },
+  findPassword: {
+    label: 'Find Password',
+  },
   welcomeBack: 'Welcome Back!',
   name: 'Name',
   password: 'Password',
