@@ -435,7 +435,7 @@ export default function LoginDialog() {
                   })
                 }}
               >
-                비밀번호를 잊으셨나요?
+                비밀번호 찾기
               </button>
             </>
           )}
