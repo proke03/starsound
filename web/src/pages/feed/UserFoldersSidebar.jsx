@@ -19,7 +19,7 @@ export default function UserFoldersSidebar() {
   const showFolders = useStore(s => s.showFolders)
   const [currentUser] = useCurrentUser()
   const userFolders = currentUser?.folders ?? []
-  const [loginOpen, setLoginOpen, isCreateAccount, setCreateAccount] =
+  const [loginOpen, setLoginOpen, tabIndex, setTabIndex] =
     useLoginDialog()
 
   return (
@@ -81,7 +81,7 @@ export default function UserFoldersSidebar() {
               <button
                 onClick={() => {
                   setLoginOpen(true)
-                  setCreateAccount(false)
+                  setTabIndex(0)
                 }}
                 className="focus:outline-none w-full h-8 rounded cursor-pointer select-none border border-gray-750 text-blue-500 flex items-center justify-center text-sm font-medium"
               >
@@ -90,7 +90,7 @@ export default function UserFoldersSidebar() {
               <button
                 onClick={() => {
                   setLoginOpen(true)
-                  setCreateAccount(true)
+                  setTabIndex(1)
                 }}
                 className="focus:outline-none w-full h-8 rounded cursor-pointer select-none bg-blue-600 text-white flex items-center justify-center text-sm font-medium"
               >
