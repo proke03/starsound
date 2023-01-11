@@ -59,6 +59,9 @@ export default function BottomBar() {
   const os = getOS()
   const [loginOpen, setLoginOpen, isCreateAccount, setCreateAccount] =
     useLoginDialog()
+
+  const [findPasswordDialog, setFindPasswordDialog] = useStore(s => [s.findPasswordDialog, s.setFindPasswordDialog])
+
   return (
     <>
       {!!currentUser && <UserSettingsDialog open={open} setOpen={setOpen} />}
@@ -92,6 +95,15 @@ export default function BottomBar() {
               }}
             >
               {t('auth.createAccount.label')}
+            </div>
+            &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+            <div
+              className="cursor-pointer hover:underline"
+              onClick={() => {
+                setFindPasswordDialog(true)
+              }}
+            >
+              {t('auth.findPassword.label')}
             </div>
           </div>
         )}
