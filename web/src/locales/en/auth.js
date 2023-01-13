@@ -26,6 +26,10 @@ export const auth = {
   },
   findPassword: {
     label: 'Find Password',
+    sendVerificationCode: 'Send Verification Code',
+    verificationCode: 'Verification Code',
+    newPassword: 'New Password',
+    newPasswordConfirm: 'Confirm New Password',
   },
   welcomeBack: 'Welcome Back!',
   name: 'Name',

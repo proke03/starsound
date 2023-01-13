@@ -246,6 +246,7 @@ export default function LoginDialog() {
                     >
                       <div className={`form-show-password-button`}>
                         <IconUserToServerArrow
+                          className="w-5 h-5"
                           onClick={() => {
                             if(emailSended) return;
                             if(!(!!email && isEmail(email))) {
@@ -271,7 +272,6 @@ export default function LoginDialog() {
                               })
                             }
                           }}
-                          className="w-5 h-5"
                         />
                       </div>
                     </Tippy>

@@ -43,13 +43,21 @@ export default function FindPasswordDialog() {
     shouldUnregister: true
   })
 
+  const email = watch('email')
   const [emailSended, setEmailSended] = useState(false)
-  const onSubmit = ({ usernameOrEmail, email, username, password }) => {
-    const input = isEmail(usernameOrEmail)? { email: usernameOrEmail } : { username: usernameOrEmail }
+  
+  const verificationCode = watch('verificationCode')
+  const [isCodeVerified, setIsCodeVerified] = useState(false)
+  
+  const newPassword = watch('newPassword')
+  const newPasswordConfirm = watch('newPasswordConfirm')
+  const [showPassword, setShowPassword] = useState(false)
+
+  const onSubmit = ({ email, verificationCode, newPassword }) => {
     findPassword({
       variables: {
         input: {
-          ...input,
+          email: email,
         }
       }
     })
@@ -57,6 +65,12 @@ export default function FindPasswordDialog() {
       setEmailSended(true)
     })
   }
+
+  const [checkVerifyEmail, { loading: checkVerifyEmailLoading }] =
+    useVerifyEmailMutation()
+
+  const [checkCode, { loading: checkCodeLoading }] =
+    useCheckCodeMutation()
 
   const close = () => {
     reset()
@@ -86,49 +100,128 @@ export default function FindPasswordDialog() {
     >
       <div className="rounded-t-lg bg-gradient-to-r from-red-400 to-indigo-600 h-2" />
       <div className="px-5 pt-2 pb-9 text-left">
-      <div className="space-y-4">
-          <input
-            id="usernameOrEmail"
-            {...register('usernameOrEmail', {
-              shouldUnregister: true
-            })}
-            className={`form-input`}
-            placeholder={t('auth.login.name')}
+        <div className="pt-2 pb-4 flex items-center">
+          <span className="text-lg mr-3 py-3 inline-flex items-center justify-center px-3">비밀번호 찾기</span>
+          <div className="h-4 ml-auto">
+            <VectorLogo className="-mt-2 -mr-20 h-12 text-secondary" />
+          </div>
+          <IconX
+            className="ml-5 w-5 h-5 text-tertiary highlightable"
+            onClick={() => close()}
           />
+        </div>
+        <div className="space-y-4">
+          <div className="relative">
+            <input
+              id="email"
+              {...register('email', {
+                shouldUnregister: true
+              })}
+              className={`form-input`}
+              placeholder={t('auth.email')}
+            />
+            <Tippy content={t('auth.findPassword.sendVerificationCode')}>
+              <div className={`form-show-password-button`}>
+                <IconUserToServerArrow
+                  className="w-5 h-5"
+                  disabled={emailSended}
+                  onClick={() => {
+                    if(emailSended) return;
+                    if(!email) {
+                      toast.error(t('auth.createAccount.invalidEmail'))
+                      return
+                    }
+                    if(!isEmail(email)){
+                      toast.error(t('auth.createAccount.emailRequired'))
+                      return
+                    }
+                    findPassword({
+                      variables: {
+                        input: {
+                          email: email ?? null
+                        }
+                      }
+                    })
+                    .then((res) => {
+                      if(res.data.verifyEmail){
+                        setEmailSended(true)
+                      }
+                    })
+                  }}
+                />
+              </div>
+            </Tippy>
+          </div>
 
-          <>
-            <div className="relative">
-              <input
-                id="password"
-                {...register('password', { required: true })}
-                className={`form-input`}
-                placeholder={t('auth.login.password')}
-                // type={showPassword ? 'text' : 'password'}
-              />
-              <ShowPasswordButton
-                // showPassword={showPassword}
-                // setShowPassword={setShowPassword}
-              />
-            </div>
-            <button 
-              className="text-base cursor-pointer text-blue-500 hover:text-blue-700"
-              onClick={() => {
-                // findPassword({
-                //   variables: {
-                //     input: {
-                //       email: email ?? null,
-                //     }
-                //   }
-                // }).then((res) => {
-                //   if(res.data.verifyEmail){
-                //     setEmailSended(true)
-                //   }
-                // })
-              }}
-            >
-              비밀번호 찾기
-            </button>
-          </>
+          {
+            isCodeVerified ? 
+            (
+              <>
+                <div className="relative">
+                  <input
+                    id="newPassword"
+                    {...register('newPassword', { required: true })}
+                    className={`form-input`}
+                    placeholder={t('auth.findPassword.newPassword')}
+                  />
+                  <ShowPasswordButton
+                    showPassword={showPassword}
+                    setShowPassword={setShowPassword}
+                  />
+                </div>
+                <div className="relative">
+                  <input
+                    id="newPasswordConfirm"
+                    {...register('newPasswordConfirm', { required: true })}
+                    className={`form-input`}
+                    placeholder={t('auth.findPassword.newPasswordConfirm')}
+                  />
+                </div>
+              </>
+            )
+            :
+            (
+              <div className="relative">
+                <input
+                  id="verificationCode"
+                  {...register('verificationCode', { required: true })}
+                  className={`form-input`}
+                  placeholder={t('auth.findPassword.verificationCode')}
+                />
+                <Tippy content={t('auth.createAccount.checkCode')}>
+                  <div className={`form-show-password-button`}>
+                    <IconUserToServerArrow
+                      className="w-5 h-5"
+                      onClick={() => {
+                        console.log(verificationCode)
+                        if(!verificationCode) {
+                          toast.error(t('auth.createAccount.codeRequired'))
+                          return
+                        }
+                        if(verificationCode.length !== 6) {
+                          toast.error(t('auth.createAccount.invalidCode'))
+                          return
+                        }
+
+                        checkCode({
+                          variables: {
+                            input: {
+                              email: email ?? null,
+                              verificationCode: verificationCode ?? null,
+                            }
+                          }
+                        })
+                        .then((res) => {
+                          if(res.data.checkCode)
+                            setIsCodeVerified(true)
+                        })
+                      }}
+                    />
+                  </div>
+                </Tippy>
+              </div>
+            )
+          }
         </div>
       </div>
     </StyledDialog>
