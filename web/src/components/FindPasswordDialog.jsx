@@ -95,6 +95,7 @@ export default function FindPasswordDialog() {
     }).then(() => {
       toast.success(t('user.settings.password.changeDone'))
       reset()
+      setTimeout(setFindPasswordDialog(false), 500)
     })
   }
   
