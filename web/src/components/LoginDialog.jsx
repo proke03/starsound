@@ -423,6 +423,7 @@ export default function LoginDialog() {
                 />
               </div>
               <button 
+                type="button"
                 className="text-base cursor-pointer text-blue-500 hover:text-blue-700"
                 onClick={() => {
                   setFindPasswordOpen(true)

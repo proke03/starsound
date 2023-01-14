@@ -13,6 +13,7 @@ import ContextMenuProvider from '@/providers/ContextMenuProvider'
 import LoginDialog from '@/components/LoginDialog'
 import UserDialog from '@/components/user/UserDialog'
 import UserProvider from '@/providers/UserProvider'
+import FindPasswordDialog from '@/components/FindPasswordDialog'
 
 export default function App() {
   const isMac = getOS() === 'Mac OS'
@@ -42,6 +43,7 @@ export default function App() {
                 <CustomDragLayer />
                 {window.electron && !isMac && <TitleBar />}
                 <LoginDialog />
+                <FindPasswordDialog />
                 <UserDialog />
                 <div
                   style={
