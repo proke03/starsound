@@ -6,20 +6,22 @@ import { GraphQLEmailAddress } from 'graphql-scalars'
 import { smtpTransport } from '@/config/email'
 import { CacheManager } from '@/util'
 
-var generateRandom = (min, max) => {
-  var ranNum = Math.floor(Math.random()*(max-min+1)) + min;
-  return ranNum;
+const generateRandom = (min, max) => {
+  return Math.floor(Math.random()*(max-min+1)) + min;
 }
 
 @InputType()
 export class CheckEmailInput {
   @Field(() => GraphQLEmailAddress, { nullable: true })
   email?: string
+
+  @Field()
+  isForEmailVerification?: boolean = true
 }
 
 export async function checkEmail(
   ctx: Context,
-  { email }: CheckEmailInput
+  { email, isForEmailVerification }: CheckEmailInput
 ): Promise<boolean> {
   logger('checkEmail')
   const { em, liveQueryStore } = ctx
@@ -31,7 +33,8 @@ export async function checkEmail(
     email: { $ilike: handleUnderscore(email) },
     isDeleted: false
   })
-  if (foundEmail) throw new Error('error.login.emailInUse')
+  if (isForEmailVerification && foundEmail) throw new Error('error.login.emailInUse')
+  if (!isForEmailVerification && !foundEmail) throw new Error('error.login.emailNotFound')
 
   const verificationCode = generateRandom(111111, 999999)
   const mailOptions = {
@@ -40,15 +43,20 @@ export async function checkEmail(
       address: process.env.MAIL_SERVICE_USER,
     },
     to: email,
-    subject: '별별소리 이메일 인증 코드',
-    text: `인증 코드는 ${verificationCode} 입니다.`,
+    subject: isForEmailVerification? '별별소리 이메일 인증 코드' : '별별소리 비밀번호 재설정 코드',
+    text: `${isForEmailVerification? '인증' : '재설정'} 코드는 ${verificationCode} 입니다.`,
   }
-  smtpTransport.sendMail(mailOptions, (error, responses) => {
+  smtpTransport.sendMail(mailOptions, async (error, responses) => {
     if(error) {
       console.log(error)
       return false
     }
     else {
+      // if(!isForEmailVerification) {
+      //   const user = await em.findOneOrFail(User, email) as User
+      //   if(!user) throw new Error('error.login.emailNotFound')
+      //   CacheManager.Instance.set(email, user.id)
+      // }
       CacheManager.Instance.set(email, verificationCode)
       console.log(CacheManager.Instance.get(email))
       return true

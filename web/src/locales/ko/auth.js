@@ -24,6 +24,13 @@ export const auth = {
     showPassword: '비밀번호 보기',
     hidePassword: '비밀번호 숨기기',
   },
+  findPassword: {
+    label: '비밀번호 찾기',
+    sendVerificationCode: '인증 번호 보내기',
+    verificationCode: '인증 번호',
+    newPassword: '새 비밀번호',
+    newPasswordConfirm: '새 비밀번호 확인',
+  },
   welcomeBack: '돌아오신 걸 환영합니다!',
   name: '이름',
   password: '비밀번호',

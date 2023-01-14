@@ -52,6 +52,9 @@ export const useStore = create((set, get) => ({
   createAccount: false,
   setCreateAccount: createAccount => set({ createAccount }),
 
+  findPasswordDialog: false,
+  setFindPasswordDialog: open => set({ findPasswordDialog: open }),
+
   showLeftSidebar: false,
   setShowLeftSidebar: showLeftSidebar => set({showLeftSidebar}),
 

@@ -61,7 +61,7 @@ export const user = {
   settings: {
     password:{
       title: '비밀번호',
-      changeDone: '변경 사항이 저장됐습니다',
+      changeDone: '비밀번호가 변경됐습니다',
     },
     deleteAccount: '계정 삭제',
     confirmDelete: '계정을 삭제하면 복구할 수 없습니다.',

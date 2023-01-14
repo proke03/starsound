@@ -1,3 +1,7 @@
+mutation findPassword($input: CheckEmailInput!) {
+  findPassword(input: $input)
+}
+
 mutation verifyEmail($input: CheckEmailInput!) {
   verifyEmail(input: $input)
 }
@@ -19,6 +23,10 @@ mutation changePassword($input: ChangePasswordInput!) {
   changePassword(input: $input) {
     ...CurrentUser
   }
+}
+
+mutation changePasswordWithEmail($input: ChangePasswordWithEmailInput!) {
+  changePasswordWithEmail(input: $input)
 }
 
 mutation changeUserAvatar($input: ChangeUserAvatarInput!) {

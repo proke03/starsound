@@ -24,6 +24,13 @@ export const auth = {
     showPassword: 'Show Password',
     hidePassword: 'Hide Password',
   },
+  findPassword: {
+    label: 'Find Password',
+    sendVerificationCode: 'Send Verification Code',
+    verificationCode: 'Verification Code',
+    newPassword: 'New Password',
+    newPasswordConfirm: 'Confirm New Password',
+  },
   welcomeBack: 'Welcome Back!',
   name: 'Name',
   password: 'Password',
