@@ -23,12 +23,14 @@ import { useTranslation } from 'react-i18next'
 import Tippy from '@tippyjs/react'
 import toast from 'react-hot-toast'
 import { policy } from '@/policy'
+import { useStore } from '@/hooks/useStore'
 
 const usernameRegex = /^[가-힣A-Za-z0-9-_]+$/gi
 
 export default function LoginDialog() {
   const { t } = useTranslation()
   const [open, setOpen, isCreateAccount, setCreateAccount] = useLoginDialog()
+  const setFindPasswordOpen = useStore(s => s.setFindPasswordDialog)
   const [showPassword, setShowPassword] = useState(false)
   const {
     handleSubmit,
@@ -97,6 +99,7 @@ export default function LoginDialog() {
       )
     }
   }
+
   const close = () => {
     reset()
     setOpen(false)
@@ -422,17 +425,8 @@ export default function LoginDialog() {
               <button 
                 className="text-base cursor-pointer text-blue-500 hover:text-blue-700"
                 onClick={() => {
-                  findPassword({
-                    variables: {
-                      input: {
-                        email: email ?? null,
-                      }
-                    }
-                  }).then((res) => {
-                    if(res.data.verifyEmail){
-                      setEmailSended(true)
-                    }
-                  })
+                  setFindPasswordOpen(true)
+                  setOpen(false)
                 }}
               >
                 {t('auth.findPassword.label')}

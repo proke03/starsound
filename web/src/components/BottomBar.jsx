@@ -96,7 +96,7 @@ export default function BottomBar() {
             >
               {t('auth.createAccount.label')}
             </div>
-            &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+            {/* &nbsp;&nbsp;&middot;&nbsp;&nbsp;
             <div
               className="cursor-pointer hover:underline"
               onClick={() => {
@@ -104,7 +104,7 @@ export default function BottomBar() {
               }}
             >
               {t('auth.findPassword.label')}
-            </div>
+            </div> */}
           </div>
         )}
 
