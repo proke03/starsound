@@ -5,7 +5,8 @@ import {
   useCheckCodeMutation,
   useCreateAccountMutation,
   useLoginMutation,
-  useFindPasswordMutation
+  useFindPasswordMutation,
+  useChangePasswordWithEmailMutation,
 } from '@/graphql/hooks'
 import {
   IconEmail,
@@ -53,18 +54,8 @@ export default function FindPasswordDialog() {
   const newPasswordConfirm = watch('newPasswordConfirm')
   const [showPassword, setShowPassword] = useState(false)
 
-  const onSubmit = ({ email, verificationCode, newPassword }) => {
-    findPassword({
-      variables: {
-        input: {
-          email: email,
-        }
-      }
-    })
-    .then(() => {
-      setEmailSended(true)
-    })
-  }
+  const [changePasswordWithEmail, { loading: changePasswordWithEmailLoading }] =
+    useChangePasswordWithEmailMutation()
 
   const [checkVerifyEmail, { loading: checkVerifyEmailLoading }] =
     useVerifyEmailMutation()
@@ -78,6 +69,34 @@ export default function FindPasswordDialog() {
   }
 
   const [disabled, setDisabled] = useState(true)
+
+  useEffect(() => {
+    if (isCodeVerified 
+      && newPassword
+      && newPasswordConfirm 
+      && newPassword === newPasswordConfirm
+      ) {
+      setDisabled(false)
+      return
+    }
+    setDisabled(true)
+  }, [isCodeVerified, newPassword, newPasswordConfirm])
+
+  const onSubmit = ({ email, verificationCode, newPassword }) => {
+    if(disabled) return;
+
+    changePasswordWithEmail({
+      variables: {
+        input: {
+          email,
+          password: newPassword
+        }
+      }
+    }).then(() => {
+      toast.success(t('user.settings.password.changeDone'))
+      reset()
+    })
+  }
   
   return (
     <StyledDialog
@@ -159,6 +178,7 @@ export default function FindPasswordDialog() {
               <>
                 <div className="relative">
                   <input
+                    type={showPassword ? 'text' : 'password'}
                     id="newPassword"
                     {...register('newPassword', { required: true })}
                     className={`form-input`}
@@ -171,6 +191,7 @@ export default function FindPasswordDialog() {
                 </div>
                 <div className="relative">
                   <input
+                    type={showPassword ? 'text' : 'password'}
                     id="newPasswordConfirm"
                     {...register('newPasswordConfirm', { required: true })}
                     className={`form-input`}

@@ -28,7 +28,9 @@ import {
   changePassword,
   ChangePasswordInput,
   CheckVerificationCodeInput,
-  checkVerificationCode
+  checkVerificationCode,
+  ChangePasswordWithEmailInput,
+  changePasswordWithEmail
 } from '@/resolver/user/mutations'
 import { user, UserArgs } from '@/resolver/user/queries'
 import { GraphQLNonNegativeInt } from 'graphql-scalars'
@@ -158,6 +160,15 @@ export class UserResolver {
     input: ChangePasswordInput
   ): Promise<User> {
     return changePassword(ctx, input)
+  }
+
+  @Mutation(() => User)
+  async changePasswordWithEmail(
+    @Ctx() ctx: Context,
+    @Arg('input')
+    input: ChangePasswordWithEmailInput
+  ): Promise<User> {
+    return changePasswordWithEmail(ctx, input)
   }
 
   @Authorized()
