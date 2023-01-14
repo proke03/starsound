@@ -42,13 +42,11 @@ export async function changePassword(
 export async function changePasswordWithEmail(
   { em }: Context,
   { email, password }: ChangePasswordWithEmailInput
-): Promise<User> {
+): Promise<boolean> {
   logger('changePasswordWithEmail')
   const user = await em.findOneOrFail(User, { email: email })
-  console.log(user)
   if(!user) throw new Error('error.login.invalidEmail')
   user.passwordHash = await argon2.hash(password)
-  await em.persistAndFlush(user)
-  console.log("bye")
-  return user
+  await em.persist(user)
+  return true
 }
