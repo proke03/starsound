@@ -26,7 +26,9 @@ mutation changePassword($input: ChangePasswordInput!) {
 }
 
 mutation changePasswordWithEmail($input: ChangePasswordWithEmailInput!) {
-  changePasswordWithEmail(input: $input)
+  changePasswordWithEmail(input: $input){
+    email
+  }
 }
 
 mutation changeUserAvatar($input: ChangeUserAvatarInput!) {
