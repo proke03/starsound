@@ -70,7 +70,7 @@ export default function LoginDialog() {
           input: {
             username,
             password,
-            email: email ? email : null
+            email: email.trim()
           }
         }
       }).then(
@@ -84,10 +84,18 @@ export default function LoginDialog() {
         }
       )
     } else {
-      const input = isEmail(usernameOrEmail)
-        ? { email: usernameOrEmail }
-        : { username: usernameOrEmail }
-      login({ variables: { input: { ...input, password } } }).then(
+      const input = isEmail(usernameOrEmail.trim())
+        ? { email: usernameOrEmail.trim() }
+        : { username: usernameOrEmail.trim() }
+      login({ 
+        variables: { 
+          input: { 
+            ...input, 
+            password
+          } 
+        } 
+      })
+      .then(
         ({
           data: {
             login: { accessToken, user }

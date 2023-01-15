@@ -88,8 +88,8 @@ export default function FindPasswordDialog() {
     changePasswordWithEmail({
       variables: {
         input: {
-          email,
-          password: newPassword
+          email: email.trim(),
+          password: newPassword.trim()
         }
       }
     }).then(() => {
