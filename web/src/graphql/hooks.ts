@@ -466,7 +466,7 @@ export type Mutation = {
   blockUser: User;
   changeOnlineStatus: User;
   changePassword: User;
-  changePasswordWithEmail: Scalars['Boolean'];
+  changePasswordWithEmail: User;
   changeUserAvatar: User;
   checkCode: Scalars['Boolean'];
   closeDm: User;
@@ -2626,7 +2626,10 @@ export type ChangePasswordWithEmailMutationVariables = Exact<{
 
 export type ChangePasswordWithEmailMutation = (
   { __typename?: 'Mutation' }
-  & Pick<Mutation, 'changePasswordWithEmail'>
+  & { changePasswordWithEmail: (
+    { __typename?: 'User' }
+    & Pick<User, 'email'>
+  ) }
 );
 
 export type ChangeUserAvatarMutationVariables = Exact<{
@@ -5824,7 +5827,9 @@ export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordM
 export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
 export const ChangePasswordWithEmailDocument = gql`
     mutation changePasswordWithEmail($input: ChangePasswordWithEmailInput!) {
-  changePasswordWithEmail(input: $input)
+  changePasswordWithEmail(input: $input) {
+    email
+  }
 }
     `;
 export type ChangePasswordWithEmailMutationFn = Apollo.MutationFunction<ChangePasswordWithEmailMutation, ChangePasswordWithEmailMutationVariables>;

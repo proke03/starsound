@@ -162,7 +162,7 @@ export class UserResolver {
     return changePassword(ctx, input)
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => User)
   async changePasswordWithEmail(
     @Ctx() ctx: Context,
     @Arg('input')
