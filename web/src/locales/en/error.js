@@ -84,6 +84,7 @@ export const error = {
   login: {
     invalid: 'Invalid login',
     invalidEmail: 'Invalid email address',
+    emailNotFound: 'Email not found',
     emailInUse: 'Email already in use',
     illegalName: `Name cannot contain {{replace}}`,
     nameLength: 'Name must be 2-32 characters',

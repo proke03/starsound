@@ -84,6 +84,7 @@ export const error = {
   login: {
     invalid: '로그인이 잘못되었습니다',
     invalidEmail: '이메일 주소가 잘못되었습니다',
+    emailNotFound: '해당 이메일로 가입한 계정이 없습니다',
     emailInUse: '이메일이 이미 사용중입니다',
     illegalName: `이름에 {{replace}}을(를) 사용할 수 없습니다`,
     nameLength: '이름은 2자에서 32자 사이여야 합니다',
