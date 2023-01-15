@@ -109,6 +109,7 @@ export default function LoginDialog() {
   }
 
   const close = () => {
+    setEmailSended(false)
     reset()
     setOpen(false)
   }
@@ -327,6 +328,7 @@ export default function LoginDialog() {
                     <Tippy content={t('auth.createAccount.checkCode')}>
                       <div className={`form-show-password-button`}>
                         <IconUserToServerArrow
+                          className="w-5 h-5"
                           onClick={() => {
                             if(!(!!verifyCode && verifyCode.length === 6)) {
                               toast.error(!verifyCode?
@@ -349,7 +351,6 @@ export default function LoginDialog() {
                                 setEmailVerified(true)
                             })
                           }}
-                          className="w-5 h-5"
                         />
                       </div>
                     </Tippy>
