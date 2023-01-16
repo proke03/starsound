@@ -38,7 +38,8 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-this-alias': 'off',
-    '@typescript-eslint/no-inferrable-types': 'off'
+    '@typescript-eslint/no-inferrable-types': 'off',
+    'no-extra-boolean-cast': 'off'
   },
   ignorePatterns: ['hooks.ts']
 }
