@@ -170,22 +170,31 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
     })
   }
 
+  const onChangeImages = e => {
+    const files = e.target.files
+    changeImages(files)
+  }
+
   function changeImages(files) {
     if (files && files.length > 0) {
+      const _files = [...files].filter(file => file.size <= 1024 * 1024 * 3)
       setImages(
-        Array.from(files).map(file => ({ file, caption: '', linkUrl: '' }))
+        _files.map(file => ({ file, caption: '', linkUrl: '' }))
       )
       let readers = []
-      for (let i = 0; i < files.length; i++) {
-        readers.push(readFileAsDataURL(files[i]))
-      }
+      _files.forEach((file) => {
+        readers.push(readFileAsDataURL(file))
+      })
+      // for (let i = 0; i < _files.length; i++) {
+      //   readers.push(readFileAsDataURL(_files[i]))
+      // }
       Promise.all(readers).then(async values => {
         values.map(async (data, i) => {
           String(data).includes('image')?
             setImages([
               ...images,
               {
-                file: files[i],
+                file: _files[i],
                 caption: '',
                 linkUrl: '',
                 data,
@@ -195,7 +204,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             setImages([
               ...images,
               {
-                file: files[i],
+                file: _files[i],
                 caption: '',
                 linkUrl: '',
                 data,
@@ -205,31 +214,32 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       })
     }
   }
-
-  const onChangeImages = e => {
-    const files = e.target.files
-    changeImages(files)
-  }
   
+  const onAddImages = e => {
+    const files = e.target.files
+    addImages(files)
+  }
+
   //FIXME: changeImages와 코드 중복
   function addImages(files) {
     if (files && files.length > 0) {
+      const _files = [...files].filter(file => file.size <= 1024 * 1024 * 3)
       setImages([
         ...images,
-        ...Array.from(files).map(file => ({ file, caption: '', linkUrl: '' }))
+        ..._files.map(file => ({ file, caption: '', linkUrl: '' }))
       ])
       let readers = []
       //FIXME: foreach
-      for (let i = 0; i < files.length; i++) {
-        readers.push(readFileAsDataURL(files[i]))
-      }
+      _files.forEach((file) => {
+        readers.push(readFileAsDataURL(file))
+      })
       Promise.all(readers).then(values => {
         values.map(async (data, i) => {
           String(data).includes('image')?
             setImages([
               ...images,
               {
-                file: files[i],
+                file: _files[i],
                 caption: '',
                 linkUrl: '',
                 data,
@@ -239,7 +249,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             setImages([
               ...images,
               {
-                file: files[i],
+                file: _files[i],
                 caption: '',
                 linkUrl: '',
                 data,
@@ -291,11 +301,6 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
             });
         });
     });
-  }
-
-  const onAddImages = e => {
-    const files = e.target.files
-    addImages(files)
   }
 
   const [files, setFiles] = useState([])
