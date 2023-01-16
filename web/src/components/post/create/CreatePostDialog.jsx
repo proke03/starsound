@@ -27,6 +27,7 @@ import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import { useStore } from '@/hooks/useStore';
 import { policy } from '@/policy'
 import PostDropZone from '@/components/post/create/PostDropZone'
+import { formatBytesToMB } from '@/utils/formatBytes';
 
 const labelClass = ctl(`
   block
@@ -625,14 +626,19 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                               >
                                 <IconX className="w-4.5 h-4.5 text-white" />
                               </div>
-                              <div className="absolute inset-0 bg-black rounded bg-opacity-0 group-hover:bg-opacity-50" />
+                              {/* <div className="absolute inset-0 bg-black rounded bg-opacity-0 group-hover:bg-opacity-50" /> */}
                               {
                                 image.file?
-                                <div
-                                  style={{ backgroundImage: `url(${image.thumbnail? image.thumbnail : image.data})` }}
-                                  // style={{ backgroundImage: `url(${image.data})` }}
-                                  className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
-                                />
+                                <>
+                                  <div
+                                    style={{ backgroundImage: `url(${image.thumbnail? image.thumbnail : image.data})` }}
+                                    // style={{ backgroundImage: `url(${image.data})` }}
+                                    className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
+                                  />
+                                  <span className="absolute bottom-0 right-1 text-sm text-green-500">
+                                    {formatBytesToMB(image.file.size)}
+                                  </span>
+                                </>
                                 :
                                 currentTab === Tab.Image &&
                                 <img
