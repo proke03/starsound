@@ -153,6 +153,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
     }
   }, [images])
 
+  const [totalSize, setTotalSize] = useState(0)
   const [isForImage, setIsForImage] = useState(false)
   function readFileAsDataURL(file) {
     return new Promise(function (resolve, reject) {
@@ -177,12 +178,13 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
 
   function changeImages(files) {
     if (files && files.length > 0) {
-      const _files = [...files].filter(file => file.size <= 1024 * 1024 * 3)
+      const _files = [...files].filter(file => file.size <= 1024 * 1024 * 10)
       setImages(
         _files.map(file => ({ file, caption: '', linkUrl: '' }))
       )
       let readers = []
       _files.forEach((file) => {
+        setTotalSize(totalSize + file.size)
         readers.push(readFileAsDataURL(file))
       })
       // for (let i = 0; i < _files.length; i++) {
@@ -223,7 +225,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   //FIXME: changeImages와 코드 중복
   function addImages(files) {
     if (files && files.length > 0) {
-      const _files = [...files].filter(file => file.size <= 1024 * 1024 * 3)
+      const _files = [...files].filter(file => file.size <= 1024 * 1024 * 10)
       setImages([
         ...images,
         ..._files.map(file => ({ file, caption: '', linkUrl: '' }))
@@ -231,6 +233,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
       let readers = []
       //FIXME: foreach
       _files.forEach((file) => {
+        setTotalSize(totalSize + file.size)
         readers.push(readFileAsDataURL(file))
       })
       Promise.all(readers).then(values => {
@@ -598,83 +601,89 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                 <div>
                   {
                     currentTab === Tab.Image &&
-                    <div className="flex">
-                      <div ref={thumbnailContainerRef} className="flex scrollbar-custom items-center space-x-3 overflow-x-auto border dark:border-gray-700 rounded-md h-31 px-3 max-w-full w-full">
-                        {images.map((image, i) => (
-                          <div
-                            key={i}
-                            onClick={() => setSelectedImage(i)}
-                            className={`cursor-pointer group relative rounded border ${
-                              selectedImage === i
-                                ? 'dark:border-gray-500'
-                                : 'dark:border-transparent'
-                            }`}
-                          >
+                    <div className="relative">
+                      <div className="flex">
+                        <div ref={thumbnailContainerRef} className="flex scrollbar-custom items-center space-x-3 overflow-x-auto border dark:border-gray-700 rounded-md h-31 px-3 max-w-full w-full">
+                          {images.map((image, i) => (
                             <div
-                              className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] transform ${
-                                selectedImage === i ? 'scale-85' : ''
+                              key={i}
+                              onClick={() => setSelectedImage(i)}
+                              className={`cursor-pointer group relative rounded border ${
+                                selectedImage === i
+                                  ? 'dark:border-gray-500'
+                                  : 'dark:border-transparent'
                               }`}
                             >
                               <div
-                                className="absolute top-1 right-1 rounded-full bg-black p-0.5 hidden group-hover:block z-10"
-                                onClick={() => {
-                                  if (selectedImage >= i && selectedImage > 0) {
-                                    // setImmediate(() =>
-                                      // setSelectedImage(selectedImage - 1)
-                                    // )
-                                    setSelectedImage(selectedImage - 1)
-                                  }
-                                  const newImages = images.slice()
-                                  newImages.splice(i, 1)
-                                  setImages(newImages)
-                                }}
+                                className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] transform ${
+                                  selectedImage === i ? 'scale-85' : ''
+                                }`}
                               >
-                                <IconX className="w-4.5 h-4.5 text-white" />
-                              </div>
-                              {/* <div className="absolute inset-0 bg-black rounded bg-opacity-0 group-hover:bg-opacity-50" /> */}
-                              {
-                                image.file?
-                                <>
-                                  <div
-                                    style={{ backgroundImage: `url(${image.thumbnail? image.thumbnail : image.data})` }}
-                                    // style={{ backgroundImage: `url(${image.data})` }}
+                                <div
+                                  className="absolute top-1 right-1 rounded-full bg-black p-0.5 hidden group-hover:block z-10"
+                                  onClick={() => {
+                                    if (selectedImage >= i && selectedImage > 0) {
+                                      // setImmediate(() =>
+                                        // setSelectedImage(selectedImage - 1)
+                                      // )
+                                      setSelectedImage(selectedImage - 1)
+                                    }
+                                    const newImages = images.slice()
+                                    setTotalSize(totalSize - image.file?.size)
+                                    newImages.splice(i, 1)
+                                    setImages(newImages)
+                                  }}
+                                >
+                                  <IconX className="w-4.5 h-4.5 text-white" />
+                                </div>
+                                {/* <div className="absolute inset-0 bg-black rounded bg-opacity-0 group-hover:bg-opacity-50" /> */}
+                                {
+                                  image.file?
+                                  <>
+                                    <div
+                                      style={{ backgroundImage: `url(${image.thumbnail? image.thumbnail : image.data})` }}
+                                      // style={{ backgroundImage: `url(${image.data})` }}
+                                      className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
+                                    />
+                                    <span className="absolute bottom-0 right-1 text-sm text-green-500">
+                                      {formatBytesToMB(image.file.size)}
+                                    </span>
+                                  </>
+                                  :
+                                  currentTab === Tab.Image &&
+                                  <img
+                                    src={image.image.smallUrl}
                                     className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
                                   />
-                                  <span className="absolute bottom-0 right-1 text-sm text-green-500">
-                                    {formatBytesToMB(image.file.size)}
-                                  </span>
-                                </>
-                                :
-                                currentTab === Tab.Image &&
-                                <img
-                                  src={image.image.smallUrl}
-                                  className={`max-w-25 max-h-25 min-w-[6.25rem] min-h-[6.25rem] bg-cover bg-center select-none rounded`}
-                                />
-                              }
+                                }
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
 
-                        <div className="min-w-[6.25rem] min-h-[6.25rem] w-25 h-25 rounded relative flex items-center justify-center border dark:border-gray-700 border-dashed cursor-pointer transition dark:hover:bg-gray-775">
-                          <input
-                            type="file"
-                            id="file"
-                            accept={currentTab === Tab.Image?
-                              "image/png, image/jpeg, image/webp, image/gif" 
-                              : 
-                              "video/mp4, video/mpeg, video/x-msvideo, video/webm"
-                            }
-                            hidden
-                            multiple
-                            onChange={onAddImages}
-                          />
-                          <label
-                            htmlFor="file"
-                            className="absolute inset-0 block cursor-pointer"
-                          />
-                          <IconPlus className="w-1/2 h-1/2 text-tertiary" />
+                          <div className="min-w-[6.25rem] min-h-[6.25rem] w-25 h-25 rounded relative flex items-center justify-center border dark:border-gray-700 border-dashed cursor-pointer transition dark:hover:bg-gray-775">
+                            <input
+                              type="file"
+                              id="file"
+                              accept={currentTab === Tab.Image?
+                                "image/png, image/jpeg, image/webp, image/gif" 
+                                : 
+                                "video/mp4, video/mpeg, video/x-msvideo, video/webm"
+                              }
+                              hidden
+                              multiple
+                              onChange={onAddImages}
+                            />
+                            <label
+                              htmlFor="file"
+                              className="absolute inset-0 block cursor-pointer"
+                            />
+                            <IconPlus className="w-1/2 h-1/2 text-tertiary" />
+                          </div>
                         </div>
                       </div>
+                      <span className="absolute bottom-0 right-1 text-sm text-green-500">
+                        {`${formatBytesToMB(totalSize).padEnd(2)}/10MB`}
+                      </span>
                     </div>
                   }
 
