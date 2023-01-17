@@ -5,8 +5,8 @@ import CreateServerDialog from '@/components/server/create/CreateServerDialog'
 import { useState } from 'react'
 
 export default function CreateServerButton() {
-  const [open, setOpen] = useState(false)
   const { t } = useTranslation()
+  const [open, setOpen] = useState(false)
 
   return (
     <>

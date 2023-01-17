@@ -69,6 +69,7 @@ const tab = {
 }
 
 export default memo(function UserDialog() {
+  const { t } = useTranslation()
   const [currentUser] = useCurrentUser()
 
   const [userId, setUserId, open, setOpen] = useStore(s => [
@@ -77,7 +78,6 @@ export default memo(function UserDialog() {
     s.userDialogOpen,
     s.setUserDialogOpen
   ])
-  const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(tab.MutualServers)
 
   const { data: userData } = useUserQuery({

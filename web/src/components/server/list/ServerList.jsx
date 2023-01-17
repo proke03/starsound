@@ -23,8 +23,8 @@ import ShowPasswordButton from '@/components/ui/ShowPasswordButton'
 import CountBadge from '@/components/ui/CountBadge'
 
 export default function ServerList({ hide = false }) {
-  const { pathname } = useLocation()
   const { t } = useTranslation()
+  const { pathname } = useLocation()
   const homePage = useStore(s => s.homePage)
   // const homeActive = pathname !== '/explore' && !pathname.startsWith('/+')
   const homeActive = pathname !== '/explore' && !pathname.startsWith('/server')

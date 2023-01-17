@@ -105,10 +105,12 @@ export class MentionList extends Component {
                 selectedIndex: index
               })}
             >
-              {typeof user === 'string' ? user : <>
-              <UserAvatar user={user} size={6} className="mr-2" />
-                {user.username}
-              </>}
+              {typeof user === 'string' ? user : 
+                <>
+                  <UserAvatar user={user} size={6} className="mr-2" />
+                  {user.username}
+                </>
+              }
             </button>
           ))}
       </div>
