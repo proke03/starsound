@@ -3,8 +3,10 @@ import ShowFoldersButton from '@/components/ui/header/buttons/ShowFoldersButton'
 import Header from '@/components/ui/header/Header'
 import HeaderTab from '@/components/ui/header/HeaderTab'
 import { useStore } from '@/hooks/useStore'
+import { useTranslation } from 'react-i18next'
 
 export default function FolderHeader({ folder }) {
+  const { t } = useTranslation()
   return (
     <Header
       showDivider

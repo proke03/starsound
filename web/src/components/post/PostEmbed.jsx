@@ -2,8 +2,10 @@ import { IconLinkExternal, IconPlay } from '@/components/ui/icons/Icons'
 import CustomEmbed, { canEmbed } from '@/components/ui/CustomEmbed'
 import { useState } from 'react'
 import MessageImageDialog from '@/components/message/MessageImageDialog'
+import { useTranslation } from 'react-i18next'
 
 export default function PostEmbed({ metadata, dark = false }) {
+  const t = useTranslation()
   const [playing, setPlaying] = useState(false)
   const embeddable = canEmbed(metadata.url)
   const themeColor = metadata.themeColor
