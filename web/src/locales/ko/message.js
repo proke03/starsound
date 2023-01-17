@@ -1,6 +1,11 @@
 export const message = {
   message: '메시지',
   pinned: '고정된 메시지',
+  needLogin: `메시지를 보내려면 로그인하세요`,
+  notifications: '알림',
+  playerJoined: '님이 {{channel}}에 입장하셨습니다.',
+  openOriginal: '원본 열기',
+  startDm: '@{{username}}님과 대화가 시작되었습니다.',
   upload: {
     upload: '업로드',
     cancel: '취소',
@@ -23,9 +28,16 @@ export const message = {
     delete: '메시지 삭제',
     deleted: '메시지가 삭제됐습니다.',
   },
-  needLogin: `메시지를 보내려면 로그인하세요`,
-  notifications: '알림',
-  playerJoined: '님이 {{channel}}에 입장하셨습니다.',
-  openOriginal: '원본 열기',
-  startDm: '@{{username}}님과 대화가 시작되었습니다.',
+  channel: {
+    noPermission: `해당 채널에 메시지를 보낼 권한이 없습니다`,
+    placeholder: `메시지 #{{channel}}`,
+  },
+  group: {
+    placeholder: `메시지 {{group}}`,
+  },
+  user: {
+    isBlocked: `해당 유저가 당신을 차단했습니다`,
+    isBlocking: `차단한 유저입니다`,
+    placeholder: `메시지 @{{user}}`,
+  },
 }
