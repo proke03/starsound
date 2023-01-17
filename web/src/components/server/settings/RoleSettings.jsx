@@ -240,6 +240,7 @@ function CreateRoleDialog({
   server,
   setSelectedRoleId
 }) {
+  const { t } = useTranslation()
   const [name, setName] = useState('')
   const [createRole, { loading }] = useCreateRoleMutation({
     update(cache, { data: { createRole } }) {
