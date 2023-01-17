@@ -46,11 +46,10 @@ export default function Comment({
     s.setReplyingCommentId
   ])
   const isReplying = replyingCommentId === comment.id
+  const { commentToEdit, setCommentToEdit } = useStore(state => state)
 
   if (comment.isDeleted && !comment.childCount) return null
 
-  const { commentToEdit, setCommentToEdit } = useStore(state => state)
-  
   return (
     <div
       className={`relative md:rounded dark:bg-gray-800 bg-gray-200 ${

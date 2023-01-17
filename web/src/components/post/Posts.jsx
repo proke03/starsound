@@ -53,7 +53,7 @@ export default function Posts({ folderId, serverId, showServerName, header }) {
             pinnedPosts?.pinnedPosts?.length > 0 &&
               pinnedPosts.pinnedPosts.map((post, index) => {
                 return (
-                  <div className="md:px-4 pb-1.5 px-0">
+                  <div className="md:px-4 pb-1.5 px-0" key={`pinned_post_${index}`}>
                     <Post 
                       post={post} 
                       showServerName={showServerName} 
