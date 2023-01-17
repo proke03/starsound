@@ -150,8 +150,8 @@ export default function CreateChannelDialog({ open, setOpen, server, channel }) 
         <div>
           <div className="relative">
             <input
-              {...register('name', { required: true, maxLength: 100 })}
-              maxLength={100}
+              {...register('name', { required: true, maxLength: t('policy.channel.nameLength') })}
+              maxLength={t('policy.channel.nameLength')}
               className="form-input-icon"
               spellCheck={false}
               autoCapitalize="none"
@@ -168,7 +168,8 @@ export default function CreateChannelDialog({ open, setOpen, server, channel }) 
 
         <textarea
           placeholder={t('channel.create.description')}
-          {...register('description')}
+          {...register('description', { maxLength: t('policy.channel.descriptionLength') })}
+          maxLength={t('policy.channel.descriptionLength')}
           className="form-textarea"
         />
 

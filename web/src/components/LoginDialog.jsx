@@ -131,7 +131,6 @@ export default function LoginDialog() {
           confirmPassword === password &&
           emailVerified
         : !!usernameOrEmail && !!password)
-      // console.log(_disabled, !!username, username?.length >= 3, username?.length <= 20, usernameRegex.test(username), (!email || (!!email && isEmail(email))), !!password, password.length >= 6, !!confirmPassword, confirmPassword === password, emailVerified)
       setDisabled(_disabled)
     }, 100)
 
@@ -368,12 +367,12 @@ export default function LoginDialog() {
                     id="password"
                     {...register('password', {
                       required: true,
-                      minLength: 6
+                      minLength: t('policy.user.passwordMinLength'),
                     })}
                     className={`form-input-password`}
                     placeholder={t('auth.createAccount.password')}
                     type={showPassword ? 'text' : 'password'}
-                    minLength={6}
+                    minLength={t('policy.user.passwordMinLength')}
                   />
                   <ShowPasswordButton
                     showPassword={showPassword}
@@ -421,7 +420,8 @@ export default function LoginDialog() {
               <div className="relative">
                 <input
                   id="password"
-                  {...register('password', { required: true })}
+                  {...register('password', { required: true, minLength: t('policy.user.passwordMinLength') })}
+                  minLength={t('policy.user.passwordMinLength')}
                   className={`form-input`}
                   placeholder={t('auth.login.password')}
                   type={showPassword ? 'text' : 'password'}

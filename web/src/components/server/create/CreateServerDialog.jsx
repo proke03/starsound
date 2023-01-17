@@ -239,10 +239,10 @@ export default function CreateServerDialog({ open, setOpen, server }) {
 
       <div className="pl-30 pr-5 pt-2 text-left">
         <input
-          {...register('displayName', { maxLength: 100, required: true })}
+          {...register('displayName', { maxLength: t('policy.server.displayNameMaxLength'), required: true })}
           placeholder={t('server.create.displayName')}
           className="form-input-lg"
-          maxLength={100}
+          maxLength={t('policy.server.displayNameMaxLength')}
         />
       </div>
 
@@ -254,9 +254,9 @@ export default function CreateServerDialog({ open, setOpen, server }) {
           </span>
             {!server && (
               <input
-                {...register('name', { pattern: serverRegex, required: true, minLength: 3, maxLength: 21 })}
-                minLength={3}
-                maxLength={21}
+                {...register('name', { pattern: serverRegex, required: true, minLength: t('policy.server.nameMinLength'), maxLength: t('policy.server.nameMaxLength') })}
+                minLength={t('policy.server.nameMinLength')}
+                maxLength={t('policy.server.nameMaxLength')}
                 placeholder={t('server.create.name')}
                 className="bg-transparent h-7 w-full border-b dark:border-gray-700 focus:outline-none transition dark:focus:border-blue-500"
                 onKeyPress={() => setNameChanged(true)}
@@ -270,10 +270,10 @@ export default function CreateServerDialog({ open, setOpen, server }) {
 
 
         <textarea
-          {...register('description', { maxLength: 500 })}
+          {...register('description', { maxLength: t('policy.server.descriptionLength') })}
           placeholder={t('server.create.description')}
           className="form-textarea"
-          maxLength={500}
+          maxLength={t('policy.server.descriptionLength')}
         />
 
         <div className="flex items-center">

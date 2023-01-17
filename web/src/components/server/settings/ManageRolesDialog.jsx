@@ -136,7 +136,7 @@ export default function ManageRolesDialog({ open, setOpen, server }) {
                   if (e.code === 'Enter' && !!name) doCreateRole()
                 }}
                 type="text"
-                maxLength={100}
+                maxLength={t('policy.role.nameMaxLength')}
               />
               {createRoleLoading ? (
                 <IconSpinner className="form-show-password-button" />
