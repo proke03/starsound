@@ -31,6 +31,7 @@ export const policy = {
     linkLength: 1000,
     textLength: 4000,
     imagesLength: 10,
+    imagesTotalSize: 1024 * 1024 * 10,
     captionLength: 180,
     posts: {
       defaultOffset: 0,
@@ -46,7 +47,7 @@ export const policy = {
   },
   server: {
     maxOwn: 5,
-    nameMinLength: 3,
+    nameMinLength: 2,
     nameMaxLength: 21,
     displayNameMinLength: 1,
     displayNameMaxLength: 30,

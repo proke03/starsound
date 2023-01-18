@@ -17,6 +17,7 @@ import { useFolderName } from '@/components/folder/useFolderName'
 import { useAddPostToFolderMutation } from '@/graphql/hooks'
 
 export default function SidebarFolder({ folder, server }) {
+  const { t } = useTranslation()
   const [addPostToFolder] = useAddPostToFolderMutation()
   const [canAddPosts] = useHasServerPermissions({
     server,
@@ -42,8 +43,6 @@ export default function SidebarFolder({ folder, server }) {
     })
   })
   const isActive = isOver && canDrop
-
-  const { t } = useTranslation()
 
   const folderName = useFolderName(folder)
 

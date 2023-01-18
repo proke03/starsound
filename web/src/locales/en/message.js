@@ -1,6 +1,11 @@
 export const message = {
   message: 'Message',
   pinned: 'Pinned Messages',
+  needLogin: `Must log in to send messages`,
+  notifications: 'Notifications',
+  playerJoined: 'has joined the {{channel}}',
+  openOriginal: 'Open original',
+  startDm: 'This is the beginning of your direct message history with @{{username}}',
   upload: {
     upload: 'Upload',
     cancel: 'Cencel',
@@ -23,9 +28,16 @@ export const message = {
     delete: 'Delete Message',
     deleted: 'Message Deleted',
   },
-  needLogin: `Must log in to send messages`,
-  notifications: 'Notifications',
-  playerJoined: 'has joined the {{channel}}',
-  openOriginal: 'Open original',
-  startDm: 'This is the beginning of your direct message history with @{{username}}',
+  channel: {
+    noPermission: `You do not have permission to send messages in this channel`,
+    placeholder: `Message #{{channel}}`,
+  },
+  group: {
+    placeholder: `Message {{group}}`,
+  },
+  user: {
+    isBlocked: `This user has blocked you`,
+    isBlocking: `You are blocking this user`,
+    placeholder: `Message @{{user}}`,
+  },
 }

@@ -32,12 +32,12 @@ function useForceUpdate() {
 }
 
 export default function MessageInput({ channel, server, group, user, users }) {
+  const { t } = useTranslation()
   const variables = {
     channelId: channel?.id,
     groupId: group?.id,
     userId: user?.id
   }
-  const { t } = useTranslation()
   const [currentUser] = useCurrentUser()
   const isBlocked =
     !!user && user.relationshipStatus === RelationshipStatus.Blocked
@@ -67,13 +67,13 @@ export default function MessageInput({ channel, server, group, user, users }) {
     if (!currentUser) return t('message.needLogin')
     if (channel) {
       if (!canUseChannel)
-        return `You do not have permission to send messages in this channel`
-      return `Message #${channel.name}`
-    } else if (group) return `Message ${group.name}`
+        return t('message.channel.noPermission')
+      return t('message.channel.placeholder', {channel: channel.name})
+    } else if (group) return t('message.group.placeholder', {group: group.name})
     else if (user) {
-      if (isBlocked) return `This user has blocked you`
-      if (isBlocking) return `You are blocking this user`
-      return `Message @${user.username}`
+      if (isBlocked) return t('message.user.blocked')
+      if (isBlocking) return t('message.user.blocking')
+      return t('message.user.placeholder', {user: user.username})
     }
     return ``
   }, [currentUser, channel, group, user, canUseChannel, isBlocked, isBlocking])

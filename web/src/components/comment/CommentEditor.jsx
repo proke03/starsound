@@ -36,6 +36,7 @@ const cancelBtnClass = ctl(`
 `)
 
 export default function CommentEditor({ postId, parentCommentId, setOpen, target }) {
+  const { t } = useTranslation()
   const [text, setText] = useState('')
   const [createComment, { loading }] = useCreateCommentMutation({
     update(cache, { data: { createComment } }) {
@@ -54,7 +55,6 @@ export default function CommentEditor({ postId, parentCommentId, setOpen, target
   })
 
   const [updateComment, { loading: updateLoading }] = useUpdateCommentMutation()
-  const { t } = useTranslation()
 
   return (
     <div className="w-full break-words overflow-hidden">

@@ -240,6 +240,7 @@ function CreateRoleDialog({
   server,
   setSelectedRoleId
 }) {
+  const { t } = useTranslation()
   const [name, setName] = useState('')
   const [createRole, { loading }] = useCreateRoleMutation({
     update(cache, { data: { createRole } }) {
@@ -267,7 +268,7 @@ function CreateRoleDialog({
             value={name}
             onChange={e => setName(e.target.value)}
             type="text"
-            maxLength={100}
+            maxLength={t('policy.role.nameMaxLength')}
           />
         </div>
 
