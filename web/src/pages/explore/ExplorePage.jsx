@@ -18,7 +18,7 @@ export default function ExplorePage() {
     s.exploreSort
   ])
 
-  const { data } = usePublicServersQuery({
+  const { data, loading } = usePublicServersQuery({
     variables: {
       sort: exploreSort,
       category:
@@ -44,7 +44,7 @@ export default function ExplorePage() {
               <ServerInfoCard server={server} key={server.id} />
             ))}
           </div>
-          {!servers.length && <EndReached>{t('user.noMutualPlanets')}</EndReached>}
+          {!servers.length && !loading? <EndReached>{t('user.noMutualPlanets')}</EndReached> : <></>}
         </div>
       </PageView>
     </Page>

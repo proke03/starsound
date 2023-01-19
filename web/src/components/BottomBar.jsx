@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next'
 
 export default function BottomBar() {
   const { t } = useTranslation()
-  const [currentUser] = useCurrentUser()
+  const [ currentUser, loading ] = useCurrentUser()
   const offset = [0, 14]
   const [open, setOpen] = useState(false)
   const [updateAvailable, setUpdateAvailable] = useStore(s => [
@@ -76,6 +76,7 @@ export default function BottomBar() {
             <div className="w-2 h-2 rounded-full bg-green-500 ml-2" />
           </>
         ) : (
+          !loading ? 
           <div className="flex items-center text-primary text-13 font-medium">
             <div
               className="cursor-pointer hover:underline"
@@ -106,6 +107,8 @@ export default function BottomBar() {
               {t('auth.findPassword.label')}
             </div> */}
           </div>
+          :
+          <></>
         )}
 
         <div className="ml-auto flex items-center space-x-4 text-primary">

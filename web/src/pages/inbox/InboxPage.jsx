@@ -18,7 +18,7 @@ export default function InboxPage() {
   const inboxPage = useStore(s => s.inboxPage)
   useSetHomePage(`inbox`)
   const [currentUser] = useCurrentUser()
-  const { data } = useRepliesQuery({
+  const { data, loading } = useRepliesQuery({
     skip: !currentUser,
     fetchPolicy: 'cache-and-network'
   })
@@ -47,7 +47,7 @@ export default function InboxPage() {
 
         <div className="space-y-1.5">
           {replies.map(reply => (
-            <Reply reply={reply} key={reply.id} />
+            !loading ? <Reply reply={reply} key={reply.id} /> : <></>
           ))}
         </div>
       </PageView>
