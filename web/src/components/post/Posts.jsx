@@ -71,7 +71,7 @@ export default function Posts({ folderId, serverId, showServerName, header }) {
                 <IconSpinner />
               </div>
             ) : (
-              <EndReached>{t('post.noMorePosts')}</EndReached>
+              !fetching ? <EndReached>{t('post.noMorePosts')}</EndReached> : <></>
             )
         }}
         endReached={() => {
