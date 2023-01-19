@@ -18,7 +18,7 @@ import NotFound from '@/pages/NotFound'
 export default function PostPage({ postId }) {
   const [currentUser] = useCurrentUser()
 
-  const { data } = usePostQuery({
+  const { data, loading } = usePostQuery({
     variables: {
       id: postId
     },
@@ -88,7 +88,7 @@ export default function PostPage({ postId }) {
           </div>
         </div>
       ) : (
-        <NotFound />
+        !loading ? <NotFound /> : <></>
       )}
     </Page>
   )
