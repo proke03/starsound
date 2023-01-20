@@ -24,10 +24,8 @@ const leftClass = show =>
   md:rounded-tl-lg
   ${show ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
   flex
-  md:w-60
-  md:min-w-[15rem]
-  w-78
-  min-w-[19.5rem]
+  w-60
+  xl:w-72
 `)
 
 const rightClass = show =>
@@ -35,8 +33,8 @@ const rightClass = show =>
   right-0
   ${show ? 'translate-x-0' : 'translate-x-full'}
   ${show ? 'md:block' : 'md:hidden'}
-  w-60
-  min-w-[15rem]
+  w-44
+  xl:w-60
 `)
 
 const overlayClass = ctl(`
