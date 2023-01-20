@@ -21,15 +21,15 @@ export default function PostEmbed({ metadata, dark = false }) {
   return (
     <div>
       <div
-        className={`rounded inline-flex transition ${
+        className={`w-full rounded inline-flex transition ${
           dark
             ? `dark:bg-gray-850 ${isWhite ? 'dark:border-gray-950' : ''}`
             : `dark:bg-gray-800 ${isWhite ? 'dark:border-gray-900' : ''}`
         } pt-4 border-l-4`}
         style={isWhite ? {} : { borderColor: metadata.themeColor }}
       >
-        <div className="flex-grow rounded-r-md pl-4 pr-4 pb-4 flex flex-col">
-          <div className="max-w-[400px] space-y-3">
+        <div className="w-full flex-grow rounded-r-md pl-4 pr-4 pb-4 flex flex-col">
+          <div className="w-full space-y-3">
             {metadata.publisher && (
               <div className="text-xs text-secondary">{metadata.publisher}</div>
             )}
@@ -46,7 +46,7 @@ export default function PostEmbed({ metadata, dark = false }) {
 
             {metadata.description && !embeddable && (
               <div
-                className="text-13 text-secondary line-clamp-9"
+                className="w-full text-13 text-secondary line-clamp-9"
                 dangerouslySetInnerHTML={{
                   __html: metadata.description ?? t('post.noDescription'),
                 }}
