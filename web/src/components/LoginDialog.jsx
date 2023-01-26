@@ -367,12 +367,12 @@ export default function LoginDialog() {
                     id="password"
                     {...register('password', {
                       required: true,
-                      minLength: t('policy.user.passwordMinLength'),
+                      minLength: policy.user.passwordMinLength,
                     })}
                     className={`form-input-password`}
                     placeholder={t('auth.createAccount.password')}
                     type={showPassword ? 'text' : 'password'}
-                    minLength={t('policy.user.passwordMinLength')}
+                    minLength={policy.user.passwordMinLength}
                   />
                   <ShowPasswordButton
                     showPassword={showPassword}
@@ -420,8 +420,8 @@ export default function LoginDialog() {
               <div className="relative">
                 <input
                   id="password"
-                  {...register('password', { required: true, minLength: t('policy.user.passwordMinLength') })}
-                  minLength={t('policy.user.passwordMinLength')}
+                  {...register('password', { required: true, minLength: policy.user.passwordMinLength })}
+                  minLength={policy.user.passwordMinLength}
                   className={`form-input`}
                   placeholder={t('auth.login.password')}
                   type={showPassword ? 'text' : 'password'}

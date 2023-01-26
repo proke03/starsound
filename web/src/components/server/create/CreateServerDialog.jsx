@@ -19,6 +19,7 @@ import Tippy from '@tippyjs/react'
 import StyledDialog from '@/components/ui/dialog/StyledDialog'
 import Switch from '@/components/ui/Switch'
 import { useTranslation } from 'react-i18next'
+import { policy } from '@/policy'
 
 const serverRegex = /^[가-힣A-Za-z0-9_]+$/i
 
@@ -239,10 +240,10 @@ export default function CreateServerDialog({ open, setOpen, server }) {
 
       <div className="pl-30 pr-5 pt-2 text-left">
         <input
-          {...register('displayName', { maxLength: t('policy.server.displayNameMaxLength'), required: true })}
+          {...register('displayName', { maxLength: policy.server.displayNameMaxLength, required: true })}
           placeholder={t('server.create.displayName')}
           className="form-input-lg"
-          maxLength={t('policy.server.displayNameMaxLength')}
+          maxLength={policy.server.displayNameMaxLength}
         />
       </div>
 
@@ -254,9 +255,9 @@ export default function CreateServerDialog({ open, setOpen, server }) {
           </span>
             {!server && (
               <input
-                {...register('name', { pattern: serverRegex, required: true, minLength: t('policy.server.nameMinLength'), maxLength: t('policy.server.nameMaxLength') })}
-                minLength={t('policy.server.nameMinLength')}
-                maxLength={t('policy.server.nameMaxLength')}
+                {...register('name', { pattern: serverRegex, required: true, minLength: policy.server.nameMinLength, maxLength: policy.server.nameMaxLength })}
+                minLength={policy.server.nameMinLength}
+                maxLength={policy.server.nameMaxLength}
                 placeholder={t('server.create.name')}
                 className="bg-transparent h-7 w-full border-b dark:border-gray-700 focus:outline-none transition dark:focus:border-blue-500"
                 onKeyPress={() => setNameChanged(true)}
@@ -270,10 +271,10 @@ export default function CreateServerDialog({ open, setOpen, server }) {
 
 
         <textarea
-          {...register('description', { maxLength: t('policy.server.descriptionLength') })}
+          {...register('description', { maxLength: policy.server.descriptionLength })}
           placeholder={t('server.create.description')}
           className="form-textarea"
-          maxLength={t('policy.server.descriptionLength')}
+          maxLength={policy.server.descriptionLength}
         />
 
         <div className="flex items-center">
