@@ -14,6 +14,7 @@ import Switch from '@/components/ui/Switch'
 import Dialog from '@/components/ui/dialog/Dialog'
 import { useTranslation } from 'react-i18next'
 import { useApolloClient } from '@apollo/client'
+import { policy } from '@/policy'
 
 export default function RoleSettings({ server }) {
   const { t } = useTranslation()
@@ -268,7 +269,7 @@ function CreateRoleDialog({
             value={name}
             onChange={e => setName(e.target.value)}
             type="text"
-            maxLength={t('policy.role.nameMaxLength')}
+            maxLength={policy.role.nameMaxLength}
           />
         </div>
 

@@ -178,7 +178,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
 
   function changeImages(files) {
     if (files && files.length > 0) {
-      const _files = [...files].filter(file => file.size <= t('policy.post.imagesTotalSize'))
+      const _files = [...files].filter(file => file.size <= 1024 * 1024 * 10)
       setImages(
         _files.map(file => ({ file, caption: '', linkUrl: '' }))
       )
@@ -225,7 +225,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
   //FIXME: changeImages와 코드 중복
   function addImages(files) {
     if (files && files.length > 0) {
-      const _files = [...files].filter(file => file.size <= t('policy.post.imagesTotalSize'))
+      const _files = [...files].filter(file => file.size <= policy.post.imagesTotalSize)
       setImages([
         ...images,
         ..._files.map(file => ({ file, caption: '', linkUrl: '' }))
@@ -520,10 +520,10 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
           <div className="relative">
             <label htmlFor="title" className={labelClass}>
               {t('post.create.title')}
-              {title?.length > 0 && ` (${title?.length}/${t('policy.post.titleMaxLength')})`}
+              {title?.length > 0 && ` (${title?.length}/${policy.post.titleMaxLength})`}
             </label>
             <input
-              maxLength={t('policy.post.titleMaxLength')}
+              maxLength={policy.post.titleMaxLength}
               className={titleClass}
               {...register('title', {
                 required: true
@@ -566,7 +566,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                 />
 
                 <input
-                  maxLength={t('policy.post.linkLength')}
+                  maxLength={policy.post.linkLength}
                   className="px-10 h-10 dark:bg-gray-750 bg-gray-100 rounded text-sm text-primary w-full focus:outline-none"
                   {...register('linkUrl', {
                     validate: url => !url || isURL(url)
@@ -682,7 +682,7 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                         </div>
                       </div>
                       <span className="absolute bottom-0 right-1 text-sm text-green-500">
-                        {`${formatBytesToMB(totalSize).padEnd(2)}/${formatBytesToMB(t('policy.post.imagesTotalSize'))}`}
+                        {`${formatBytesToMB(totalSize).padEnd(2)}/${formatBytesToMB(policy.post.imagesTotalSize)}`}
                       </span>
                     </div>
                   }
@@ -774,14 +774,14 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
                             html={images[selectedImage]?.caption || ''}
                             onChange={e => {
                               if (
-                                images[selectedImage]?.caption?.length >= t('policy.post.captionLength')
+                                images[selectedImage]?.caption?.length >= policy.post.captionLength
                               ) {
                                 return
                               }
                               const temp = images.slice()
                               let val = e.target.value
-                              if (val.length > t('policy.post.captionLength')) {
-                                val = val.substring(0, t('policy.post.captionLength')+1)
+                              if (val.length > policy.post.captionLength) {
+                                val = val.substring(0, policy.post.captionLength+1)
                               }
                               temp[selectedImage].caption = val
                               setImages(temp)

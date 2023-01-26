@@ -22,6 +22,7 @@ import Switch from '@/components/ui/Switch'
 import { AnimatePresence, motion } from 'framer-motion'
 import { HiPlus } from 'react-icons/hi'
 import Tippy from '@tippyjs/react'
+import { policy } from '@/policy'
 
 export default function ManageRolesDialog({ open, setOpen, server }) {
   const { t } = useTranslation()
@@ -136,7 +137,7 @@ export default function ManageRolesDialog({ open, setOpen, server }) {
                   if (e.code === 'Enter' && !!name) doCreateRole()
                 }}
                 type="text"
-                maxLength={t('policy.role.nameMaxLength')}
+                maxLength={policy.role.nameMaxLength}
               />
               {createRoleLoading ? (
                 <IconSpinner className="form-show-password-button" />

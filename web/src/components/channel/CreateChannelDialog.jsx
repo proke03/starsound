@@ -13,6 +13,7 @@ import { IconCheck, IconSpinner, IconX } from '@/components/ui/icons/Icons'
 import ctl from '@netlify/classnames-template-literals'
 import Tippy from '@tippyjs/react'
 import { useTranslation } from 'react-i18next';
+import { policy } from '@/policy'
 
 const dotClass = enabled =>
   ctl(`
@@ -150,8 +151,8 @@ export default function CreateChannelDialog({ open, setOpen, server, channel }) 
         <div>
           <div className="relative">
             <input
-              {...register('name', { required: true, maxLength: t('policy.channel.nameLength') })}
-              maxLength={t('policy.channel.nameLength')}
+              {...register('name', { required: true, maxLength: policy.channel.nameLength })}
+              maxLength={policy.channel.nameLength}
               className="form-input-icon"
               spellCheck={false}
               autoCapitalize="none"
@@ -162,14 +163,14 @@ export default function CreateChannelDialog({ open, setOpen, server, channel }) 
             <IconChannel className="form-input-icon-icon" />
           </div>
           {channelAlreadyExists && (
-            <div className="form-error">{t('channel.create.alreadyExists')}</div>
+            <div className="form-error">{channel.create.alreadyExists}</div>
           )}
         </div>
 
         <textarea
           placeholder={t('channel.create.description')}
-          {...register('description', { maxLength: t('policy.channel.descriptionLength') })}
-          maxLength={t('policy.channel.descriptionLength')}
+          {...register('description', { maxLength: policy.channel.descriptionLength })}
+          maxLength={policy.channel.descriptionLength}
           className="form-textarea"
         />
 
