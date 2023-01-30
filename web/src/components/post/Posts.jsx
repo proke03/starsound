@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, Suspense, lazy } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 import { usePosts } from '@/components/post/usePosts'
-import Post from '@/components/post/Post'
+// import Post from '@/components/post/Post'
 import { IconSpinner } from '@/components/ui/icons/IconSpinner'
 import { useCallback, useRef } from 'react'
 import EndReached from '@/components/ui/EndReached'
@@ -9,8 +9,10 @@ import { useTranslation } from 'react-i18next'
 import { usePinnedPostsQuery } from '@/graphql/hooks'
 import { useStore } from '@/hooks/useStore'
 
+
 export default function Posts({ folderId, serverId, showServerName, header }) {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
+  const Post = lazy(() => import('@/components/post/Post'))
   
   const virtuoso = useRef(null)
 
@@ -18,7 +20,7 @@ export default function Posts({ folderId, serverId, showServerName, header }) {
 
   const { postFetchDone, setPostFetchDone } = useStore(state => state)
   useEffect(() => {
-    if (!fetching && !postFetchDone) setPostFetchDone(true);
+    if (!fetching && !postFetchDone) setPostFetchDone(true)
   }, [fetching])
 
   const postRenderer = useCallback(
@@ -27,7 +29,9 @@ export default function Posts({ folderId, serverId, showServerName, header }) {
       if (!post) return <div style={{ height: '1px' }} /> // returning null or zero height breaks the virtuoso
       return (
         <div className="md:px-4 pb-1.5 px-0">
-          <Post post={post} showServerName={showServerName} index={index} />
+          <Suspense fallback={<></>}>
+            <Post post={post} showServerName={showServerName} index={index} />
+          </Suspense>
         </div>
       )
     },
