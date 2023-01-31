@@ -1,23 +1,25 @@
+import { lazy, Suspense } from 'react'
 import { DndProvider } from 'react-dnd'
 import { TouchBackend } from 'react-dnd-touch-backend'
 import Routes from '@/pages/Routes'
 import { ApolloProvider } from '@apollo/client/react'
-import ResponsiveToaster from '@/components/ui/ResponsiveToaster'
-import CustomDragLayer from '@/components/ui/CustomDragLayer'
 import { BrowserRouter, HashRouter } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import TitleBar from '@/components/ui/electron/titlebar/TitleBar'
 import { getOS } from '@/utils/getOS'
 import { apolloClient } from '@/graphql/apolloClient'
 import ContextMenuProvider from '@/providers/ContextMenuProvider'
-import LoginDialog from '@/components/LoginDialog'
-import UserDialog from '@/components/user/UserDialog'
 import UserProvider from '@/providers/UserProvider'
-import FindPasswordDialog from '@/components/FindPasswordDialog'
 
 export default function App() {
   const isMac = getOS() === 'Mac OS'
   const Router = window.electron ? HashRouter : BrowserRouter
+
+  const ResponsiveToaster = lazy(() => import('@/components/ui/ResponsiveToaster'))
+  const CustomDragLayer = lazy(() => import('@/components/ui/CustomDragLayer'))
+  const LoginDialog = lazy(() => import('@/components/LoginDialog'))
+  const FindPasswordDialog = lazy(() => import('@/components/FindPasswordDialog'))
+  const UserDialog = lazy(() => import('@/components/user/UserDialog'))
 
   return (
     <ApolloProvider client={apolloClient}>
@@ -39,12 +41,12 @@ export default function App() {
                 backend={TouchBackend}
                 options={{ enableTouchEvents: false, enableMouseEvents: true }}
               >
-                <ResponsiveToaster />
-                <CustomDragLayer />
+                <Suspense fallback={<></>}><ResponsiveToaster /></Suspense>
+                <Suspense fallback={<></>}><CustomDragLayer /></Suspense>
+                <Suspense fallback={<></>}><LoginDialog /></Suspense>
                 {window.electron && !isMac && <TitleBar />}
-                <LoginDialog />
-                <FindPasswordDialog />
-                <UserDialog />
+                <Suspense fallback={<></>}><FindPasswordDialog /></Suspense>
+                <Suspense fallback={<></>}><UserDialog /></Suspense>
                 <div
                   style={
                     window.electron
