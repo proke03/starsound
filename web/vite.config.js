@@ -73,5 +73,6 @@ export default defineConfig(({ command }) => ({
   build: {
     target: 'es2018',
     outDir: process.env.ELECTRON === 'true' ? '../electron/dist' : 'dist',
+    cssCodeSplit: true,
   }
 }))
