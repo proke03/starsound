@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { lazy, useCallback, useEffect, useMemo, useState } from 'react'
 import { IconUpload } from '@/components/ui/icons/Icons'
 import Tippy from '@tippyjs/react'
 import { useTranslation } from 'react-i18next'
@@ -12,17 +12,13 @@ import {
   ServerPermission,
   useCreateMessageMutation
 } from '@/graphql/hooks'
-import { EditorContent, ReactRenderer, Extension } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
 import Link from '@/components/ui/editor/Link'
-import Placeholder from '@tiptap/extension-placeholder'
 import { Mention } from '@/components/ui/editor/Mention'
 import tippy from 'tippy.js/headless'
 import { MentionList } from '@/components/message/input/MentionList'
 import { useCurrentUser } from '@/hooks/graphql/useCurrentUser'
 import { useHasServerPermissions } from '@/hooks/useHasServerPermissions'
 import { useOpenLogin } from '@/hooks/useLoginDialog'
-import { Editor } from '@tiptap/react/src/Editor'
 import TypingAnimation from '@/components/message/input/TypingAnimation'
 
 function useForceUpdate() {
@@ -32,6 +28,10 @@ function useForceUpdate() {
 }
 
 export default function MessageInput({ channel, server, group, user, users }) {
+  const { EditorContent, ReactRenderer, Extension } = lazy(() => '@tiptap/react')
+  const StarterKit = lazy(() => '@tiptap/starter-kit')
+  const Placeholder = lazy(() => '@tiptap/extension-placeholder')
+  const { Editor } = lazy(() => '@tiptap/react/src/Editor')
   const { t } = useTranslation()
   const variables = {
     channelId: channel?.id,

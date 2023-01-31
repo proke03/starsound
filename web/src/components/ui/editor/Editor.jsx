@@ -17,14 +17,15 @@ import {
   IconFormatStrikethrough,
   IconFormatUnderline
 } from '@/components/ui/icons/Icons'
-import { useEditor, EditorContent } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
 import Link from '@/components/ui/editor/Link'
-import Underline from '@tiptap/extension-underline'
 import { Spoiler } from './Spoiler'
-import { useCallback, useEffect } from 'react'
+import { lazy, useCallback, useEffect } from 'react'
 
 export default function Editor({ text, setText, target }) {
+  const { useEditor, EditorContent } = lazy(() => '@tiptap/react')
+  const StarterKit = lazy(() => '@tiptap/starter-kit')
+  const Underline = lazy(() => '@tiptap/extension-underline')
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
