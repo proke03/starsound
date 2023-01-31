@@ -3,6 +3,7 @@ import reactRefresh from '@vitejs/plugin-react-refresh'
 import { resolve } from 'path'
 import stringHash from 'string-hash'
 import { VitePWA } from 'vite-plugin-pwa'
+import { visualizer } from "rollup-plugin-visualizer"
 
 export default defineConfig(({ command }) => ({
   base: process.env.ELECTRON === 'true' ? './' : '/',
@@ -41,7 +42,10 @@ export default defineConfig(({ command }) => ({
         ]
       },
       workbox: {}
-    })
+    }),
+    visualizer({
+      gzipSize: true,
+    }),
   ],
   resolve: {
     alias: {
