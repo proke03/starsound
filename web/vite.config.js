@@ -68,7 +68,7 @@ export default defineConfig(({ command }) => ({
     }
   },
   esbuild: {
-    jsxInject: `import React from 'react'`
+    jsxInject: `import { jsx as _jsx } from 'react/jsx-runtime'`
   },
   build: {
     target: 'es2018',
