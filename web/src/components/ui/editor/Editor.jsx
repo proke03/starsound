@@ -22,9 +22,9 @@ import { Spoiler } from './Spoiler'
 import { lazy, useCallback, useEffect } from 'react'
 
 export default function Editor({ text, setText, target }) {
-  const { useEditor, EditorContent } = lazy(() => import('@tiptap/react'))
-  const StarterKit = lazy(() => import('@tiptap/starter-kit'))
-  const Underline = lazy(() => import('@tiptap/extension-underline'))
+  const { useEditor, EditorContent } = lazy(() => '@tiptap/react')
+  const StarterKit = lazy(() => '@tiptap/starter-kit')
+  const Underline = lazy(() => '@tiptap/extension-underline')
 
   const editor = useEditor({
     extensions: [

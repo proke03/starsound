@@ -28,10 +28,10 @@ function useForceUpdate() {
 }
 
 export default function MessageInput({ channel, server, group, user, users }) {
-  const { EditorContent, ReactRenderer, Extension } = lazy(() => import('@tiptap/react'))
-  const StarterKit = lazy(() => import('@tiptap/starter-kit'))
-  const Placeholder = lazy(() => import('@tiptap/extension-placeholder'))
-  const { Editor } = lazy(() => import('@tiptap/react/src/Editor'))
+  const { EditorContent, ReactRenderer, Extension } = lazy(() => '@tiptap/react')
+  const StarterKit = lazy(() => '@tiptap/starter-kit')
+  const Placeholder = lazy(() => '@tiptap/extension-placeholder')
+  const { Editor } = lazy(() => '@tiptap/react/src/Editor')
   const { t } = useTranslation()
   const variables = {
     channelId: channel?.id,
