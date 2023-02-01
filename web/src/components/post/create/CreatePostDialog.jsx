@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState, useRef } from 'react'
+import { useEffect, useLayoutEffect, useState, useRef, Suspense } from 'react'
 import ctl from '@netlify/classnames-template-literals'
 import Editor from '@/components/ui/editor/Editor'
 import {
@@ -112,6 +112,7 @@ const Tab = {
 }
 
 export default function CreatePostDialog({ open, setOpen, serverId }) {
+  const Editor = (() => import('@/components/ui/editor/Editor'))
   const { t } = useTranslation()
   const [text, setText] = useState('')
   const [createPost, { loading }] = useCreatePostMutation()
@@ -534,7 +535,9 @@ export default function CreatePostDialog({ open, setOpen, serverId }) {
 
           {currentTab === Tab.Text && (
             <div className="pt-5">
-              <Editor text={text} setText={setText} target={postToEdit}/>
+              <Suspense fallback={<></>}>
+                <Editor text={text} setText={setText} target={postToEdit}/>
+              </Suspense>
             </div>
           )}
 

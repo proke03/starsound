@@ -1,6 +1,5 @@
-import { useLayoutEffect, useState } from 'react'
+import { Suspense, useLayoutEffect, useState } from 'react'
 import ctl from '@netlify/classnames-template-literals'
-import Editor from '@/components/ui/editor/Editor'
 import { IconSpinner } from '@/components/ui/icons/Icons'
 import { useTranslation } from 'react-i18next'
 import {
@@ -36,6 +35,7 @@ const cancelBtnClass = ctl(`
 `)
 
 export default function CommentEditor({ postId, parentCommentId, setOpen, target }) {
+  const Editor = (() => import('@/components/ui/editor/Editor'))
   const { t } = useTranslation()
   const [text, setText] = useState('')
   const [createComment, { loading }] = useCreateCommentMutation({
@@ -58,7 +58,9 @@ export default function CommentEditor({ postId, parentCommentId, setOpen, target
 
   return (
     <div className="w-full break-words overflow-hidden">
-      <Editor text={text} setText={setText} target={target}/>
+      <Suspense fallback={<></>}>
+        <Editor text={text} setText={setText} target={target}/>
+      </Suspense>
       <div className="flex justify-end space-x-3 items-center pt-3">
         <button
           className={cancelBtnClass}
