@@ -9,7 +9,15 @@ import './styles/tippy.css'
 import App from './App'
 import { inject } from '@vercel/analytics'
 
-inject()
+inject({
+  debug: true,
+  beforeSend: (event) => {
+    console.log(event)
+    if (event.name === 'pageview') {
+      return false
+    }
+  },
+})
 
 if (window.electron) document.documentElement.classList.add('electron')
 
